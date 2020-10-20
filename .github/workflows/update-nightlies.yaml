@@ -67,8 +67,8 @@ jobs:
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        committer: "Knative Automation <automation@knative.team>"
-        author: "Knative Automation <automation@knative.team>"
+        committer: "Knative Automation <automation+github@knative.team>"
+        author: "Knative Automation <automation+github@knative.team>"
 
         # Where to stage the change.
         push-to-fork: knative-automation/serving
@@ -86,8 +86,8 @@ jobs:
             curl https://storage.googleapis.com/knative-nightly/${{ matrix.nightly }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
           done
           ```
-          /assign @knative-sandbox/networking-wg-leads
-          /cc @knative-sandbox/networking-wg-leads
+          /assign @knative/networking-wg-leads
+          /cc @knative/networking-wg-leads
 
     - name: Post failure notice to Slack
       uses: rtCamp/action-slack-notify@v2.1.0
