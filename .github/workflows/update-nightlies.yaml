@@ -67,8 +67,8 @@ jobs:
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        committer: "Knative Automation <automation+github@knative.team>"
-        author: "Knative Automation <automation+github@knative.team>"
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
 
         # Where to stage the change.
         push-to-fork: knative-automation/serving
