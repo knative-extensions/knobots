@@ -1,0 +1,608 @@
+# Copyright 2020 The Knative Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Auto Updates
+
+on:
+  schedule:
+    - cron: '0 1,13 * * 1-5' # 6am/pm Pacific on weekdays
+
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch name'
+        required: true
+        default: 'master'
+
+      # TODO(mattmoor): Add a required notice/justification that's included in the slack messaging for manual triggers.
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      actions-include: ${{ steps.load-matrix.outputs.actions-include }}
+      actions-names: ${{ steps.load-matrix.outputs.actions-names }}
+      deps-include: ${{ steps.load-matrix.outputs.deps-include }}
+      deps-names: ${{ steps.load-matrix.outputs.deps-names }}
+      gotool-include: ${{ steps.load-matrix.outputs.gotool-include }}
+      gotool-names: ${{ steps.load-matrix.outputs.gotool-names }}
+      misspell-include: ${{ steps.load-matrix.outputs.misspell-include }}
+      misspell-names: ${{ steps.load-matrix.outputs.misspell-names }}
+      prettier-include: ${{ steps.load-matrix.outputs.prettier-include }}
+      prettier-names: ${{ steps.load-matrix.outputs.prettier-names }}
+      branch: ${{ steps.load-matrix.outputs.branch }}
+    steps:
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+
+    - id: load-matrix
+      run: |
+        go get github.com/bronze1man/yaml2json
+
+        function filtered_repos() {
+          local EXCLUDE="${1}"
+          local FILTER=$(cat "${EXCLUDE}" | yaml2json | jq "join(\"|\")")
+          if [ "$FILTER" = '""' ]; then
+            FILTER="\"match-nothing-${RANDOM}\""
+          fi
+          cat ${GITHUB_WORKSPACE}/repos.yaml | yaml2json | jq -c "map(select(.name | test(${FILTER}) | not))"
+        }
+
+        function filtered_names() {
+          filtered_repos "$1" | jq -c "map(.name)"
+        }
+
+        for x in actions deps gotool misspell prettier ; do
+          echo "::group::Matrix names for $x"
+          filtered_names $x-exclude.yaml | jq .
+          echo "::endgroup::"
+
+          echo "::group::Matrix includes for $x"
+          filtered_repos $x-exclude.yaml | jq .
+          echo "::endgroup::"
+
+          # Only run update-deps on release-branches.
+          if [[ "${{ github.event.inputs.branch }}" != "" ]] && [[ "$x" != "deps" ]]; then
+            echo "::set-output name=$x-include::[]"
+            echo "::set-output name=$x-names::[]"
+          else
+            echo "::set-output name=$x-include::$(filtered_repos $x-exclude.yaml)"
+            echo "::set-output name=$x-names::$(filtered_names $x-exclude.yaml)"
+          fi
+        done
+
+        # Create a properly default property for downstream.
+        if [[ "${{ github.event.inputs.branch }}" != "" ]]; then
+          echo "::set-output name=branch::${{ github.event.inputs.branch }}"
+        else
+          echo "::set-output name=branch::master"
+        fi
+
+  update-deps:
+    name: Update Deps and Codegen
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      max-parallel: 5
+      matrix:
+        name: ${{fromJson(needs.meta.outputs.deps-names)}}
+        include: ${{fromJson(needs.meta.outputs.deps-include)}}
+
+    env:
+      GO111MODULE: on
+
+    steps:
+
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+      id: go
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ matrix.name }}
+        ref: ${{ needs.meta.outputs.branch }}
+
+    - name: Install Dependencies
+      run: |
+        cd $(mktemp -d)
+        go get github.com/google/ko/cmd/ko
+        go get github.com/google/licenseclassifier
+        go get github.com/google/go-licenses
+
+    - name: Update Deps and Codegen
+      shell: bash
+      run: |
+        # Determine the name of the go module.
+        export MODULE_NAME=$(go mod graph | cut -d' ' -f 1 | grep -v '@' | head -1)
+
+        # TODO(mattmoor): Move this into `./hack/update-codegen.sh`
+        TMP_DIR="$(mktemp -d)"
+        export GOPATH=${GOPATH:-${TMP_DIR}}
+        export PATH="${PATH}:${TMP_DIR}/bin"
+        TMP_REPO_PATH="${TMP_DIR}/src/${MODULE_NAME}"
+        mkdir -p "$(dirname "${TMP_REPO_PATH}")" && ln -s "${GITHUB_WORKSPACE}" "${TMP_REPO_PATH}"
+
+        ./hack/update-deps.sh --upgrade
+        # We may pull in code-generator updates, or not have generated code.
+        [[ ! -f hack/update-codegen.sh ]] || ./hack/update-codegen.sh
+
+        # If we don't run this before the "git diff-index" it seems to list
+        # every file that's been touched by codegen.
+        git status
+        echo "create_pr=false" >> $GITHUB_ENV
+        for x in $(git diff-index --name-only HEAD --); do
+          if [ "$(basename $x)" = "go.mod" ]; then
+            continue
+          elif [ "$(basename $x)" = "go.sum" ]; then
+            continue
+          elif [ "$(basename $x)" = "modules.txt" ]; then
+            continue
+          fi
+          echo "Found non-module diff: $x"
+          echo "create_pr=true" >> $GITHUB_ENV
+          break
+        done
+
+    - name: Create Pull Request
+      id: cpr
+      if: env.create_pr == 'true'
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+
+        # Where to stage the change.
+        push-to-fork: ${{ matrix.fork }}
+        branch: auto-updates/update-deps-${{ needs.meta.outputs.branch }}
+        signoff: true
+        delete-branch: true
+
+        # Description of the change and PR body.
+        commit-message: 'upgrade to latest dependencies'
+        title: '[${{ needs.meta.outputs.branch }}] Upgrade to latest dependencies'
+        body: |
+          Produced via:
+          ```shell
+          ./hack/update-deps.sh --upgrade
+          ./hack/update-codegen.sh
+          ```
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "[${{ needs.meta.outputs.branch }}] Updating dependencies for ${{ matrix.name }} failed."
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    - name: Notify of pending pull request.
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#228B22'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "Staged update-deps PR for ${{ matrix.name }}."
+        SLACK_MESSAGE: |
+          Please review: ${{ steps.cpr.outputs.pull-request-url }}
+
+  gotool:
+    name: Go Format and Imports
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      max-parallel: 5
+      matrix:
+        name: ${{fromJson(needs.meta.outputs.gotool-names)}}
+        include: ${{fromJson(needs.meta.outputs.gotool-include)}}
+
+    env:
+      GO111MODULE: on
+
+    steps:
+
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+      id: go
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ matrix.name }}
+
+    - name: Install Dependencies
+      run: |
+        cd $(mktemp -d)
+        go get golang.org/x/tools/cmd/goimports
+
+    - name: Go Format and Imports
+      shell: bash
+      run: |
+        export FILES=( $(find -path './vendor' -prune -o -path './third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print) )
+        if (( ${#FILES[@]} > 0 )); then
+          goimports -w "${FILES[@]}"
+          gofmt -s -w  "${FILES[@]}"
+        else
+          echo No Go files found.
+        fi
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+
+        # Where to stage the change.
+        push-to-fork: ${{ matrix.fork }}
+        branch: auto-updates/gotools
+        signoff: true
+        delete-branch: true
+
+        # Description of the change and PR body.
+        commit-message: 'format Go code'
+        title: '[Automated] Format Go code'
+        body: |
+          Produced via:
+          ```shell
+          export FILES=( $(find -path './vendor' -prune -o -path './third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print) )
+          goimports -w "${FILES[@]}"
+          gofmt -s -w  "${FILES[@]}"
+          ```
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: Format Go code for ${{ matrix.name }} failed.
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    - name: Notify of pending pull request.
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#228B22'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "Staged gofmt PR for ${{ matrix.name }}."
+        SLACK_MESSAGE: |
+          Please review: ${{ steps.cpr.outputs.pull-request-url }}
+
+  misspell:
+    name: Fix Misspellings
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      max-parallel: 5
+      matrix:
+        name: ${{fromJson(needs.meta.outputs.misspell-names)}}
+        include: ${{fromJson(needs.meta.outputs.misspell-include)}}
+
+    env:
+      GO111MODULE: on
+
+    steps:
+
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+      id: go
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ matrix.name }}
+
+    - name: Install Dependencies
+      run: |
+        cd $(mktemp -d)
+        go get github.com/client9/misspell/cmd/misspell
+
+    - name: client9/misspell
+      shell: bash
+      run: |
+        export FILES=( $(find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*') )
+        if (( ${#FILES[@]} > 0 )); then
+          misspell -w "${FILES[@]}"
+        else
+          echo No files found.
+        fi
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+
+        # Where to stage the change.
+        push-to-fork: ${{ matrix.fork }}
+        branch: auto-updates/client9-misspell
+        signoff: true
+        delete-branch: true
+
+        # Description of the change and PR body.
+        commit-message: 'Run github.com/client9/misspell'
+        title: '[Automated] Fix misspellings'
+        body: |
+          Produced via:
+          ```shell
+          export FILES=( $(find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*') )
+          misspell -w "${FILES[@]}"
+          ```
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: Fix misspellings for ${{ matrix.name }} failed.
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    - name: Notify of pending pull request.
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#228B22'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "Staged misspell PR for ${{ matrix.name }}."
+        SLACK_MESSAGE: |
+          Please review: ${{ steps.cpr.outputs.pull-request-url }}
+
+  update-actions:
+    name: Update actions
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      max-parallel: 5
+      matrix:
+        name: ${{fromJson(needs.meta.outputs.actions-names)}}
+        include: ${{fromJson(needs.meta.outputs.actions-include)}}
+
+    env:
+      GO111MODULE: on
+
+    steps:
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        path: main
+        repository: ${{ matrix.name }}
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        path: meta
+        repository: "${{ matrix.meta-organization }}/.github"
+
+    - name: Copy Actions
+      shell: bash
+      run: |
+        mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows/"
+        cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
+          "${GITHUB_WORKSPACE}/main/.github/workflows/"
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+
+        # Where to stage the change.
+        push-to-fork: ${{ matrix.fork }}
+        branch: auto-updates/common-actions
+        signoff: true
+        delete-branch: true
+        path: main
+
+        # Description of the change and PR body.
+        commit-message: 'Update common github actions'
+        title: '[Automated] Update actions'
+        body: |
+          Produced via:
+          ```shell
+          # meta: ${{ matrix.meta-organization }}/.github
+          # main: ${{ matrix.name }}
+          cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
+            "${GITHUB_WORKSPACE}/main/.github/workflows/"
+          ```
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: Copy actions for ${{ matrix.name }} failed.
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    - name: Notify of pending pull request.
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#228B22'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "Staged actions-sync PR for ${{ matrix.name }}."
+        SLACK_MESSAGE: |
+          Please review: ${{ steps.cpr.outputs.pull-request-url }}
+
+  prettier:
+    name: Format markdown
+    runs-on: ubuntu-latest
+    needs: meta
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      max-parallel: 5
+      matrix:
+        name: ${{fromJson(needs.meta.outputs.prettier-names)}}
+        include: ${{fromJson(needs.meta.outputs.prettier-include)}}
+
+    env:
+      GO111MODULE: on
+
+    steps:
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        path: main
+        repository: ${{ matrix.name }}
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        path: meta
+        repository: "${{ matrix.meta-organization }}/.github"
+
+    - name: Run prettier
+      shell: bash
+      run: |
+        sudo npm install --global prettier
+
+        prettier --write --prose-wrap=always $(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/)
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+
+        # Where to stage the change.
+        push-to-fork: ${{ matrix.fork }}
+        branch: auto-updates/format-markdown
+        signoff: true
+        delete-branch: true
+        path: main
+
+        # Description of the change and PR body.
+        commit-message: 'Format markdown'
+        title: '[Automated] Format markdown'
+        body: |
+          Produced via:
+          ```shell
+          prettier --write --prose-wrap=always $(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/)
+          ```
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: Format markdown for ${{ matrix.name }} failed.
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    - name: Notify of pending pull request.
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      env:
+        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
+        SLACK_USERNAME: sockpuppet
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#228B22'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "Staged prettier PR for ${{ matrix.name }}."
+        SLACK_MESSAGE: |
+          Please review: ${{ steps.cpr.outputs.pull-request-url }}

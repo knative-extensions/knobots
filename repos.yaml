@@ -1,0 +1,184 @@
+# Experiment with loading a matrix Job "include" from a file.
+
+# knative
+- name: 'knative/pkg'
+  meta-organization: 'knative'
+  fork: 'knative-automation/pkg'
+  channel: 'serving-api'
+  assignees: knative/serving-writers knative/eventing-writers
+- name: 'knative/caching'
+  meta-organization: 'knative'
+  fork: 'knative-automation/caching'
+  channel: 'serving-api'
+  assignees: knative/serving-writers
+- name: 'knative/networking'
+  meta-organization: 'knative'
+  fork: 'knative-automation/networking'
+  channel: 'networking'
+  assignees: knative/networking-wg-leads
+  pr-notify: 'true'
+- name: 'knative/serving'
+  meta-organization: 'knative'
+  fork: 'knative-automation/serving'
+  channel: 'serving-api'
+  assignees: knative/serving-writers
+- name: 'knative/eventing'
+  meta-organization: 'knative'
+  fork: 'knative-automation/eventing'
+  channel: 'eventing'
+  assignees: knative/eventing-writers
+- name: 'knative/operator'
+  meta-organization: 'knative'
+  fork: 'knative-automation/operator'
+  channel: 'operations'
+  assignees: knative/operations-wg-leads
+- name: 'knative/test-infra'
+  meta-organization: 'knative'
+  fork: 'knative-automation/test-infra'
+  channel: 'productivity'
+  assignees: knative/productivity-wg-leads
+- name: 'knative/docs'
+  meta-organization: 'knative'
+  fork: 'knative-automation/docs'
+  channel: 'docs'
+  assignees: knative/serving-writers knative/eventing-writers knative/docs-wg-leads
+- name: 'knative/client'
+  meta-organization: 'knative'
+  fork: 'knative-automation/client'
+  channel: 'cli'
+  assignees: knative/client-wg-leads
+  pr-notify: 'true'
+
+# knative-sandbox (samples)
+- name: 'knative-sandbox/sample-controller'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/sample-controller'
+  channel: 'serving-api'
+  assignees: knative-sandbox/api-core-wg-leads
+- name: 'knative-sandbox/sample-source'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/sample-source'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
+
+# knative-sandbox (eventing)
+- name: 'knative-sandbox/eventing-rabbitmq'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-rabbitmq'
+  channel: 'eventing-delivery'
+  assignees: knative-automation/channel-wg-leads
+- name: 'knative-sandbox/discovery'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/discovery'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-kafka-broker'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-kafka-broker'
+  channel: 'eventing-delivery'
+  assignees: knative-automation/channel-wg-leads
+- name: 'knative-sandbox/eventing-kafka'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-kafka'
+  channel: 'eventing-delivery'
+  assignees: knative-automation/channel-wg-leads
+- name: 'knative-sandbox/eventing-github'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-github'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-natss'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-natss'
+  channel: 'eventing-delivery'
+  assignees: knative-automation/channel-wg-leads
+
+# knative-sandbox (networking)
+- name: 'knative-sandbox/net-contour'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/net-contour'
+  channel: 'net-contour'
+  assignees: knative-sandbox/networking-wg-leads
+  pr-notify: 'true'
+- name: 'knative-sandbox/net-kourier'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/net-kourier'
+  channel: 'net-kourier'
+  assignees: knative-sandbox/networking-wg-leads
+  pr-notify: 'true'
+- name: 'knative-sandbox/net-istio'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/net-istio'
+  channel: 'net-istio'
+  assignees: knative-sandbox/networking-wg-leads
+  pr-notify: 'true'
+- name: 'knative-sandbox/net-http01'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/net-http01'
+  channel: 'net-http01'
+  assignees: knative-sandbox/networking-wg-leads
+  pr-notify: 'true'
+- name: 'knative-sandbox/net-certmanager'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/net-certmanager'
+  channel: 'net-certmanager'
+  assignees: knative-sandbox/networking-wg-leads
+  pr-notify: 'true'
+
+# tektoncd
+- name: 'tektoncd/pipeline'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/pipeline'
+  channel: '@vdemeester'
+  assignees: tektoncd/core-maintainers
+- name: 'tektoncd/triggers'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/triggers'
+  channel: '@ImJasonH'
+  assignees: tektoncd/core-maintainers
+
+# google
+- name: 'google/exposure-notifications-server'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/exposure-notifications-server'
+  channel: '@helmick'
+  assignees: mikehelmick
+- name: 'google/knative-gcp'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/knative-gcp'
+  channel: '@nachocano'
+  assignees: nachocano grantr ian-mi
+- name: 'google/go-containerregistry'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/go-containerregistry'
+  channel: 'ggcr'
+  assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
+  pr-notify: 'true'
+- name: 'google/ko'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/ko'
+  channel: 'ko'
+  assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
+  pr-notify: 'true'
+
+# vmware-tanzu
+- name: 'vmware-tanzu/sources-for-knative'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/sources-for-knative'
+  channel: 'vmware-sources'
+  assignees: we don't use Prow
+  pr-notify: 'true'
+
+# mattmoor
+- name: 'mattmoor/boilerplate-check'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/boilerplate-check'
+  channel: '@mattmoor'
+  assignees: '@mattmoor'
+  pr-notify: 'true'
+- name: 'mattmoor/mink'
+  meta-organization: 'knative' # Pull actions from the Knative org.
+  fork: 'knative-automation/mink'
+  channel: 'mink'
+  assignees: '@mattmoor'
+  pr-notify: 'true'
