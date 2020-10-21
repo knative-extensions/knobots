@@ -169,8 +169,8 @@ jobs:
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
-        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
 
         # Where to stage the change.
         push-to-fork: ${{ matrix.fork }}
@@ -194,8 +194,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ failure() }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -209,8 +209,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -269,8 +269,8 @@ jobs:
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
-        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
 
         # Where to stage the change.
         push-to-fork: ${{ matrix.fork }}
@@ -295,8 +295,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ failure() }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -310,8 +310,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -369,8 +369,8 @@ jobs:
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
-        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
 
         # Where to stage the change.
         push-to-fork: ${{ matrix.fork }}
@@ -394,8 +394,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ failure() }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -409,8 +409,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -461,8 +461,8 @@ jobs:
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
-        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
 
         # Where to stage the change.
         push-to-fork: ${{ matrix.fork }}
@@ -489,8 +489,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ failure() }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -504,8 +504,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -556,8 +556,8 @@ jobs:
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        committer: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
-        author: "Matt Moore (via Sockpuppet) <mattmoor@vmware.com>"
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
 
         # Where to stage the change.
         push-to-fork: ${{ matrix.fork }}
@@ -581,8 +581,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ failure() }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
@@ -596,8 +596,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
       env:
-        SLACK_ICON: http://github.com/mattmoor-sockpuppet.png?size=48
-        SLACK_USERNAME: sockpuppet
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
         SLACK_CHANNEL: ${{ matrix.channel }}
