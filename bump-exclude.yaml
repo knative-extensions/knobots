@@ -1,0 +1,3 @@
+# Don't have ./hack/update-deps.sh
+- "google/exposure-notifications-server"
+- "tektoncd/triggers"

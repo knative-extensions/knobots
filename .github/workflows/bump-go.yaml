@@ -1,0 +1,189 @@
+# Copyright 2020 The Knative Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Before running this workflow make sure that GitHub Actions and test-infra
+# support the target Go version.
+
+name: Bump Go
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Go target version'
+        required: true
+        default: '1.15'
+      exclude:
+        description: 'Exclude regex'
+        required: false
+        default: "^third_party"
+      branch:
+        description: 'Branch name'
+        required: true
+        default: 'master'
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      bump-include: ${{ steps.load-matrix.outputs.bump-include }}
+      bump-names: ${{ steps.load-matrix.outputs.bump-names }}
+    steps:
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+    - name: Set up Go ${{ github.event.inputs.version }}.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ github.event.inputs.version }}.x
+
+    - id: load-matrix
+      run: |
+        go get github.com/bronze1man/yaml2json
+
+        function filtered_repos() {
+          local EXCLUDE="${1}"
+          local FILTER=$(cat "${EXCLUDE}" | yaml2json | jq "join(\"|\")")
+          if [ "$FILTER" = '""' ]; then
+            FILTER="\"match-nothing-${RANDOM}\""
+          fi
+          cat ${GITHUB_WORKSPACE}/repos.yaml | yaml2json | jq -c "map(select(.name | test(${FILTER}) | not))"
+        }
+
+        function filtered_names() {
+          filtered_repos "$1" | jq -c "map(.name)"
+        }
+
+        x=bump
+
+        echo "::group::Matrix names for $x"
+        filtered_names $x-exclude.yaml | jq .
+        echo "::endgroup::"
+
+        echo "::group::Matrix includes for $x"
+        filtered_repos $x-exclude.yaml | jq .
+        echo "::endgroup::"
+
+        echo "::set-output name=$x-include::$(filtered_repos $x-exclude.yaml)"
+        echo "::set-output name=$x-names::$(filtered_names $x-exclude.yaml)"
+
+  bump-go:
+    name: Bump Go 
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      max-parallel: 5
+      matrix:
+        name: ${{fromJson(needs.meta.outputs.bump-names)}}
+        include: ${{fromJson(needs.meta.outputs.bump-include)}}
+
+    env:
+      GO111MODULE: on
+
+    steps:
+
+    - name: Set up Go ${{ github.event.inputs.version }}.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ github.event.inputs.version }}.x
+      id: go
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ matrix.name }}
+        ref: ${{ github.event.inputs.branch }}
+
+    - name: Install Dependencies
+      run: |
+        cd $(mktemp -d)
+        go get github.com/google/licenseclassifier
+        go get github.com/google/go-licenses
+        go get github.com/pierdipi/gobump/cmd/gobump 
+
+    - name: Bump Go
+      run: |
+        gobump --target ${{ github.event.inputs.version }} --exclude-regex ${{ github.event.inputs.exclude }}
+               
+    - name: Update Deps 
+      shell: bash
+      run: |
+        # Determine the name of the go module.
+        export MODULE_NAME=$(go mod graph | cut -d' ' -f 1 | grep -v '@' | head -1)
+
+        # TODO(mattmoor): Move this into `./hack/update-codegen.sh`
+        TMP_DIR="$(mktemp -d)"
+        export GOPATH=${GOPATH:-${TMP_DIR}}
+        export PATH="${PATH}:${TMP_DIR}/bin"
+        TMP_REPO_PATH="${TMP_DIR}/src/${MODULE_NAME}"
+        mkdir -p "$(dirname "${TMP_REPO_PATH}")" && ln -s "${GITHUB_WORKSPACE}" "${TMP_REPO_PATH}"
+
+        ./hack/update-deps.sh
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
+
+        # Where to stage the change.
+        push-to-fork: ${{ matrix.fork }}
+        branch: manual-updates/bump-go-${{ github.event.inputs.branch }}
+        signoff: true
+        delete-branch: true
+
+        # Description of the change and PR body.
+        commit-message: 'Bump Go to ${{ github.event.inputs.version }}'
+        title: '[${{ github.event.inputs.branch }}] Bump Go to ${{ github.event.inputs.version }}'
+        body: |
+          Produced via:
+          ```shell
+          gobump --target ${{ github.event.inputs.version }} --exclude-regex ${{ github.event.inputs.exclude }}
+          ./hack/update-deps.sh
+          ```
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "[${{ github.event.inputs.branch }}] Bump Go for ${{ matrix.name }} failed."
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    - name: Notify of pending pull request.
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      env:
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#228B22'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "Staged Bump Go PR for ${{ matrix.name }}."
+        SLACK_MESSAGE: |
+          Please review: ${{ steps.cpr.outputs.pull-request-url }}
