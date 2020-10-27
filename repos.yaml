@@ -61,37 +61,79 @@
   channel: 'eventing-sources'
   assignees: knative-sandbox/source-wg-leads
 
-# knative-sandbox (eventing)
-- name: 'knative-sandbox/eventing-rabbitmq'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-rabbitmq'
-  channel: 'eventing-delivery'
-  assignees: knative-automation/channel-wg-leads
+# knative-sandbox/discovery
 - name: 'knative-sandbox/discovery'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/discovery'
   channel: 'eventing-sources'
   assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-kafka-broker'
+
+# knative-sandbox/eventing-* (eventing), sorted alphabetically
+- name: 'knative-sandbox/eventing-autoscaler-keda'
   meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-kafka-broker'
+  fork: 'knative-automation/eventing-autoscaler-keda'
   channel: 'eventing-delivery'
-  assignees: knative-automation/channel-wg-leads
-- name: 'knative-sandbox/eventing-kafka'
+  assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-awssqs'
   meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-kafka'
-  channel: 'eventing-delivery'
-  assignees: knative-automation/channel-wg-leads
+  fork: 'knative-automation/eventing-awssqs'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-camel'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-camel'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-ceph'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-ceph'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-couchdb'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-couchdb'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
 - name: 'knative-sandbox/eventing-github'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-github'
   channel: 'eventing-sources'
   assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-gitlab'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-gitlab'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
+- name: 'knative-sandbox/eventing-kafka'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-kafka'
+  channel: 'eventing-delivery'
+  assignees: knative-automation/channel-wg-leads
+- name: 'knative-sandbox/eventing-kafka-broker'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-kafka-broker'
+  channel: 'eventing-delivery'
+  assignees: knative-automation/channel-wg-leads
 - name: 'knative-sandbox/eventing-natss'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-natss'
   channel: 'eventing-delivery'
   assignees: knative-automation/channel-wg-leads
+- name: 'knative-sandbox/eventing-prometheus'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-prometheus'
+  channel: 'eventing-sources'
+  assignees: knative-automation/source-wg-leads
+- name: 'knative-sandbox/eventing-rabbitmq'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-rabbitmq'
+  channel: 'eventing-delivery'
+  assignees: knative-automation/channel-wg-leads
+- name: 'knative-sandbox/eventing-redis'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-redis'
+  channel: 'eventing-sources'
+  assignees: knative-automation/source-wg-leads
 
 # knative-sandbox (networking)
 - name: 'knative-sandbox/net-contour'
