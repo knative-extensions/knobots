@@ -27,9 +27,6 @@ To add a repository here, there are two requirements:
       # These should bias toward Github teams, but must exist within the target
       # organization (so knative[-sandbox] should use the team in their respective org).
       assignees: knative/foo-wg-leads
-
-      # Whether to notify channel when a PR has been staged (defaults to 'false')
-      pr-notify: 'true'
    ```
 
 2. `github.com/{fork}.git` must be a fork of `{name}` (if specified) and `knative-automation`

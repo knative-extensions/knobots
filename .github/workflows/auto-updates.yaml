@@ -207,7 +207,7 @@ jobs:
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
       env:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
@@ -308,7 +308,7 @@ jobs:
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
       env:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
@@ -407,7 +407,7 @@ jobs:
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
       env:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
@@ -502,7 +502,7 @@ jobs:
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
       env:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
@@ -594,7 +594,7 @@ jobs:
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ matrix.pr-notify != '' && steps.cpr.outputs.pull-request-url != '' }}
+      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
       env:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
