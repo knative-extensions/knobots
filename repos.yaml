@@ -16,7 +16,6 @@
   fork: 'knative-automation/networking'
   channel: 'networking'
   assignees: knative/networking-wg-leads
-  pr-notify: 'true'
 - name: 'knative/serving'
   meta-organization: 'knative'
   fork: 'knative-automation/serving'
@@ -47,7 +46,6 @@
   fork: 'knative-automation/client'
   channel: 'cli'
   assignees: knative/client-wg-leads
-  pr-notify: 'true'
 
 # knative-sandbox (samples)
 - name: 'knative-sandbox/sample-controller'
@@ -141,31 +139,26 @@
   fork: 'knative-automation/net-contour'
   channel: 'net-contour'
   assignees: knative-sandbox/networking-wg-leads
-  pr-notify: 'true'
 - name: 'knative-sandbox/net-kourier'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-kourier'
   channel: 'net-kourier'
   assignees: knative-sandbox/networking-wg-leads
-  pr-notify: 'true'
 - name: 'knative-sandbox/net-istio'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-istio'
   channel: 'net-istio'
   assignees: knative-sandbox/networking-wg-leads
-  pr-notify: 'true'
 - name: 'knative-sandbox/net-http01'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-http01'
   channel: 'net-http01'
   assignees: knative-sandbox/networking-wg-leads
-  pr-notify: 'true'
 - name: 'knative-sandbox/net-certmanager'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-certmanager'
   channel: 'net-certmanager'
   assignees: knative-sandbox/networking-wg-leads
-  pr-notify: 'true'
 
 # tektoncd
 - name: 'tektoncd/pipeline'
@@ -195,13 +188,11 @@
   fork: 'knative-automation/go-containerregistry'
   channel: 'ggcr'
   assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
-  pr-notify: 'true'
 - name: 'google/ko'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/ko'
   channel: 'ko'
   assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
-  pr-notify: 'true'
 
 # vmware-tanzu
 - name: 'vmware-tanzu/sources-for-knative'
@@ -209,7 +200,6 @@
   fork: 'knative-automation/sources-for-knative'
   channel: 'vmware-sources'
   assignees: we don't use Prow
-  pr-notify: 'true'
 
 # mattmoor
 - name: 'mattmoor/boilerplate-check'
@@ -217,10 +207,8 @@
   fork: 'knative-automation/boilerplate-check'
   channel: '@mattmoor'
   assignees: '@mattmoor'
-  pr-notify: 'true'
 - name: 'mattmoor/mink'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/mink'
   channel: 'mink'
   assignees: '@mattmoor'
-  pr-notify: 'true'
