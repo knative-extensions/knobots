@@ -60,18 +60,16 @@ jobs:
           filtered_repos "$1" | jq -c "map(.name)"
         }
 
-        x=bump
-
-        echo "::group::Matrix names for $x"
-        filtered_names $x-exclude.yaml | jq .
+        echo "::group::Matrix names for bump"
+        filtered_names bump-exclude.yaml | jq .
         echo "::endgroup::"
 
-        echo "::group::Matrix includes for $x"
-        filtered_repos $x-exclude.yaml | jq .
+        echo "::group::Matrix includes for bump"
+        filtered_repos bump-exclude.yaml | jq .
         echo "::endgroup::"
 
-        echo "::set-output name=$x-include::$(filtered_repos $x-exclude.yaml)"
-        echo "::set-output name=$x-names::$(filtered_names $x-exclude.yaml)"
+        echo "::set-output name=bump-include::$(filtered_repos bump-exclude.yaml)"
+        echo "::set-output name=bump-names::$(filtered_names bump-exclude.yaml)"
 
   bump-go:
     name: Bump Go 
@@ -108,7 +106,7 @@ jobs:
 
     - name: Bump Go
       run: |
-        go mod -edit -go=${{ github.event.inputs.version }}
+        go mod edit -go=${{ github.event.inputs.version }}
                
     - name: Update Deps 
       shell: bash
@@ -146,7 +144,7 @@ jobs:
         body: |
           Produced via:
           ```shell
-          go mod -edit -go=${{ github.event.inputs.version }}
+          go mod edit -go=${{ github.event.inputs.version }}
           ./hack/update-deps.sh
           ```
           /cc ${{ matrix.assignees }}
