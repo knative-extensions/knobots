@@ -24,10 +24,6 @@ on:
         description: 'Go target version'
         required: true
         default: '1.15'
-      exclude:
-        description: 'Exclude regex'
-        required: false
-        default: "^third_party"
       branch:
         description: 'Branch name'
         required: true
@@ -103,7 +99,6 @@ jobs:
       run: |
         go get github.com/google/licenseclassifier
         go get github.com/google/go-licenses
-        go get github.com/pierdipi/gobump/cmd/gobump 
 
     - name: Check out code onto GOPATH
       uses: actions/checkout@v2
@@ -113,7 +108,7 @@ jobs:
 
     - name: Bump Go
       run: |
-        gobump --target ${{ github.event.inputs.version }} --exclude-regex ${{ github.event.inputs.exclude }}
+        go mod -edit -go=${{ github.event.inputs.version }}
                
     - name: Update Deps 
       shell: bash
@@ -151,7 +146,7 @@ jobs:
         body: |
           Produced via:
           ```shell
-          gobump --target ${{ github.event.inputs.version }} --exclude-regex ${{ github.event.inputs.exclude }}
+          go mod -edit -go=${{ github.event.inputs.version }}
           ./hack/update-deps.sh
           ```
           /cc ${{ matrix.assignees }}
