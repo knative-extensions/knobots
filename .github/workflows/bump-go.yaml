@@ -99,18 +99,17 @@ jobs:
         go-version: ${{ github.event.inputs.version }}.x
       id: go
 
+    - name: Install Dependencies
+      run: |
+        go get github.com/google/licenseclassifier
+        go get github.com/google/go-licenses
+        go get github.com/pierdipi/gobump/cmd/gobump 
+
     - name: Check out code onto GOPATH
       uses: actions/checkout@v2
       with:
         repository: ${{ matrix.name }}
         ref: ${{ github.event.inputs.branch }}
-
-    - name: Install Dependencies
-      run: |
-        cd $(mktemp -d)
-        go get github.com/google/licenseclassifier
-        go get github.com/google/go-licenses
-        go get github.com/pierdipi/gobump/cmd/gobump 
 
     - name: Bump Go
       run: |
