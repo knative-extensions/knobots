@@ -115,7 +115,7 @@ jobs:
 
         # If manual trigger sent reason.
         if [[ "${{ github.event.inputs.reason }}" != "" ]]; then
-          echo "::set-output name=reason:Justification, :${{ github.event.inputs.reason }}"
+          echo "::set-output name=reason::Justification, ${{ github.event.inputs.reason }}"
         else
           echo "::set-output name=reason::Cron."
         fi
