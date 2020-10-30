@@ -41,7 +41,6 @@ jobs:
       RELEASE: 'v0.19'
       #########################################
       DEFAULT_BRANCH: 'master'
-      DEFAULT_REASON: 'Cron.'
     outputs:
       actions-include: ${{ steps.load-matrix.outputs.actions-include }}
       actions-names: ${{ steps.load-matrix.outputs.actions-names }}
@@ -116,9 +115,9 @@ jobs:
 
         # If manual trigger sent reason.
         if [[ "${{ github.event.inputs.reason }}" != "" ]]; then
-          echo "::set-output name=reason::${{ github.event.inputs.reason }}"
+          echo "::set-output name=reason:Justification, :${{ github.event.inputs.reason }}"
         else
-          echo "::set-output name=reason::${DEFUALT_REASON}"
+          echo "::set-output name=reason::Cron."
         fi
 
   update-deps:
@@ -224,7 +223,7 @@ jobs:
           ./hack/update-deps.sh --upgrade
           ./hack/update-codegen.sh
           ```
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -257,7 +256,7 @@ jobs:
         SLACK_TITLE: "Staged update-deps PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
 
   gotool:
     name: Go Format and Imports
@@ -359,7 +358,7 @@ jobs:
         SLACK_TITLE: "Staged gofmt PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
 
   misspell:
     name: Fix Misspellings
@@ -427,7 +426,7 @@ jobs:
           export FILES=( $(find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*') )
           misspell -w "${FILES[@]}"
           ```
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -445,7 +444,7 @@ jobs:
         SLACK_TITLE: Fix misspellings for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -461,7 +460,7 @@ jobs:
         SLACK_TITLE: "Staged misspell PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
 
   update-actions:
     name: Update actions
@@ -525,7 +524,7 @@ jobs:
           cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
             "${GITHUB_WORKSPACE}/main/.github/workflows/"
           ```
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -543,7 +542,7 @@ jobs:
         SLACK_TITLE: Copy actions for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -559,7 +558,7 @@ jobs:
         SLACK_TITLE: "Staged actions-sync PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
 
   prettier:
     name: Format markdown
@@ -637,7 +636,7 @@ jobs:
         SLACK_TITLE: Format markdown for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -653,4 +652,4 @@ jobs:
         SLACK_TITLE: "Staged prettier PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          Justification, ${{ needs.meta.outputs.reason }}
+          ${{ needs.meta.outputs.reason }}
