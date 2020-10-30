@@ -21,15 +21,26 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch name'
+        description: 'Branch Name? (master)'
         required: true
         default: 'master'
 
-      # TODO(mattmoor): Add a required notice/justification that's included in the slack messaging for manual triggers.
+      release:
+        description: 'Release? (vX.Y) defaults to current release'
+
+      reason:
+        description: "Justification?"
+        required: true
 
 jobs:
   meta:
     runs-on: ubuntu-latest
+    env:
+      #########################################
+      #   Update this section each release.   #
+      RELEASE: 'v0.19'
+      #########################################
+      DEFAULT_BRANCH: 'master'
     outputs:
       actions-include: ${{ steps.load-matrix.outputs.actions-include }}
       actions-names: ${{ steps.load-matrix.outputs.actions-names }}
@@ -42,6 +53,8 @@ jobs:
       prettier-include: ${{ steps.load-matrix.outputs.prettier-include }}
       prettier-names: ${{ steps.load-matrix.outputs.prettier-names }}
       branch: ${{ steps.load-matrix.outputs.branch }}
+      release: ${{ steps.load-matrix.outputs.release }}
+      reason: ${{ steps.load-matrix.outputs.reason }}
     steps:
     - name: Check out code onto GOPATH
       uses: actions/checkout@v2
@@ -90,7 +103,21 @@ jobs:
         if [[ "${{ github.event.inputs.branch }}" != "" ]]; then
           echo "::set-output name=branch::${{ github.event.inputs.branch }}"
         else
-          echo "::set-output name=branch::master"
+          echo "::set-output name=branch::${DEFAULT_BRANCH}"
+        fi
+
+        # If manual trigger sent release.
+        if [[ "${{ github.event.inputs.release }}" != "" ]]; then
+          echo "::set-output name=release::${{ github.event.inputs.release }}"
+        else
+          echo "::set-output name=release::${RELEASE}"
+        fi
+
+        # If manual trigger sent reason.
+        if [[ "${{ github.event.inputs.reason }}" != "" ]]; then
+          echo "::set-output name=reason::Justification, ${{ github.event.inputs.reason }}"
+        else
+          echo "::set-output name=reason::Cron."
         fi
 
   update-deps:
@@ -127,6 +154,7 @@ jobs:
         go get github.com/google/ko/cmd/ko
         go get github.com/google/licenseclassifier
         go get github.com/google/go-licenses
+        go get knative.dev/test-infra/buoy
 
     - name: Update Deps and Codegen
       shell: bash
@@ -141,7 +169,15 @@ jobs:
         TMP_REPO_PATH="${TMP_DIR}/src/${MODULE_NAME}"
         mkdir -p "$(dirname "${TMP_REPO_PATH}")" && ln -s "${GITHUB_WORKSPACE}" "${TMP_REPO_PATH}"
 
-        ./hack/update-deps.sh --upgrade
+        release_flag=""
+        # Test to see if this module is using the knative.dev/hack repo, if it is,
+        # then we know it is safe to pass down the release flag.
+        if [[ $(buoy needs go.mod --domain knative.dev | grep knative.dev/hack) ]]; then
+          release_flag="--release ${{ needs.meta.outputs.release }}"
+        fi
+
+        ./hack/update-deps.sh --upgrade ${release_flag}
+        
         # We may pull in code-generator updates, or not have generated code.
         [[ ! -f hack/update-codegen.sh ]] || ./hack/update-codegen.sh
 
@@ -187,6 +223,7 @@ jobs:
           ./hack/update-deps.sh --upgrade
           ./hack/update-codegen.sh
           ```
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -204,6 +241,7 @@ jobs:
         SLACK_TITLE: "[${{ needs.meta.outputs.branch }}] Updating dependencies for ${{ matrix.name }} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -219,6 +257,7 @@ jobs:
         SLACK_TITLE: "Staged update-deps PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
   gotool:
     name: Go Format and Imports
@@ -288,6 +327,7 @@ jobs:
           goimports -w "${FILES[@]}"
           gofmt -s -w  "${FILES[@]}"
           ```
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -305,6 +345,7 @@ jobs:
         SLACK_TITLE: Format Go code for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -320,6 +361,7 @@ jobs:
         SLACK_TITLE: "Staged gofmt PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
   misspell:
     name: Fix Misspellings
@@ -387,6 +429,7 @@ jobs:
           export FILES=( $(find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*') )
           misspell -w "${FILES[@]}"
           ```
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -404,6 +447,7 @@ jobs:
         SLACK_TITLE: Fix misspellings for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -419,6 +463,7 @@ jobs:
         SLACK_TITLE: "Staged misspell PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
   update-actions:
     name: Update actions
@@ -482,6 +527,7 @@ jobs:
           cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
             "${GITHUB_WORKSPACE}/main/.github/workflows/"
           ```
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -499,6 +545,7 @@ jobs:
         SLACK_TITLE: Copy actions for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -514,6 +561,7 @@ jobs:
         SLACK_TITLE: "Staged actions-sync PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
   prettier:
     name: Format markdown
@@ -574,6 +622,7 @@ jobs:
           ```shell
           prettier --write --prose-wrap=always $(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/)
           ```
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
 
@@ -591,6 +640,7 @@ jobs:
         SLACK_TITLE: Format markdown for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
     - name: Notify of pending pull request.
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -606,3 +656,4 @@ jobs:
         SLACK_TITLE: "Staged prettier PR for ${{ matrix.name }}."
         SLACK_MESSAGE: |
           Please review: ${{ steps.cpr.outputs.pull-request-url }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
