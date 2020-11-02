@@ -57,7 +57,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/sample-source'
   channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
+  assignees: knative-sandbox/source-wg-leads lberk
 
 # knative-sandbox/discovery
 - name: 'knative-sandbox/discovery'
