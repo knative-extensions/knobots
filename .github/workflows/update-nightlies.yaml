@@ -43,7 +43,7 @@ jobs:
           directory: ./third_party/contour-latest
           files: net-contour.yaml contour.yaml
         - nightly: net-istio
-          directory: ./third_party/
+          directory: ./third_party/istio-latest
           files: net-istio.yaml
         - nightly: net-kourier
           directory: ./third_party/kourier-latest
