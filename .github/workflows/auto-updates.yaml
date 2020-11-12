@@ -38,7 +38,7 @@ jobs:
     env:
       #########################################
       #   Update this section each release.   #
-      RELEASE: 'v0.19'
+      RELEASE: 'v0.20'
       #########################################
       DEFAULT_BRANCH: 'master'
     outputs:
