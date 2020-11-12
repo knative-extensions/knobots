@@ -41,6 +41,11 @@
   fork: 'knative-automation/docs'
   channel: 'docs'
   assignees: knative/serving-writers knative/eventing-writers knative/docs-wg-leads
+- name: 'knative/docs'
+  meta-organization: 'knatiev'
+  fork: 'knative-automation/website'
+  channel: 'docs'
+  assignees: knative/docs-wg-leads knative/technical-oversight-committee
 - name: 'knative/client'
   meta-organization: 'knative'
   fork: 'knative-automation/client'
