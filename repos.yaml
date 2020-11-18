@@ -160,18 +160,6 @@
   channel: 'net-certmanager'
   assignees: knative-sandbox/networking-wg-leads
 
-# tektoncd
-- name: 'tektoncd/pipeline'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/pipeline'
-  channel: '@vdemeester'
-  assignees: tektoncd/core-maintainers
-- name: 'tektoncd/triggers'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/triggers'
-  channel: '@ImJasonH'
-  assignees: tektoncd/core-maintainers
-
 # google
 - name: 'google/exposure-notifications-server'
   meta-organization: 'knative' # Pull actions from the Knative org.
