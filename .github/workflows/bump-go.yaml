@@ -24,10 +24,6 @@ on:
         description: 'Go target version'
         required: true
         default: '1.15'
-      branch:
-        description: 'Branch name'
-        required: true
-        default: 'master'
 
 jobs:
   meta:
@@ -102,7 +98,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: ${{ matrix.name }}
-        ref: ${{ github.event.inputs.branch }}
 
     - name: Bump Go
       run: |
@@ -119,13 +114,13 @@ jobs:
 
         # Where to stage the change.
         push-to-fork: ${{ matrix.fork }}
-        branch: manual-updates/bump-go-${{ github.event.inputs.branch }}
+        branch: manual-updates/bump-go-version
         signoff: true
         delete-branch: true
 
         # Description of the change and PR body.
         commit-message: 'Bump Go to ${{ github.event.inputs.version }}'
-        title: '[${{ github.event.inputs.branch }}] Bump Go to ${{ github.event.inputs.version }}'
+        title: 'Bump Go to ${{ github.event.inputs.version }}'
         body: |
           Produced via:
           ```shell
@@ -145,7 +140,7 @@ jobs:
         SLACK_CHANNEL: ${{ matrix.channel }}
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
-        SLACK_TITLE: "[${{ github.event.inputs.branch }}] Bump Go for ${{ matrix.name }} failed."
+        SLACK_TITLE: "Bump Go for ${{ matrix.name }} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
