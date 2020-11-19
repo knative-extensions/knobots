@@ -108,21 +108,6 @@ jobs:
       run: |
         go mod edit -go=${{ github.event.inputs.version }}
                
-    - name: Update Deps 
-      shell: bash
-      run: |
-        # Determine the name of the go module.
-        export MODULE_NAME=$(go mod graph | cut -d' ' -f 1 | grep -v '@' | head -1)
-
-        # TODO(mattmoor): Move this into `./hack/update-codegen.sh`
-        TMP_DIR="$(mktemp -d)"
-        export GOPATH=${GOPATH:-${TMP_DIR}}
-        export PATH="${PATH}:${TMP_DIR}/bin"
-        TMP_REPO_PATH="${TMP_DIR}/src/${MODULE_NAME}"
-        mkdir -p "$(dirname "${TMP_REPO_PATH}")" && ln -s "${GITHUB_WORKSPACE}" "${TMP_REPO_PATH}"
-
-        ./hack/update-deps.sh
-
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v3
@@ -145,7 +130,6 @@ jobs:
           Produced via:
           ```shell
           go mod edit -go=${{ github.event.inputs.version }}
-          ./hack/update-deps.sh
           ```
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
