@@ -160,6 +160,13 @@
   channel: 'net-certmanager'
   assignees: knative-sandbox/networking-wg-leads
 
+# knative-sandbox (kperf)
+- name: 'knative-sandbox/kperf'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kperf'
+  channel: 'performance'
+  assignees: knative/productivity-wg-leads
+
 # tektoncd
 - name: 'tektoncd/pipeline'
   meta-organization: 'knative' # Pull actions from the Knative org.
