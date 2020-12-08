@@ -169,8 +169,8 @@
 - name: 'google/knative-gcp'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/knative-gcp'
-  channel: '@nachocano'
-  assignees: nachocano grantr ian-mi
+  channel: 'knative-gcp'
+  assignees: '@nlopezgi @grantr @ian-mi'
 - name: 'google/go-containerregistry'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/go-containerregistry'
