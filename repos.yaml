@@ -170,7 +170,7 @@
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/knative-gcp'
   channel: 'knative-gcp'
-  assignees: '@nlopezgi @grantr @ian-mi'
+  assignees: '@nlopezgi @zhongduo'
 - name: 'google/go-containerregistry'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/go-containerregistry'
