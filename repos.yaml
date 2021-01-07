@@ -176,7 +176,8 @@
 - name: 'google/knative-gcp'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/knative-gcp'
-  channel: 'knative-gcp'
+  # Disabled as too noisy for a low-traffic channel
+  # channel: 'knative-gcp'
   assignees: '@nlopezgi @zhongduo'
 - name: 'google/go-containerregistry'
   meta-organization: 'knative' # Pull actions from the Knative org.
