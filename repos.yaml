@@ -47,6 +47,13 @@
   channel: 'cli'
   assignees: knative/client-wg-leads
 
+# knative-sandbox (reconciler test)
+- name: 'knative-sandbox/reconciler-test'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/reconciler-test'
+  channel: 'test'
+  assignees: knative/eventing-writers knative/serving-writers
+
 # knative-sandbox (samples)
 - name: 'knative-sandbox/sample-controller'
   meta-organization: 'knative-sandbox'
