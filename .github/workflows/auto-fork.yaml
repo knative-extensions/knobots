@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Auto-fork Knative and Knative-Sandbox
+name: Auto-Fork
 
 on:
   schedule:
