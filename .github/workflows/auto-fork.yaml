@@ -55,9 +55,6 @@ jobs:
     - name: Check Repo
       run: GITHUB_TOKEN=${{ PERSONAL_ACCESS_TOKEN }} ./hack/auto-fork.sh ${{ matrix.org }}
 
-# PERSONAL_ACCESS_TOKEN
-
-
     - name: Post failure notice to Slack
       uses: rtCamp/action-slack-notify@v2.1.0
       if: ${{ failure() }}
@@ -65,7 +62,6 @@ jobs:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
         SLACK_CHANNEL: 'productivity'
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
