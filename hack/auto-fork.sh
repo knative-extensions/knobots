@@ -10,19 +10,19 @@
 org=$1
 if [ -z "$org" ]; then
   echo "invoke with ./hack/auto-fork.sh <org>, org is required."
-    exit 1
+  exit 1
 fi
 
 has () {
-    local seeking=$1; shift
-    local in=1
-    for element; do
-        if [[ $element == "$seeking" ]]; then
-            in=0
-            break
-        fi
-    done
-    return $in
+  local seeking=$1; shift
+  local in=1
+  for element; do
+    if [[ $element == "$seeking" ]]; then
+      in=0
+      break
+    fi
+  done
+  return $in
 }
 
 has_fork () {
