@@ -71,6 +71,8 @@ jobs:
 
         if [[ "$unique_refs" -ne 1 ]]; then
           echo "create_pr=true" >> $GITHUB_ENV
+        else
+          echo "skipping nightly bump since there are no changes"
         fi
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
