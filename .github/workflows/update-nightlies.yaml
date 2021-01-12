@@ -37,43 +37,79 @@ jobs:
         # Map to nightly-specific parameters.
         include:
         - nightly: net-certmanager
+          module: knative.dev/net-certmanager
           directory: ./third_party/cert-manager-latest
           files: net-certmanager.yaml
         - nightly: net-contour
+          module: knative.dev/net-contour
           directory: ./third_party/contour-latest
           files: net-contour.yaml contour.yaml
         - nightly: net-istio
+          module: knative.dev/net-istio
           directory: ./third_party/istio-latest
           files: net-istio.yaml
         - nightly: net-kourier
+          module: knative.dev/net-kourier
           directory: ./third_party/kourier-latest
           files: kourier.yaml
-
     steps:
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+
+    - name: Install Dependencies
+      run: |
+        cd $(mktemp -d)
+        go get github.com/dprotaso/modlog
+
     - name: Check out code onto GOPATH
       uses: actions/checkout@v2
       with:
         repository: 'knative/serving'
+        ref: release-0.19
 
     - name: Download nightlies
       shell: bash
+      id: nightlies
       run: |
         for x in ${{ matrix.files }}; do
           curl https://storage.googleapis.com/knative-nightly/${{ matrix.nightly }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
         done
+
+        function release_labels() {
+          git diff | grep 'knative.dev/release' | tr -s ' '
+        }
 
         # Prior to the 'sed' we have output in the following format:
         #
         # - serving.knative.dev/release: "v20210111-9f0302e4"
         # + serving.knative.dev/release: "v20210112-9f0302e4"
         #
-        unique_refs=$(git diff | tr -s ' ' | grep 'knative.dev/release' | sed 's/.* "\(.*\)"$/\1/' | cut -d '-' -f2 | sort -u | wc -l)
+        ref_count=$(release_labels | sed 's/.* "\(.*\)"$/\1/' | cut -d '-' -f2 | sort -u | wc -l)
 
-        if [[ "$unique_refs" -ne 1 ]]; then
-          echo "create_pr=true" >> $GITHUB_ENV
-        else
-          printf "\nskipping nightly bump since there are no changes\n"
+        if [[ "$ref_count" -eq 1 ]]; then
+          echo "::warning file=.github.js,line=1::${{matrix.nightly}} -  skipping bump no changes"
+          exit 0
         fi
+
+        echo "create_pr=true" >> $GITHUB_ENV
+
+        from_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '-' | cut -d ' ' -f2)
+        to_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '+' | cut -d ' ' -f2)
+
+        if [[ -z "$from_sha" ]]  || [[ -z "$to_sha" ]]; then
+          echo "::warning file=.github.js,line=1::${{matrix.nightly}} - failed to get valid shas for a diff"
+          exit 0
+        fi
+
+        # capture logs for the module changes
+        deplog=$(modlog -s ${{ matrix.module }} $from_sha $to_sha || true)
+        deplog="${deplog//$'\n'/'%0A'}"
+        deplog="${deplog//$'\r'/'%0D'}"
+        echo "::set-output name=deplog::$deplog"
+
+
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       if: env.create_pr == 'true'
@@ -90,17 +126,27 @@ jobs:
         delete-branch: true
 
         # Description of the change and PR body.
-        commit-message: 'Update ${{ matrix.nightly }} nightly'
+        commit-message: |
+          Update ${{ matrix.nightly }} nightly
+
+          ${{ steps.nightlies.outputs.deplog }}
+
         title: '[Automated] Update ${{ matrix.nightly }} nightly'
         body: |
+          /assign @knative/networking-wg-leads
+          /cc @knative/networking-wg-leads
+
           Produced via:
           ```shell
           for x in ${{ matrix.files }}; do
             curl https://storage.googleapis.com/knative-nightly/${{ matrix.nightly }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
           done
           ```
-          /assign @knative/networking-wg-leads
-          /cc @knative/networking-wg-leads
+
+          Details:
+          ```
+          ${{ steps.nightlies.outputs.deplog }}
+          ```
 
     - name: Post failure notice to Slack
       uses: rtCamp/action-slack-notify@v2.1.0
