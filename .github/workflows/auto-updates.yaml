@@ -151,18 +151,20 @@ jobs:
     - name: Install Dependencies
       run: |
         cd $(mktemp -d)
-        
+
         echo '::group:: install ko'
         curl -L https://github.com/google/ko/releases/download/v0.6.0/ko_0.6.0_Linux_x86_64.tar.gz | tar xzf - ko
         chmod +x ./ko
         sudo mv ko /usr/local/bin
         echo '::endgroup::'
-        
+
         go get github.com/google/licenseclassifier
         go get github.com/google/go-licenses
+        go get github.com/dprotaso/modlog
         go get knative.dev/test-infra/buoy
 
     - name: Update Deps and Codegen
+      id: updatedeps
       shell: bash
       run: |
         # Determine the name of the go module.
@@ -182,8 +184,9 @@ jobs:
           release_flag="--release ${{ needs.meta.outputs.release }}"
         fi
 
+        echo "::set-output name=update-dep-cmd::./hack/update-deps.sh --upgrade ${release_flag}"
         ./hack/update-deps.sh --upgrade ${release_flag}
-        
+
         # We may pull in code-generator updates, or not have generated code.
         [[ ! -f hack/update-codegen.sh ]] || ./hack/update-codegen.sh
 
@@ -204,6 +207,15 @@ jobs:
           break
         done
 
+        # capture logs for the module changes
+        errout=$(mktemp)
+        deplog=$(modlog . HEAD dirty 2>$errout)
+        cat $errout
+        deplog="${deplog//$'\n'/'%0A'}"
+        deplog="${deplog//$'\r'/'%0D'}"
+        echo "::set-output name=deplog::$deplog"
+
+
     - name: Create Pull Request
       id: cpr
       if: env.create_pr == 'true'
@@ -221,17 +233,28 @@ jobs:
         delete-branch: true
 
         # Description of the change and PR body.
-        commit-message: 'upgrade to latest dependencies'
+        commit-message: |
+          upgrade to latest dependencies
+
+          ${{ steps.updatedeps.outputs.deplog }}
+
         title: '[${{ needs.meta.outputs.branch }}] Upgrade to latest dependencies'
         body: |
-          Produced via:
-          ```shell
-          ./hack/update-deps.sh --upgrade
-          ./hack/update-codegen.sh
-          ```
           ${{ needs.meta.outputs.reason }} -${{ github.actor }}
+
           /cc ${{ matrix.assignees }}
           /assign ${{ matrix.assignees }}
+
+          Produced via:
+          ```shell
+          ${{ steps.updatedeps.outputs.update-dep-cmd}}
+          ./hack/update-codegen.sh
+          ```
+
+          Details:
+          ```
+          ${{ steps.updatedeps.outputs.deplog }}
+          ```
 
     - name: Post failure notice to Slack
       uses: rtCamp/action-slack-notify@v2.1.0
