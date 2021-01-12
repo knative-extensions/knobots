@@ -208,9 +208,7 @@ jobs:
         done
 
         # capture logs for the module changes
-        errout=$(mktemp)
-        deplog=$(modlog . HEAD dirty 2>$errout)
-        cat $errout
+        deplog=$(modlog . HEAD dirty || true)
         deplog="${deplog//$'\n'/'%0A'}"
         deplog="${deplog//$'\r'/'%0D'}"
         echo "::set-output name=deplog::$deplog"
