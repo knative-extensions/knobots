@@ -67,7 +67,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: 'knative/serving'
-        ref: release-0.19
 
     - name: Download nightlies
       shell: bash
