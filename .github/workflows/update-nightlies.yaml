@@ -61,8 +61,20 @@ jobs:
         for x in ${{ matrix.files }}; do
           curl https://storage.googleapis.com/knative-nightly/${{ matrix.nightly }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
         done
+
+        # Prior to the cut we have output in the following format:
+        #
+        # - serving.knative.dev/release: "v20210111-9f0302e4"
+        # + serving.knative.dev/release: "v20210112-9f0302e4"
+        #
+        unique_refs=$(git diff | grep serving.knative.dev/release | tr -s ' ' | cut -c43-50 | sort -u | wc -l)
+
+        if [[ "$unique_refs" -ne 1 ]]; then
+          echo "create_pr=true" >> $GITHUB_ENV
+        fi
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
+      if: env.create_pr == 'true'
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
