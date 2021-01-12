@@ -62,12 +62,12 @@ jobs:
           curl https://storage.googleapis.com/knative-nightly/${{ matrix.nightly }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
         done
 
-        # Prior to the cut we have output in the following format:
+        # Prior to the 'sed' we have output in the following format:
         #
         # - serving.knative.dev/release: "v20210111-9f0302e4"
         # + serving.knative.dev/release: "v20210112-9f0302e4"
         #
-        unique_refs=$(git diff | grep serving.knative.dev/release | tr -s ' ' | cut -c43-50 | sort -u | wc -l)
+        unique_refs=$(git diff | tr -s ' ' | grep 'knative.dev/release' | sed 's/.* "\(.*\)"$/\1/' | cut -d '-' -f2 | sort -u | wc -l)
 
         if [[ "$unique_refs" -ne 1 ]]; then
           echo "create_pr=true" >> $GITHUB_ENV
