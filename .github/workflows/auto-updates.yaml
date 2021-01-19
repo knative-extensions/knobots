@@ -21,9 +21,9 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch Name? (master)'
+        description: 'Branch Name? (empty for default branch of the respective repository)'
         required: true
-        default: 'master'
+        default: ''
 
       release:
         description: 'Release? (vX.Y) defaults to current release'
@@ -40,7 +40,6 @@ jobs:
       #   Update this section each release.   #
       RELEASE: 'v0.21'
       #########################################
-      DEFAULT_BRANCH: 'master'
     outputs:
       actions-include: ${{ steps.load-matrix.outputs.actions-include }}
       actions-names: ${{ steps.load-matrix.outputs.actions-names }}
@@ -100,11 +99,7 @@ jobs:
         done
 
         # Create a properly default property for downstream.
-        if [[ "${{ github.event.inputs.branch }}" != "" ]]; then
-          echo "::set-output name=branch::${{ github.event.inputs.branch }}"
-        else
-          echo "::set-output name=branch::${DEFAULT_BRANCH}"
-        fi
+        echo "::set-output name=branch::${{ github.event.inputs.branch }}"
 
         # If manual trigger sent release.
         if [[ "${{ github.event.inputs.release }}" != "" ]]; then
@@ -147,6 +142,12 @@ jobs:
       with:
         repository: ${{ matrix.name }}
         ref: ${{ needs.meta.outputs.branch }}
+
+    # This is required because the branch setting might be empty (to infer a default), so
+    # after checkout we fetch what the checkout action decided to check out.
+    - name: Infer branch from checkout
+      run: |
+        echo "::set-output name=branch::$(git branch --show-current)"
 
     - name: Install Dependencies
       run: |
