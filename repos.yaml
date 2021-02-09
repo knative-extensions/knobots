@@ -182,12 +182,10 @@
 - name: 'google/go-containerregistry'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/go-containerregistry'
-  channel: 'ggcr'
   assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
 - name: 'google/ko'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/ko'
-  channel: 'ko'
   assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
 
 # vmware-tanzu
