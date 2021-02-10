@@ -33,6 +33,7 @@ jobs:
         - net-contour
         - net-istio
         - net-kourier
+        - eventing-kafka-broker
 
         # Map to nightly-specific parameters.
         include:
@@ -40,18 +41,48 @@ jobs:
           module: knative.dev/net-certmanager
           directory: ./third_party/cert-manager-latest
           files: net-certmanager.yaml
+          bucket: net-certmanager
+          repository: knative/serving
+          fork: serving
+          channel: net-certmanager
+          assignee: @knative/networking-wg-leads
         - nightly: net-contour
           module: knative.dev/net-contour
           directory: ./third_party/contour-latest
           files: net-contour.yaml contour.yaml
+          bucket: net-contour
+          repository: knative/serving
+          fork: serving
+          channel: net-contour
+          assignee: @knative/networking-wg-leads
         - nightly: net-istio
           module: knative.dev/net-istio
           directory: ./third_party/istio-latest
           files: net-istio.yaml
+          bucket: net-istio
+          repository: knative/serving
+          fork: serving
+          channel: net-istio
+          assignee: @knative/networking-wg-leads
         - nightly: net-kourier
           module: knative.dev/net-kourier
           directory: ./third_party/kourier-latest
           files: kourier.yaml
+          bucket: net-kourier
+          repository: knative/serving
+          fork: serving
+          channel: net-kourier
+          assignee: @knative/networking-wg-leads
+        - nightly: eventing-kafka-broker
+          module: knative.dev/eventing-kafka-broker
+          directory: ./third_party/eventing-latest
+          files: [ "eventing-crds.yaml", "eventing-core.yaml" ]
+          bucket: eventing
+          repository: knative-sandbox/eventing-kafka-broker
+          fork: eventing-kafka-broker
+          channel: eventing-delivery
+          assignee: @knative/delivery-wg-leads
+
     steps:
     - name: Set up Go 1.15.x
       uses: actions/setup-go@v2
@@ -66,14 +97,14 @@ jobs:
     - name: Check out code onto GOPATH
       uses: actions/checkout@v2
       with:
-        repository: 'knative/serving'
+        repository: ${{ matrix.repository }}
 
     - name: Download nightlies
       shell: bash
       id: nightlies
       run: |
         for x in ${{ matrix.files }}; do
-          curl https://storage.googleapis.com/knative-nightly/${{ matrix.nightly }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
+          curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
         done
 
         function release_labels() {
@@ -119,26 +150,26 @@ jobs:
         author: "Knative Automation <automation@knative.team>"
 
         # Where to stage the change.
-        push-to-fork: knative-automation/serving
-        branch: update-nightly/${{ matrix.nightly }}
+        push-to-fork: knative-automation/${{ matrix.fork }}
+        branch: update-nightly/${{ matrix.bucket }}
         signoff: true
         delete-branch: true
 
         # Description of the change and PR body.
         commit-message: |
-          Update ${{ matrix.nightly }} nightly
+          Update ${{ matrix.bucket }} nightly
 
           ${{ steps.nightlies.outputs.deplog }}
 
         title: '[Automated] Update ${{ matrix.nightly }} nightly'
         body: |
-          /assign @knative/networking-wg-leads
-          /cc @knative/networking-wg-leads
+          /assign ${{ matrix.assignee }}
+          /cc ${{ matrix.assignee }}
 
           Produced via:
           ```shell
           for x in ${{ matrix.files }}; do
-            curl https://storage.googleapis.com/knative-nightly/${{ matrix.nightly }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
+            curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
           done
           ```
 
@@ -155,7 +186,7 @@ jobs:
         SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-        SLACK_CHANNEL: ${{ matrix.nightly }}
+        SLACK_CHANNEL: ${{ matrix.channel }}
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
         SLACK_TITLE: Update nightly ${{ matrix.nightly }} failed.
