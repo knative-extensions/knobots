@@ -172,7 +172,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-sample'
   channel: 'client'
-  assignees: 'knative/client-writers'
+  assignees: 'knative-sandbox/client-writers'
 
 # google
 - name: 'google/exposure-notifications-server'
