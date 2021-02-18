@@ -266,22 +266,6 @@ jobs:
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
-    - name: Notify of pending pull request.
-      uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
-      env:
-        SLACK_ICON: http://github.com/knative-automation.png?size=48
-        SLACK_USERNAME: knative-automation
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-        SLACK_CHANNEL: ${{ matrix.channel }}
-        SLACK_COLOR: '#228B22'
-        MSG_MINIMAL: 'true'
-        SLACK_TITLE: "Staged update-deps PR for ${{ matrix.name }}."
-        SLACK_MESSAGE: |
-          Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
-
   gotool:
     name: Go Format and Imports
     needs: meta
@@ -374,22 +358,6 @@ jobs:
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
-    - name: Notify of pending pull request.
-      uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
-      env:
-        SLACK_ICON: http://github.com/knative-automation.png?size=48
-        SLACK_USERNAME: knative-automation
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-        SLACK_CHANNEL: ${{ matrix.channel }}
-        SLACK_COLOR: '#228B22'
-        MSG_MINIMAL: 'true'
-        SLACK_TITLE: "Staged gofmt PR for ${{ matrix.name }}."
-        SLACK_MESSAGE: |
-          Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
-
   misspell:
     name: Fix Misspellings
     needs: meta
@@ -476,22 +444,6 @@ jobs:
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
-    - name: Notify of pending pull request.
-      uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
-      env:
-        SLACK_ICON: http://github.com/knative-automation.png?size=48
-        SLACK_USERNAME: knative-automation
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-        SLACK_CHANNEL: ${{ matrix.channel }}
-        SLACK_COLOR: '#228B22'
-        MSG_MINIMAL: 'true'
-        SLACK_TITLE: "Staged misspell PR for ${{ matrix.name }}."
-        SLACK_MESSAGE: |
-          Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
-
   update-actions:
     name: Update actions
     needs: meta
@@ -574,22 +526,6 @@ jobs:
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ${{ needs.meta.outputs.reason }} -${{ github.actor }}
 
-    - name: Notify of pending pull request.
-      uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
-      env:
-        SLACK_ICON: http://github.com/knative-automation.png?size=48
-        SLACK_USERNAME: knative-automation
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-        SLACK_CHANNEL: ${{ matrix.channel }}
-        SLACK_COLOR: '#228B22'
-        MSG_MINIMAL: 'true'
-        SLACK_TITLE: "Staged actions-sync PR for ${{ matrix.name }}."
-        SLACK_MESSAGE: |
-          Please review: ${{ steps.cpr.outputs.pull-request-url }}
-          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
-
   prettier:
     name: Format markdown
     runs-on: ubuntu-latest
@@ -667,20 +603,4 @@ jobs:
         SLACK_TITLE: Format markdown for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
-
-    - name: Notify of pending pull request.
-      uses: rtCamp/action-slack-notify@v2.1.0
-      if: ${{ steps.cpr.outputs.pull-request-url != '' }}
-      env:
-        SLACK_ICON: http://github.com/knative-automation.png?size=48
-        SLACK_USERNAME: knative-automation
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-        SLACK_CHANNEL: ${{ matrix.channel }}
-        SLACK_COLOR: '#228B22'
-        MSG_MINIMAL: 'true'
-        SLACK_TITLE: "Staged prettier PR for ${{ matrix.name }}."
-        SLACK_MESSAGE: |
-          Please review: ${{ steps.cpr.outputs.pull-request-url }}
           ${{ needs.meta.outputs.reason }} -${{ github.actor }}
