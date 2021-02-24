@@ -168,10 +168,20 @@
   assignees: knative-sandbox/networking-wg-leads
 
 # knative-sandbox/kn-plugin-*, sorted alphabetically
+- name: 'knative-sandbox/kn-plugin-admin'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-admin'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
 - name: 'knative-sandbox/kn-plugin-sample'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-sample'
-  channel: 'client'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+- name: 'knative-sandbox/kn-plugin-source-kafka'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-source-kafka'
+  channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
 # google
