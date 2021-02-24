@@ -53,7 +53,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Check Repo
-      run: GITHUB_TOKEN=${{ PERSONAL_ACCESS_TOKEN }} ./hack/auto-fork.sh ${{ matrix.org }}
+      run: GITHUB_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} ./hack/auto-fork.sh ${{ matrix.org }}
 
     - name: Post failure notice to Slack
       uses: rtCamp/action-slack-notify@v2.1.0
