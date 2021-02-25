@@ -167,6 +167,13 @@
   channel: 'net-certmanager'
   assignees: knative-sandbox/networking-wg-leads
 
+# knative-sandbox (kn-plugin-admin)
+- name: 'knative-sandbox/kn-plugin-admin'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-admin'
+  channel: 'cli'
+  assignees: knative/client-wg-leads
+
 # google
 - name: 'google/exposure-notifications-server'
   meta-organization: 'knative' # Pull actions from the Knative org.
