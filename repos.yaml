@@ -66,6 +66,13 @@
   channel: 'eventing-sources'
   assignees: knative-sandbox/source-wg-leads lberk
 
+# knative-sandbox/control-protocol
+- name: 'knative-sandbox/control-protocol'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/control-protocol'
+  channel: 'eventing-delivery'
+  assignees: knative-sandbox/channel-wg-leads
+
 # knative-sandbox/discovery
 - name: 'knative-sandbox/discovery'
   meta-organization: 'knative-sandbox'
