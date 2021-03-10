@@ -180,14 +180,40 @@
   fork: 'knative-automation/kn-plugin-admin'
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-diag'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-diag'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-migration'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-migration'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
 - name: 'knative-sandbox/kn-plugin-sample'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-sample'
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-service-log'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-service-log'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
 - name: 'knative-sandbox/kn-plugin-source-kafka'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-source-kafka'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-source-kamelet'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-source-kamelet'
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
