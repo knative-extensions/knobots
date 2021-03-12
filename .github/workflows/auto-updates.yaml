@@ -395,7 +395,7 @@ jobs:
       run: |
         export FILES=( $(find . -type f -not -path './vendor/*' -not -path './third_party/*' -not -path './.git/*') )
         if (( ${#FILES[@]} > 0 )); then
-          misspell -w "${FILES[@]}"
+          misspell -i importas -w "${FILES[@]}"
         else
           echo No files found.
         fi
