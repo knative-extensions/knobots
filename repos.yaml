@@ -42,7 +42,7 @@
   channel: 'docs'
   assignees: knative/serving-writers knative/eventing-writers knative/docs-wg-leads
 - name: 'knative/docs'
-  meta-organization: 'knatiev'
+  meta-organization: 'knative'
   fork: 'knative-automation/website'
   channel: 'docs'
   assignees: knative/docs-wg-leads knative/technical-oversight-committee
