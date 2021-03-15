@@ -479,7 +479,7 @@ jobs:
         cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
           "${GITHUB_WORKSPACE}/main/.github/workflows/"
         yaml2json < "${GITHUB_WORKSPACE}/meta/actions-omitted.yaml" | \
-          jq -r ".[\"${{ matrix.meta-organization }}/${{ matrix.name }}\"].omit | .[] | \"*\"" | \
+          jq -r "(.[\"${{ matrix.meta-organization }}/${{ matrix.name }}\"] // {\"omit\": []}).omit[] + \"*\"" | \
           while read GLOB; do rm "${GITHUB_WORKSPACE}/main/.github/workflows/${GLOB}"; done
 
     - name: Create Pull Request
