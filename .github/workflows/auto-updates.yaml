@@ -477,10 +477,17 @@ jobs:
       with:
         path: config
 
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+
     - name: Copy Actions
       shell: bash
       run: |
-        mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows/"
+        go get github.com/bronze1man/yaml2json
+
+mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows/"
         cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
           "${GITHUB_WORKSPACE}/main/.github/workflows/"
         yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" | \
