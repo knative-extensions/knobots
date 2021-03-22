@@ -477,9 +477,16 @@ jobs:
       with:
         path: config
 
+    - name: Set up Go 1.15.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+
     - name: Copy Actions
       shell: bash
       run: |
+        go get github.com/bronze1man/yaml2json
+
         mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows/"
         cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
           "${GITHUB_WORKSPACE}/main/.github/workflows/"
