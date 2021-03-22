@@ -487,7 +487,7 @@ jobs:
       run: |
         go get github.com/bronze1man/yaml2json
 
-mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows/"
+        mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows/"
         cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
           "${GITHUB_WORKSPACE}/main/.github/workflows/"
         yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" | \
