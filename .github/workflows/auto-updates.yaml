@@ -460,17 +460,22 @@ jobs:
 
     steps:
 
-    - name: Check out code onto GOPATH
+    - name: Check out target repo
       uses: actions/checkout@v2
       with:
         path: main
         repository: ${{ matrix.name }}
 
-    - name: Check out code onto GOPATH
+    - name: Check out source templates
       uses: actions/checkout@v2
       with:
         path: meta
         repository: "${{ matrix.meta-organization }}/.github"
+
+    - name: Check out knobots configuration
+      uses: actions/checkout@v2
+      with:
+        path: config
 
     - name: Copy Actions
       shell: bash
@@ -478,7 +483,7 @@ jobs:
         mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows/"
         cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
           "${GITHUB_WORKSPACE}/main/.github/workflows/"
-        yaml2json < "${GITHUB_WORKSPACE}/meta/actions-omitted.yaml" | \
+        yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" | \
           jq -r "(.[\"${{ matrix.meta-organization }}/${{ matrix.name }}\"] // {\"omit\": []}).omit[] + \"*\"" | \
           while read GLOB; do rm "${GITHUB_WORKSPACE}/main/.github/workflows/${GLOB}"; done
 
