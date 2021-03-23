@@ -1,5 +1,6 @@
 # Hugo sucks
 - "knative/docs"
+- "knative/website"
 # Declined because of Markdown formatter breaking conventions
 - "knative/client"
 - "knative-sandbox/kn-plugin-admin"
