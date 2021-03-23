@@ -192,6 +192,12 @@
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
+- name: 'knative-sandbox/kn-plugin-event'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-event'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
 - name: 'knative-sandbox/kn-plugin-migration'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-migration'
