@@ -179,6 +179,13 @@
   channel: 'net-certmanager'
   assignees: knative-sandbox/networking-wg-leads
 
+# knative-sandbox (kperf)
+- name: 'knative-sandbox/kperf'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kperf'
+  channel: 'performance'
+  assignees: knative/productivity-wg-leads
+
 # knative-sandbox/kn-plugin-*, sorted alphabetically
 - name: 'knative-sandbox/kn-plugin-admin'
   meta-organization: 'knative-sandbox'
