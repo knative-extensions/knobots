@@ -41,11 +41,23 @@
   fork: 'knative-automation/docs'
   channel: 'docs'
   assignees: knative/serving-writers knative/eventing-writers knative/docs-wg-leads
+- name: 'knative/website'
+  meta-organization: 'knative'
+  fork: 'knative-automation/website'
+  channel: 'docs'
+  assignees: knative-docs/docs-wg-leads
 - name: 'knative/client'
   meta-organization: 'knative'
   fork: 'knative-automation/client'
   channel: 'cli'
   assignees: knative/client-wg-leads
+
+# knative-sandbox (reconciler test)
+- name: 'knative-sandbox/reconciler-test'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/reconciler-test'
+  channel: 'test'
+  assignees: knative/eventing-writers knative/serving-writers
 
 # knative-sandbox (samples)
 - name: 'knative-sandbox/sample-controller'
@@ -58,6 +70,13 @@
   fork: 'knative-automation/sample-source'
   channel: 'eventing-sources'
   assignees: knative-sandbox/source-wg-leads lberk
+
+# knative-sandbox/control-protocol
+- name: 'knative-sandbox/control-protocol'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/control-protocol'
+  channel: 'eventing-delivery'
+  assignees: knative-sandbox/channel-wg-leads
 
 # knative-sandbox/discovery
 - name: 'knative-sandbox/discovery'
@@ -167,17 +186,54 @@
   channel: 'performance'
   assignees: knative/productivity-wg-leads
 
-# tektoncd
-- name: 'tektoncd/pipeline'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/pipeline'
-  channel: '@vdemeester'
-  assignees: tektoncd/core-maintainers
-- name: 'tektoncd/triggers'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/triggers'
-  channel: '@ImJasonH'
-  assignees: tektoncd/core-maintainers
+# knative-sandbox/kn-plugin-*, sorted alphabetically
+- name: 'knative-sandbox/kn-plugin-admin'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-admin'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-diag'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-diag'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-event'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-event'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-migration'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-migration'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-sample'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-sample'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-service-log'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-service-log'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-source-kafka'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-source-kafka'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-source-kamelet'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-source-kamelet'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
 
 # google
 - name: 'google/exposure-notifications-server'
@@ -188,17 +244,16 @@
 - name: 'google/knative-gcp'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/knative-gcp'
-  channel: '@nachocano'
-  assignees: nachocano grantr ian-mi
+  # Disabled as too noisy for a low-traffic channel
+  # channel: 'knative-gcp'
+  assignees: '@nlopezgi @zhongduo'
 - name: 'google/go-containerregistry'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/go-containerregistry'
-  channel: 'ggcr'
   assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
 - name: 'google/ko'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/ko'
-  channel: 'ko'
   assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
 
 # vmware-tanzu

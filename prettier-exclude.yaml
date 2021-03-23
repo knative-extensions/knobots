@@ -1,10 +1,11 @@
 # Hugo sucks
 - "knative/docs"
-# Declined
+# Declined because of Markdown formatter breaking conventions
 - "knative/client"
+- "knative-sandbox/kn-plugin-admin"
+- "knative-sandbox/kn-plugin-sample"
+- "knative-sandbox/kn-plugin-source-kafka"
 # Haven't asked if they want them.
 - "google/exposure-notifications-server"
-# Tekton has unresolved issues
-- "tektoncd/pipeline"
 # Generated docs have problems
 - "google/go-containerregistry"
