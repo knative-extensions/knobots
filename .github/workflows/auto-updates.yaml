@@ -41,6 +41,8 @@ jobs:
     outputs:
       actions-include: ${{ steps.load-matrix.outputs.actions-include }}
       actions-names: ${{ steps.load-matrix.outputs.actions-names }}
+      community-include: ${{ steps.load-matrix.outputs.community-include }}
+      community-names: ${{ steps.load-matrix.outputs.community-names }}
       deps-include: ${{ steps.load-matrix.outputs.deps-include }}
       deps-names: ${{ steps.load-matrix.outputs.deps-names }}
       gotool-include: ${{ steps.load-matrix.outputs.gotool-include }}
@@ -76,7 +78,7 @@ jobs:
           filtered_repos "$1" | jq -c "map(.name)"
         }
 
-        for x in actions deps gotool misspell prettier ; do
+        for x in actions community deps gotool misspell prettier ; do
           echo "::group::Matrix names for $x"
           filtered_names $x-exclude.yaml | jq .
           echo "::endgroup::"
@@ -537,6 +539,97 @@ jobs:
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
         SLACK_TITLE: Copy actions for ${{ matrix.name }} failed.
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
+
+  update-community:
+    name: Update Knative Community files (OWNERS_ALIASES)
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Keep running if one leg fails.
+      max-parallel: 5
+      matrix:
+        name: ${{fromJson(needs.meta.outputs.community-names)}}
+        include: ${{fromJson(needs.meta.outputs.community-include)}}
+
+    env:
+      GO111MODULE: on
+
+    steps:
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        path: main
+        repository: ${{ matrix.name }}
+
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+      with:
+        path: meta
+        repository: "knative/community"
+
+    - name: Copy OWNERS_ALIASES
+      shell: bash
+      run: |
+        FILE="OWNERS_ALIASES"
+        if [ "${{ matrix.meta-organization }}" != "knative" ] ; then
+          FILE="${{ matrix.meta-organization }}-OWNERS_ALIASES"
+        fi
+        if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ] ; then
+          cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
+        fi
+        # TODO: copy other files over, like CODE-OF-CONDUCT.md
+
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
+
+        # Where to stage the change.
+        push-to-fork: ${{ matrix.fork }}
+        branch: auto-updates/common-aliases
+        signoff: true
+        delete-branch: true
+        path: matrix.name
+
+        commit-message: 'Update knative/community files'
+        title: '[Automated] Update knative/community files'
+        body: |
+          Produced via:
+          ```shell
+          # meta: knative/community
+          # main: ${{matrix.name}}
+          FILE="OWNERS_ALIASES"
+          if [ "${{ matrix.meta-organization }}" != "knative" ] ; then
+            FILE="${{ matrix.meta-organization }}-OWNERS_ALIASES"
+          fi
+          if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ] ; then
+            cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
+          fi
+          ```
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+        SLACK_CHANNEL: ${{ matrix.channel }}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: Copy community for ${{ matrix.name }} failed.
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ${{ needs.meta.outputs.reason }} -${{ github.actor }}
