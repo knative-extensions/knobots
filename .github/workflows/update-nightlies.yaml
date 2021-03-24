@@ -45,7 +45,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-certmanager
-          assignee: @knative/networking-wg-leads
+          assignee: "@knative/networking-wg-leads"
         - nightly: net-contour
           module: knative.dev/net-contour
           directory: ./third_party/contour-latest
@@ -54,7 +54,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-contour
-          assignee: @knative/networking-wg-leads
+          assignee: "@knative/networking-wg-leads"
         - nightly: net-istio
           module: knative.dev/net-istio
           directory: ./third_party/istio-latest
@@ -63,7 +63,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-istio
-          assignee: @knative/networking-wg-leads
+          assignee: "@knative/networking-wg-leads"
         - nightly: net-kourier
           module: knative.dev/net-kourier
           directory: ./third_party/kourier-latest
@@ -72,7 +72,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-kourier
-          assignee: @knative/networking-wg-leads
+          assignee: "@knative/networking-wg-leads"
         - nightly: eventing-kafka-broker
           module: knative.dev/eventing-kafka-broker
           directory: ./third_party/eventing-latest
@@ -81,7 +81,7 @@ jobs:
           repository: knative-sandbox/eventing-kafka-broker
           fork: eventing-kafka-broker
           channel: eventing-delivery
-          assignee: @knative/delivery-wg-leads
+          assignee: "@knative/delivery-wg-leads"
 
     steps:
     - name: Set up Go 1.15.x
