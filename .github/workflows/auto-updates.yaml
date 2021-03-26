@@ -597,7 +597,7 @@ jobs:
         branch: auto-updates/common-aliases
         signoff: true
         delete-branch: true
-        path: matrix.name
+        path: main
 
         commit-message: 'Update knative/community files'
         title: '[Automated] Update knative/community files'
