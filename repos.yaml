@@ -178,6 +178,11 @@
   fork: 'knative-automation/net-certmanager'
   channel: 'net-certmanager'
   assignees: knative-sandbox/networking-wg-leads
+- name: 'knative-sandbox/net-ingressv2'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/net-ingressv2'
+  channel: 'net-ingressv2'
+  assignees: knative-sandbox/networking-wg-leads
 
 # knative-sandbox (kperf)
 - name: 'knative-sandbox/kperf'
