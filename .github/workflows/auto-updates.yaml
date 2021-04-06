@@ -27,8 +27,11 @@ on:
         description: 'Release? (vX.Y) defaults to current release'
 
       reason:
-        description: "Justification?"
+        description: 'Justification?'
         required: true
+
+      pr_empty_deps:
+        description: 'If true, send update PRs even for deps changes that don't change vendor. Use this only for releases.'
 
 jobs:
   meta:
@@ -53,6 +56,7 @@ jobs:
       prettier-names: ${{ steps.load-matrix.outputs.prettier-names }}
       release: ${{ steps.load-matrix.outputs.release }}
       reason: ${{ steps.load-matrix.outputs.reason }}
+      pr_empty_deps: ${{ steps.load-matrix.outputs.pr_empty_deps }}
     steps:
     - name: Check out code onto GOPATH
       uses: actions/checkout@v2
@@ -110,6 +114,8 @@ jobs:
         else
           echo "::set-output name=reason::Cron."
         fi
+
+        echo "::set-output ${{ github.events.inputs.pr_empty_deps }}"
 
   update-deps:
     name: Update Deps and Codegen
@@ -191,7 +197,7 @@ jobs:
         # If we don't run this before the "git diff-index" it seems to list
         # every file that's been touched by codegen.
         git status
-        echo "create_pr=false" >> $GITHUB_ENV
+        echo "create_pr=${{ needs.meta.outputs.pr_empty_deps }}" >> $GITHUB_ENV
         for x in $(git diff-index --name-only HEAD --); do
           if [ "$(basename $x)" = "go.mod" ]; then
             continue
