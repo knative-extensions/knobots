@@ -195,7 +195,7 @@ jobs:
         # If we don't run this before the "git diff-index" it seems to list
         # every file that's been touched by codegen.
         git status
-        echo "create_pr=${{ github.events.inputs.pr-empty-deps }}" >> $GITHUB_ENV
+        echo "create_pr=${{ github.event.inputs.pr-empty-deps }}" >> $GITHUB_ENV
         for x in $(git diff-index --name-only HEAD --); do
           if [ "$(basename $x)" = "go.mod" ]; then
             continue
