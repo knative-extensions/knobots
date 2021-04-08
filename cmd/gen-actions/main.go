@@ -1,5 +1,19 @@
 package main
 
+// Copyright 2020 The Knative Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import (
 	"fmt"
 	"log"
@@ -24,7 +38,12 @@ func main() {
 		log.Print("Failed to open 'actions':", err)
 		os.Exit(1)
 	}
-	templ := template.New("actions_template.yaml").Funcs(map[string]interface{}{"split": strings.Split, "join": strings.Join})
+	templFuncs := map[string]interface{}{
+		"split":  strings.Split,
+		"join":   strings.Join,
+		"github": GitHub,
+	}
+	templ := template.New("actions_template.yaml").Funcs(templFuncs)
 	templ = template.Must(templ.ParseFiles(filepath.Join("cmd", "gen-actions", "actions_template.yaml")))
 	for _, entry := range entries {
 		if !entry.IsDir() {
@@ -75,15 +94,25 @@ func handleDir(path string, templ *template.Template) error {
 }
 
 type conf struct {
-	Action        string
-	ActionRef     string
+	Action        string `yaml:"-"`
+	ActionRef     string `yaml:"-"`
 	ShortName     string `yaml:"shortName"`
 	PRTitle       string `yaml:"prTitle"`
 	PRBody        string `yaml:"prBody"`
 	CommitMessage string `yaml:"commitMessage"`
+	Inputs        []Input
+	// With allows passing _extra_ inputs to the action; all inputs will automatically be passed
+	With map[string]string
+}
+
+type Input struct {
+	Name        string
+	Description string
+	Required    bool
+	Default     string
 }
 
 // GitHub returns a github variable substitution
-func (c *conf) GitHub(args ...string) string {
+func GitHub(args ...string) string {
 	return "${{ " + strings.Join(args, " ") + " }}"
 }

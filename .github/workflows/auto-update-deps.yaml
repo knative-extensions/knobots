@@ -20,9 +20,18 @@ on:
 
   workflow_dispatch:
     inputs:
-      # TODO: get inputs from config
+      branch:
+        description: "Branch Name? (empty for default branch of the respective repository)"
+      release:
+        description: "Release? (vX.Y) defaults to current release"
       reason:
+        description: "Justification?"
+        required: true
         default: "Cron"
+      pr-empty-deps:
+        description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
+        default: "false"
+      
 
 jobs:
   meta:
@@ -78,6 +87,10 @@ jobs:
       with:
         repo: ${{ matrix.name }}
         include: ${{ matrix.include }}
+        branch: "${{ github.event.inputs.branch }}"
+        release: "${{ github.event.inputs.release }}"
+        reason: "${{ github.event.inputs.reason }}"
+        pr-empty-deps: "${{ github.event.inputs.pr-empty-deps }}"
 
     - name: Create Pull Request
       id: cpr

@@ -1,5 +1,18 @@
 shortName: deps
 
+inputs:
+- name: branch
+  description: "Branch Name? (empty for default branch of the respective repository)"
+- name: release
+  description: "Release? (vX.Y) defaults to current release"
+- name: reason
+  description: "Justification?"
+  required: true
+  default: "Cron"
+- name: pr-empty-deps
+  description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
+  default: "false"
+
 prTitle: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
 prBody: |
   ${{ github.event.inputs.reason }} -${{ github.actor }}
