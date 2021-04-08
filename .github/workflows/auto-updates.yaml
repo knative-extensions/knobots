@@ -40,7 +40,7 @@ jobs:
     env:
       #########################################
       #   Update this section each release.   #
-      RELEASE: 'v0.22'
+      RELEASE: 'v0.23'
       #########################################
     outputs:
       actions-include: ${{ steps.load-matrix.outputs.actions-include }}
