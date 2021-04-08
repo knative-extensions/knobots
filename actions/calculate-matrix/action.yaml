@@ -1,0 +1,22 @@
+name: "Calculate repo matrix"
+description: "Calculate the set of repos this action should apply to"
+branding:
+  icon: copy
+  color: blue
+inputs:
+  action-name:
+    description: "Name of action, used to determine excludes."
+    required: true
+  repo-only:
+    description: "Name of a single repo to apply to for this run."
+outputs:
+  include:
+    description: "Repo data structure on selected repos (list)"
+  names:
+    description: "Repo names only (parallel list to repos)"
+runs
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    NAME: ${{ inputs.action-name }}
+    ONLY: ${{ inputs.repo-only }}

@@ -1,0 +1,16 @@
+# update-deps.yml
+name: "Update Go Deps and Codegen"
+description: "Updates golang dependencies and codegen using using hack/update-deps.sh and hack/update-codegen.sh"
+branding:
+  icon: download-cloud
+  color: green
+inputs:
+  # Don't seem to need any
+outputs:
+  create_pr:
+    description: "Whether a PR should be created because there were meaningful changes"
+  deplog:
+    description: "Report on module changes"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

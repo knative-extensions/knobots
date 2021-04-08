@@ -1,0 +1,119 @@
+# Copyright 2020 The Knative Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Auto Updates
+
+on:
+  schedule:
+    - cron: '0 1,13 * * 1-5' # 6am/pm Pacific on weekdays
+
+  workflow_dispatch:
+    inputs:
+      # TODO: get inputs from config
+      reason:
+        default: "Cron"
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    env:
+      #########################################
+      #   Update this section each release.   #
+      RELEASE: 'v0.22'
+      #########################################
+    outputs:
+	    include: {{ "${{ steps.load-matrix.outputs.includes }}" }}
+	    names: {{ "${{ steps.load-matrix.outputs.names }}" }}
+
+    steps:
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v2
+
+    - name: Calculate affected repos
+      id: load-matrix
+      uses: "./actions/calculate-matrix"
+      with:
+        action-name: deps # Also have: actions gotool misspell prettier, get from template
+        repo-only: "" # TODO, expose as a parameter
+
+  apply-change:
+    name: "Apply Change" # TODO: from metadata?
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        name: {{"${{fromJson(needs.meta.outputs.names)}}"}}
+        include: {{"${{fromJson(needs.meta.outputs.include)}}"}}
+    steps:
+    # TODO: parameterize checkouts and paths
+    - name: Checkout repo code
+      uses: actions/checkout@v2
+      with:
+        repository: {{"${{ matrix.name }}"}}
+        ref: {{" ${{ github.event.inputs.branch }}"}}
+  
+    # This is required because the branch setting might be empty (to infer a default), so
+    # after checkout we fetch what the checkout action decided to check out.
+    - name: Infer branch from checkout
+      id: inferbranch
+      run: |
+        echo "::set-output name=branch::$(git branch --show-current)"
+
+    - name: Apply work
+      id: work
+      uses: "{{"${{ github.repository }}/actions/update-deps@${{ github.sha }}"}}" # TODO: parameterize
+      with:
+        repo: {{"${{ matrix.name }}"}}
+        include: {{"${{ matrix.include }}"}}
+
+    - name: Create Pull Request
+      id: cpr
+      if: env.create_pr == "true"
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: {{"${{ secrets.PERSONAL_ACCESS_TOKEN }}"}}
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
+        push-to-fork: {{"${{ matrix.fork }}"}}
+        branch: auto-updates/update-deps-{{"${{ steps.inferbranch.outputs.branch }}"}}
+        signoff: true
+        delete-branch: true
+
+        commit-message: |
+          # TODO: parameterize
+          Ran action update-deps
+        title: {{"[${{ steps.inferbranch.outputs.branch }}"}}] Upgrade to latest dependencies # TODO: parameterize
+        body: |
+          # TODO: parameterize
+          {{`${{ github.event.inputs.reason }} -${{ github.actor }}
+
+          Produced by ${{ github.repository }}/actions/update-deps@${{ github.sha }}`}}
+
+    - name: Report error
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: {{"${{ failure() }}"}}
+      env:
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
+        SLACK_WEBHOOK: {{"${{ secrets.SLACK_WEBHOOK }}"}}
+
+        SLACK_CHANNEL: {{"${{ matrix.channel }}"}}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "{{"[${{ steps.inferbranch.outputs.branch }}] Updating dependencies for ${{ matrix.name }} failed."}}"
+        SLACK_MESSAGE: |
+          {{`For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ${{ needs.meta.outputs.reason }} -${{ github.actor }}`}}
