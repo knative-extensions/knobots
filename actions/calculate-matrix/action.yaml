@@ -7,7 +7,7 @@ inputs:
   action-name:
     description: "Name of action, used to determine excludes."
     required: true
-  repo-only:
+  only-repo:
     description: "Name of a single repo to apply to for this run."
 outputs:
   include:
@@ -19,4 +19,4 @@ runs
   image: 'Dockerfile'
   env:
     NAME: ${{ inputs.action-name }}
-    ONLY: ${{ inputs.repo-only }}
+    ONLY: ${{ inputs.only-repo }}

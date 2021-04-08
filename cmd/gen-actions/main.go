@@ -97,6 +97,7 @@ type conf struct {
 	Action        string `yaml:"-"`
 	ActionRef     string `yaml:"-"`
 	ShortName     string `yaml:"shortName"`
+	Title         string
 	PRTitle       string `yaml:"prTitle"`
 	PRBody        string `yaml:"prBody"`
 	CommitMessage string `yaml:"commitMessage"`

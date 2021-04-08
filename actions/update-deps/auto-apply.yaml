@@ -1,4 +1,5 @@
 shortName: deps
+title: "Update Deps and Codegen"
 
 inputs:
 - name: branch

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Auto Updates
+name: Update Deps and Codegen
 
 on:
   schedule:
@@ -20,6 +20,8 @@ on:
 
   workflow_dispatch:
     inputs:
+      only-repo:
+        description: "Only autogenerate a single repo (exact match)?"
       branch:
         description: "Branch Name? (empty for default branch of the respective repository)"
       release:
@@ -54,7 +56,7 @@ jobs:
       uses: "./actions/calculate-matrix"
       with:
         action-name: deps
-        repo-only: "" # TODO, expose as a parameter
+        only-repo: ${{ github.event.inputs.only-repo }}
 
   apply-change:
     name: "Apply Change" # TODO: from metadata?
