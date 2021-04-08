@@ -1,0 +1,20 @@
+shortName: deps
+
+prTitle: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
+prBody: |
+  ${{ github.event.inputs.reason }} -${{ github.actor }}
+
+  /cc ${{ matrix.assignees }}
+  /assign ${{ matrix.assignees }}
+
+  Produced by: ${{ github.repository }}/actions/update-deps
+
+  Details:
+  ```
+  ${{ steps.updatedeps.outputs.deplog }}
+  ```
+
+commitMessage: |
+  upgrade to latest dependencies
+
+  ${{ steps.work.outputs.deplog }}

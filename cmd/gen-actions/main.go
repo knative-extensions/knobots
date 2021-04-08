@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	"gopkg.in/yaml.v1"
@@ -23,7 +24,8 @@ func main() {
 		log.Print("Failed to open 'actions':", err)
 		os.Exit(1)
 	}
-	templ := template.Must(template.ParseFiles(filepath.Join("cmd", "gen-actions", "actions_template.yaml")))
+	templ := template.New("actions_template.yaml").Funcs(map[string]interface{}{"split": strings.Split, "join": strings.Join})
+	templ = template.Must(templ.ParseFiles(filepath.Join("cmd", "gen-actions", "actions_template.yaml")))
 	for _, entry := range entries {
 		if !entry.IsDir() {
 			log.Printf("Skipping 'actions/%s', not a directory", entry.Name())
@@ -52,19 +54,36 @@ func handleDir(path string, templ *template.Template) error {
 		return fmt.Errorf("Unable to read %q: %w", metafile, err)
 	}
 	c := conf{}
-	if err := yaml.Unmarshal(bytes, c); err != nil {
+	if err := yaml.Unmarshal(bytes, &c); err != nil {
 		return fmt.Errorf("Unable to parse %q: %w", metafile, err)
 	}
+	// Deliberately using unix path convertion here.
+	c.ActionRef = "${{ github.repository }}/actions/" + path + "@${{ github.sha }}"
+	c.Action = path
 
 	outfileName := filepath.Join(".github", "workflows", "auto-"+path+".yaml")
 	outfile, err := os.OpenFile(outfileName, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
 	if err != nil {
 		return fmt.Errorf("Unable to open %q: %w", outfileName, err)
 	}
-	templ.Execute(outfile, c)
+	if err := templ.Execute(outfile, &c); err != nil {
+		os.Remove(outfileName)
+		return fmt.Errorf("Failed to write %q: %w", outfileName, err)
+	}
 	log.Printf("Generated %q for %s", outfileName, path)
 	return nil
 }
 
 type conf struct {
+	Action        string
+	ActionRef     string
+	ShortName     string `yaml:"shortName"`
+	PRTitle       string `yaml:"prTitle"`
+	PRBody        string `yaml:"prBody"`
+	CommitMessage string `yaml:"commitMessage"`
+}
+
+// GitHub returns a github variable substitution
+func (c *conf) GitHub(args ...string) string {
+	return "${{ " + strings.Join(args, " ") + " }}"
 }

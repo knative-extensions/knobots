@@ -33,8 +33,8 @@ jobs:
       RELEASE: 'v0.22'
       #########################################
     outputs:
-	    include: {{ "${{ steps.load-matrix.outputs.includes }}" }}
-	    names: {{ "${{ steps.load-matrix.outputs.names }}" }}
+	    include: {{.GitHub "steps.load-matrix.outputs.includes"}}
+	    names: {{.GitHub "steps.load-matrix.outputs.names"}}
 
     steps:
     - name: Check out code onto GOPATH
@@ -44,7 +44,7 @@ jobs:
       id: load-matrix
       uses: "./actions/calculate-matrix"
       with:
-        action-name: deps # Also have: actions gotool misspell prettier, get from template
+        action-name: {{.ShortName}}
         repo-only: "" # TODO, expose as a parameter
 
   apply-change:
@@ -55,15 +55,15 @@ jobs:
       fail-fast: false
       max-parallel: 5
       matrix:
-        name: {{"${{fromJson(needs.meta.outputs.names)}}"}}
-        include: {{"${{fromJson(needs.meta.outputs.include)}}"}}
+        name: {{.GitHub "fromJson(needs.meta.outputs.names)"}}
+        include: {{.GitHub "fromJson(needs.meta.outputs.include)"}}
     steps:
     # TODO: parameterize checkouts and paths
     - name: Checkout repo code
       uses: actions/checkout@v2
       with:
-        repository: {{"${{ matrix.name }}"}}
-        ref: {{" ${{ github.event.inputs.branch }}"}}
+        repository: {{.GitHub "matrix.name"}}
+        ref: {{.GitHub "github.event.inputs.branch"}}
   
     # This is required because the branch setting might be empty (to infer a default), so
     # after checkout we fetch what the checkout action decided to check out.
@@ -74,46 +74,42 @@ jobs:
 
     - name: Apply work
       id: work
-      uses: "{{"${{ github.repository }}/actions/update-deps@${{ github.sha }}"}}" # TODO: parameterize
+      uses: {{.ActionRef}}
       with:
-        repo: {{"${{ matrix.name }}"}}
-        include: {{"${{ matrix.include }}"}}
+        repo: {{.GitHub "matrix.name"}}
+        include: {{.GitHub "matrix.include"}}
 
     - name: Create Pull Request
       id: cpr
       if: env.create_pr == "true"
       uses: peter-evans/create-pull-request@v3
       with:
-        token: {{"${{ secrets.PERSONAL_ACCESS_TOKEN }}"}}
+        token: {{.GitHub "secrets.PERSONAL_ACCESS_TOKEN"}}
         committer: "Knative Automation <automation@knative.team>"
         author: "Knative Automation <automation@knative.team>"
-        push-to-fork: {{"${{ matrix.fork }}"}}
-        branch: auto-updates/update-deps-{{"${{ steps.inferbranch.outputs.branch }}"}}
+        push-to-fork: {{.GitHub "matrix.fork"}}
+        branch: auto-updates/update-deps-{{.GitHub "steps.inferbranch.outputs.branch"}}
         signoff: true
         delete-branch: true
 
         commit-message: |
-          # TODO: parameterize
-          Ran action update-deps
-        title: {{"[${{ steps.inferbranch.outputs.branch }}"}}] Upgrade to latest dependencies # TODO: parameterize
+          {{join (split .CommitMessage "\n") "\n          "}}
+        title: "{{.PRTitle}}"
         body: |
-          # TODO: parameterize
-          {{`${{ github.event.inputs.reason }} -${{ github.actor }}
-
-          Produced by ${{ github.repository }}/actions/update-deps@${{ github.sha }}`}}
+          {{join (split .PRBody "\n") "\n          "}}
 
     - name: Report error
       uses: rtCamp/action-slack-notify@v2.1.0
-      if: {{"${{ failure() }}"}}
+      if: {{.GitHub "failure()"}}
       env:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
-        SLACK_WEBHOOK: {{"${{ secrets.SLACK_WEBHOOK }}"}}
+        SLACK_WEBHOOK: {{.GitHub "secrets.SLACK_WEBHOOK"}}
 
-        SLACK_CHANNEL: {{"${{ matrix.channel }}"}}
+        SLACK_CHANNEL: {{.GitHub "matrix.channel"}}
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
-        SLACK_TITLE: "{{"[${{ steps.inferbranch.outputs.branch }}] Updating dependencies for ${{ matrix.name }} failed."}}"
+        SLACK_TITLE: "{{.PRTitle}} for {{.GitHub "matrix.name"}} failed."
         SLACK_MESSAGE: |
-          {{`For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          ${{ needs.meta.outputs.reason }} -${{ github.actor }}`}}
+          For detailed logs: https://github.com/{{.GitHub "github.repository"}}/actions/runs/{{.GitHub "github.run_id"}}
+          {{.GitHub "github.event.inputs.reason"}} -{{.GitHub "github.actor"}}
