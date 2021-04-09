@@ -85,7 +85,7 @@ jobs:
 
     - name: Apply work
       id: work
-      uses: ${{ github.repository }}/actions/update-deps@${{ github.sha }}
+      uses: "${{ github.repository }}/actions/update-deps@${{ github.sha }}"
       with:
         repo: ${{ matrix.name }}
         include: ${{ matrix.include }}

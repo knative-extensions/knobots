@@ -78,7 +78,7 @@ jobs:
 
     - name: Apply work
       id: work
-      uses: {{.ActionRef}}
+      uses: "{{.ActionRef}}"
       with:
         repo: {{github "matrix.name"}}
         include: {{github "matrix.include"}}{{range .Inputs}}
