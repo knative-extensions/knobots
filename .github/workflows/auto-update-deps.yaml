@@ -85,7 +85,7 @@ jobs:
 
     - name: Apply work
       id: work
-      uses: "evankanderson/knobots/update-deps@${{github.sha}}"
+      uses: "evankanderson/knobots/update-deps@react"
       with:
         repo: ${{ matrix.name }}
         include: ${{ matrix.include }}
