@@ -85,7 +85,7 @@ jobs:
 
     - name: Apply work
       id: work
-      uses: "evankanderson/knobots/update-deps@{{github.sha}}"
+      uses: "evankanderson/knobots/update-deps@${{github.sha}}"
       with:
         repo: ${{ matrix.name }}
         include: ${{ matrix.include }}
@@ -96,7 +96,7 @@ jobs:
 
     - name: Create Pull Request
       id: cpr
-      if: env.create_pr == "true"
+      if: ${{ env.create_pr == "true" }}
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
