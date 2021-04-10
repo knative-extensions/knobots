@@ -96,7 +96,7 @@ jobs:
 
     - name: Create Pull Request
       id: cpr
-      if: ${{ env.create_pr == "true" }}
+      if: ${{ env.create_pr == 'true' }}
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
