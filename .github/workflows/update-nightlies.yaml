@@ -103,6 +103,7 @@ jobs:
       shell: bash
       id: nightlies
       run: |
+        set -x
         for x in ${{ matrix.files }}; do
           curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
         done
