@@ -41,7 +41,7 @@ jobs:
       names: {{github "steps.load-matrix.outputs.names"}}
 
     steps:
-    - name: Check out code onto GOPATH
+    - name: Check out knobots configuration
       uses: actions/checkout@v2
 
     - name: Calculate affected repos
