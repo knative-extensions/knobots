@@ -14,7 +14,7 @@ outputs:
     description: "Repo data structure on selected repos (list)"
   names:
     description: "Repo names only (parallel list to repos)"
-runs
+runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
