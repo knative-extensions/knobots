@@ -14,6 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -e
+
+deplog=""
+
 # Determine the name of the go module.
 if [[ -f go.mod ]]; then
     export MODULE_NAME=$(go mod graph | cut -d' ' -f 1 | grep -v '@' | head -1)
@@ -34,6 +38,10 @@ if [[ -f go.mod ]]; then
 
     echo "::set-output name=update-dep-cmd::./hack/update-deps.sh --upgrade ${release_flag}"
     ./hack/update-deps.sh --upgrade ${release_flag}
+    # capture logs for the module changes
+    deplog=$(modlog . HEAD dirty || true)
+    deplog="${deplog//$'\n'/'%0A'}"
+    deplog="${deplog//$'\r'/'%0D'}"
 fi
 
 # We may pull in code-generator updates, or not have generated code.
@@ -57,8 +65,5 @@ for x in $(git diff-index --name-only HEAD --); do
     break
 done
 
-# capture logs for the module changes
-deplog=$(modlog . HEAD dirty || true)
-deplog="${deplog//$'\n'/'%0A'}"
-deplog="${deplog//$'\r'/'%0D'}"
+
 echo "::set-output name=deplog::$deplog"
