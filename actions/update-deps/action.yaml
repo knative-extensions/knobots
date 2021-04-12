@@ -4,8 +4,13 @@ description: "Updates golang dependencies and codegen using using hack/update-de
 branding:
   icon: download-cloud
   color: green
-# inputs: 
-  # Don't seem to need any
+inputs: 
+  branch:  # TODO: move to general template
+    description: "Select a non-default branch"
+  release:
+    description: "Target release for knative dependencies (used by Buoy)"
+  pr-empty-deps:
+    description: "If true, send update PRs even for deps changes that don't change vendor. Defaults to false to reduce no-op PR spam."
 outputs:
   create_pr:
     description: "Whether a PR should be created because there were meaningful changes"
@@ -14,3 +19,6 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  env:
+    RELEASE: ${{ inputs.release }}
+    FORCE_DEPS: ${{ inputs.pr-empty-deps }}

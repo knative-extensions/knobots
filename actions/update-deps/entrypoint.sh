@@ -33,7 +33,7 @@ if [[ -f go.mod ]]; then
     # Test to see if this module is using the knative.dev/hack repo, if it is,
     # then we know it is safe to pass down the release flag.
     if [[ $(buoy needs go.mod --domain knative.dev | grep knative.dev/hack) ]]; then
-        release_flag="--release ${{ needs.meta.outputs.release }}"
+        release_flag="--release ${RELEASE}"
     fi
 
     echo "::set-output name=update-dep-cmd::./hack/update-deps.sh --upgrade ${release_flag}"
@@ -50,7 +50,10 @@ fi
 # If we don't run this before the "git diff-index" it seems to list
 # every file that's been touched by codegen.
 git status
-echo "create_pr=false" >> $GITHUB_ENV  # TODO: re-incorporate "don't ignore go accounting" flag
+create_pr="false"
+if [[ "${FORCE_DEPS}" == "true" ]]; then
+  create_pr="true"
+fi
 for x in $(git diff-index --name-only HEAD --); do
     if [ "$(basename $x)" = "go.mod" ]; then
         continue
@@ -60,10 +63,13 @@ for x in $(git diff-index --name-only HEAD --); do
         continue
     fi
     echo "Found non-module diff: $x"
-    echo "create_pr=true" >> $GITHUB_ENV
-    echo "::set-output name=create_pr::true"
+    create_pr="true"
     break
 done
+
+echo "create_pr=${create_pr}" >> $GITHUB_ENV
+echo "::set-output name=create_pr::${create_pr}"
+
 
 
 echo "::set-output name=deplog::$deplog"
