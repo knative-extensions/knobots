@@ -4,7 +4,7 @@ description: "Updates golang dependencies and codegen using using hack/update-de
 branding:
   icon: download-cloud
   color: green
-inputs:
+# inputs: 
   # Don't seem to need any
 outputs:
   create_pr:
