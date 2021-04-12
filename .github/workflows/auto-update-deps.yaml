@@ -44,11 +44,11 @@ jobs:
       RELEASE: 'v0.22'
       #########################################
     outputs:
-      include: ${{ steps.load-matrix.outputs.includes }}
+      includes: ${{ steps.load-matrix.outputs.includes }}
       names: ${{ steps.load-matrix.outputs.names }}
 
     steps:
-    - name: Check out code onto GOPATH
+    - name: Check out knobots configuration
       uses: actions/checkout@v2
 
     - name: Calculate affected repos
@@ -67,7 +67,7 @@ jobs:
       max-parallel: 5
       matrix:
         name: ${{ fromJson(needs.meta.outputs.names) }}
-        include: ${{ fromJson(needs.meta.outputs.include) }}
+        include: ${{ fromJson(needs.meta.outputs.includes) }}
     steps:
     # TODO: parameterize checkouts and paths
     - name: Checkout repo code

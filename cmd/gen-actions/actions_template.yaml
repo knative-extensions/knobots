@@ -37,7 +37,7 @@ jobs:
       RELEASE: 'v0.22'
       #########################################
     outputs:
-      include: {{github "steps.load-matrix.outputs.includes"}}
+      includes: {{github "steps.load-matrix.outputs.includes"}}
       names: {{github "steps.load-matrix.outputs.names"}}
 
     steps:
@@ -60,7 +60,7 @@ jobs:
       max-parallel: 5
       matrix:
         name: {{github "fromJson(needs.meta.outputs.names)"}}
-        include: {{github "fromJson(needs.meta.outputs.include)"}}
+        include: {{github "fromJson(needs.meta.outputs.includes)"}}
     steps:
     # TODO: parameterize checkouts and paths
     - name: Checkout repo code

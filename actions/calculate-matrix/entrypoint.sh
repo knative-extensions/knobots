@@ -38,5 +38,5 @@ echo "::group::Matrix includes for ${NAME}"
 echo "${SELECTED_REPOS}" | jq .
 echo "::endgroup::"
 
-echo "::set-output name=include::${SELECTED_REPOS}"
+echo "::set-output name=includes::${SELECTED_REPOS}"
 echo "::set-output name=names::${SELECTED_NAMES}"
