@@ -20,13 +20,13 @@ function filtered_repos() {
   local FILTER=$(cat "${EXCLUDE}" | yaml2json | jq "join(\"|\")")
   if [[ "$FILTER" != "" ]]; then
     FILTER=".name | test(${FILTER}) | not"
-  fi
-  if [[ "$EXACT" != "" ]]; then
-    FILTER="${FILTER} and .name == \"${EXACT}\""
-  fi
-  if [[ "$FILTER" == '""' ]]; then
+  else
     FILTER="true"
   fi
+  if [[ "$EXACT" != "" ]]; then
+    FILTER="(${FILTER}) and (.name == \"${EXACT}\")"
+  fi
+
   cat repos.yaml | yaml2json | jq -c "map(select(${FILTER}))"
 }
 
