@@ -16,19 +16,26 @@
 
 function filtered_repos() {
   local EXCLUDE="${1}"
+  local EXACT="${2}"
   local FILTER=$(cat "${EXCLUDE}" | yaml2json | jq "join(\"|\")")
-  if [[ "$FILTER" == '""' ]]; then
-    FILTER="\"match-nothing-${RANDOM}\""
+  if [[ "$FILTER" != "" ]]; then
+    FILTER=".name | test(\"${FILTER}\") | not"
   fi
-  cat repos.yaml | yaml2json | jq -c "map(select(.name | test(${FILTER}) | not))"
+  if [[ "$EXACT" != "" ]]; then
+    FILTER="${FILTER} and .name == \"${EXACT}\""
+  fi
+  if [[ "$FILTER" == '""' ]]; then
+    FILTER="true"
+  fi
+  cat repos.yaml | yaml2json | jq -c "map(select(${FILTER}))"
 }
 
 function filtered_names() {
-    filtered_repos "${1}" | jq -c "map(.name)"
+    filtered_repos "${1}" "${2}" | jq -c "map(.name)"
 }
 
-SELECTED_NAMES="$(filtered_names "${NAME}-exclude.yaml")"
-SELECTED_REPOS="$(filtered_repos "${NAME}-exclude.yaml")"
+SELECTED_NAMES="$(filtered_names "${NAME}-exclude.yaml" "${ONLY}")"
+SELECTED_REPOS="$(filtered_repos "${NAME}-exclude.yaml" "${ONLY}")"
 
 echo "::group::Matrix names for ${NAME}"
 echo "${SELECTED_NAMES}" | jq .
