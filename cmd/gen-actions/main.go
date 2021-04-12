@@ -78,7 +78,7 @@ func handleDir(path string, templ *template.Template) error {
 	}
 	// Deliberately using unix path convertion here.
 	c.ActionRef = "${{ github.repository }}/actions/" + path + "@${{ github.sha }}"
-	c.ActionRef = "evankanderson/knobots/" + path + "@react"
+	c.ActionRef = "evankanderson/knobots/actions/" + path + "@react"
 	c.Action = path
 
 	outfileName := filepath.Join(".github", "workflows", "auto-"+path+".yaml")
