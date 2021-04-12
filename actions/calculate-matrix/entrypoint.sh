@@ -19,7 +19,7 @@ function filtered_repos() {
   local EXACT="${2}"
   local FILTER=$(cat "${EXCLUDE}" | yaml2json | jq "join(\"|\")")
   if [[ "$FILTER" != "" ]]; then
-    FILTER=".name | test(\"${FILTER}\") | not"
+    FILTER=".name | test(${FILTER}) | not"
   fi
   if [[ "$EXACT" != "" ]]; then
     FILTER="${FILTER} and .name == \"${EXACT}\""
