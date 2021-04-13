@@ -21,7 +21,13 @@ on:
   workflow_dispatch:
     inputs:
       only-repo:
-        description: "Only autogenerate a single repo (exact match)?"
+        description: "Only autogenerate a single repo (exact match)?"    
+      branch:
+        description: "Branch Name? (empty for default branch of the respective repository)"
+      reason:
+        description: "Justification?"
+        required: true
+        default: "Cron"
       {{range .Inputs}}{{.Name}}:
         description: "{{.Description}}"{{if .Required}}
         required: {{.Required}}{{end}}{{if .Default}}

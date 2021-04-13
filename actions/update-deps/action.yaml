@@ -4,11 +4,9 @@ description: "Updates golang dependencies and codegen using using hack/update-de
 branding:
   icon: download-cloud
   color: green
-inputs: 
-  branch:  # TODO: move to general template
-    description: "Select a non-default branch"
+inputs:
   release:
-    description: "Target release for knative dependencies (used by Buoy)"
+    description: "Release? (vX.Y) defaults to current release"
   pr-empty-deps:
     description: "If true, send update PRs even for deps changes that don't change vendor. Defaults to false to reduce no-op PR spam."
 outputs:

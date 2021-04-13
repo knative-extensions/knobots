@@ -21,15 +21,16 @@ on:
   workflow_dispatch:
     inputs:
       only-repo:
-        description: "Only autogenerate a single repo (exact match)?"
+        description: "Only autogenerate a single repo (exact match)?"    
       branch:
         description: "Branch Name? (empty for default branch of the respective repository)"
-      release:
-        description: "Release? (vX.Y) defaults to current release"
       reason:
         description: "Justification?"
         required: true
         default: "Cron"
+      release:
+        description: "Release? (vX.Y) defaults to current release"
+        default: "v0.23"
       pr-empty-deps:
         description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
         default: "false"
@@ -89,9 +90,7 @@ jobs:
       with:
         repo: ${{ matrix.name }}
         include: ${{ matrix.include }}
-        branch: "${{ github.event.inputs.branch }}"
         release: "${{ github.event.inputs.release }}"
-        reason: "${{ github.event.inputs.reason }}"
         pr-empty-deps: "${{ github.event.inputs.pr-empty-deps }}"
 
     - name: Create Pull Request
