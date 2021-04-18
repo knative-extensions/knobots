@@ -115,7 +115,7 @@ jobs:
 	        /assign $${{ matrix.assignees }}
 
 	        Produced by: ${{ github.repository }}/actions/update-actions
-
+          
         	Details:
 	        ```
           ${{ steps.work.outputs.log }}
