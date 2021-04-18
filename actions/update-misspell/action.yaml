@@ -1,14 +1,14 @@
 # update-deps.yml
-name: "Run Gofmt and Goimport"
-description: "Automatic golang formatting and import ordering"
+name: "Fix Misspellings"
+description: "Automatic spelling correction"
 branding:
-  icon: smile
+  icon: pen-tool
   color: green
 outputs:
   create_pr:
     description: "Whether a PR should be created because there were meaningful changes"
   deplog:
-    description: "Report on module changes"
+    description: "Report on spelling changes"
 runs:
   using: 'docker'
   image: 'Dockerfile'
