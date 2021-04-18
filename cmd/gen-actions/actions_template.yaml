@@ -35,11 +35,6 @@ on:
 jobs:
   meta:
     runs-on: ubuntu-latest
-    env:
-      #########################################
-      #   Update this section each release.   #
-      RELEASE: 'v0.22'
-      #########################################
     outputs:
       includes: {{github "steps.load-matrix.outputs.includes"}}
       names: {{github "steps.load-matrix.outputs.names"}}

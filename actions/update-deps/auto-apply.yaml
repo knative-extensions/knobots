@@ -4,7 +4,6 @@ title: "Update Deps and Codegen"
 inputs:
 - name: release
   description: "Release? (vX.Y) defaults to current release"
-  default: "v0.23"
 - name: pr-empty-deps
   description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
   default: "false"

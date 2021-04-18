@@ -28,7 +28,6 @@ on:
         default: "Cron"
       release:
         description: "Release? (vX.Y) defaults to current release"
-        default: "v0.23"
       pr-empty-deps:
         description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
         default: "false"
@@ -39,11 +38,6 @@ on:
 jobs:
   meta:
     runs-on: ubuntu-latest
-    env:
-      #########################################
-      #   Update this section each release.   #
-      RELEASE: 'v0.22'
-      #########################################
     outputs:
       includes: ${{ steps.load-matrix.outputs.includes }}
       names: ${{ steps.load-matrix.outputs.names }}
@@ -119,6 +113,7 @@ jobs:
           upgrade to latest dependencies
           
           ${{ steps.work.outputs.log }}
+          
         title: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}
