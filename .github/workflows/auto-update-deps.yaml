@@ -121,7 +121,7 @@ jobs:
           ${{ steps.work.outputs.deplog }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
         body: |
-          ${{ github.event.inputs.reason }} -${{ github.actor }}
+          ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}
 
           /cc ${{ matrix.assignees }}
           /assign $${{ matrix.assignees }}
@@ -147,4 +147,4 @@ jobs:
         SLACK_TITLE: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies for ${{ matrix.name }} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
+          ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}

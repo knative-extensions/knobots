@@ -109,7 +109,7 @@ jobs:
           {{join (split .CommitMessage "\n") "\n          "}}
         title: "{{.PRTitle}}"
         body: |
-          {{github `github.event.inputs.reason`}} -{{github "github.actor"}}
+          {{github `github.event.inputs.reason || 'Cron'`}} -{{github "github.actor"}}
 
           /cc {{github "matrix.assignees"}}
           /assign ${{github "matrix.assignees"}}
@@ -135,4 +135,4 @@ jobs:
         SLACK_TITLE: "{{.PRTitle}} for {{github "matrix.name"}} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/{{github "github.repository"}}/actions/runs/{{github "github.run_id"}}
-          {{github "github.event.inputs.reason" `|| "Cron"`}} -{{github "github.actor"}}
+          {{github "github.event.inputs.reason" `|| 'Cron'`}} -{{github "github.actor"}}
