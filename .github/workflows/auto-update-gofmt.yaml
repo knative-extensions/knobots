@@ -109,7 +109,7 @@ jobs:
           ${{ steps.work.outputs.deplog }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Format Go code"
         body: |
-          ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
+          ${{ github.event.inputs.reason }} -${{ github.actor }}
 
           /cc ${{ matrix.assignees }}
           /assign $${{ matrix.assignees }}
