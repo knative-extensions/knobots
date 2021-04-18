@@ -108,7 +108,8 @@ jobs:
         done
 
         function release_labels() {
-          git diff | grep 'knative.dev/release' | tr -s ' '
+          # If grep matches no lines (exit code == 1) make this a noop since pipefail is on
+          git diff | { grep 'knative.dev/release' || [[ $? == 1 ]]; } | tr -s ' '
         }
 
         # Prior to the 'sed' we have output in the following format:
@@ -118,7 +119,9 @@ jobs:
         #
         ref_count=$(release_labels | sed 's/.* "\(.*\)"$/\1/' | cut -d '-' -f2 | sort -u | wc -l)
 
-        if [[ "$ref_count" -eq 1 ]]; then
+        if [[ "$ref_count" -lt 2 ]]; then
+          # For debugging
+          release_labels | sort -u
           echo "::warning file=.github.js,line=1::${{matrix.nightly}} -  skipping bump no changes"
           exit 0
         fi
