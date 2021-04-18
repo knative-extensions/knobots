@@ -18,5 +18,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    RELEASE: ${{ inputs.release }}
+    RELEASE: ${{ inputs.release || "v0.23" }}
     FORCE_DEPS: ${{ inputs.pr-empty-deps }}

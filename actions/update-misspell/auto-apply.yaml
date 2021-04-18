@@ -4,20 +4,8 @@ title: "Fix Misspellings"
 # No special inputs needed.
 
 prTitle: "[${{ steps.inferbranch.outputs.branch }}] Fix spelling"
-prBody: |
-  ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
-
-  /cc ${{ matrix.assignees }}
-  /assign ${{ matrix.assignees }}
-
-  Produced by: ${{ github.repository }}/actions/update-misspell
-
-  Details:
-  ```
-  ${{ steps.updatedeps.outputs.deplog }}
-  ```
 
 commitMessage: |
-  Format go code
+  Fix spelling
 
-  ${{ steps.work.outputs.deplog }}
+  ${{ steps.work.outputs.log }}

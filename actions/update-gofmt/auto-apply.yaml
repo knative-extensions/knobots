@@ -4,20 +4,8 @@ title: "Run Gofmt and Goimport"
 # No special inputs needed.
 
 prTitle: "[${{ steps.inferbranch.outputs.branch }}] Format Go code"
-prBody: |
-  ${{ github.event.inputs.reason }} -${{ github.actor }}
-
-  /cc ${{ matrix.assignees }}
-  /assign ${{ matrix.assignees }}
-
-  Produced by: ${{ github.repository }}/actions/update-gofmt
-
-  Details:
-  ```
-  ${{ steps.updatedeps.outputs.deplog }}
-  ```
 
 commitMessage: |
   Format go code
 
-  ${{ steps.work.outputs.deplog }}
+  ${{ steps.work.outputs.log }}

@@ -104,9 +104,9 @@ jobs:
         delete-branch: true
 
         commit-message: |
-          Format go code
+          Update actions
           
-          ${{ steps.work.outputs.deplog }}
+          ${{ steps.work.outputs.log }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}

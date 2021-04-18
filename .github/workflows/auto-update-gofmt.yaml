@@ -106,7 +106,7 @@ jobs:
         commit-message: |
           Format go code
           
-          ${{ steps.work.outputs.deplog }}
+          ${{ steps.work.outputs.log }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Format Go code"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}

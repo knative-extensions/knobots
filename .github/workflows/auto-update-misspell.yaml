@@ -104,9 +104,9 @@ jobs:
         delete-branch: true
 
         commit-message: |
-          Format go code
+          Fix spelling
           
-          ${{ steps.work.outputs.deplog }}
+          ${{ steps.work.outputs.log }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Fix spelling"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}

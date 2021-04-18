@@ -118,7 +118,7 @@ jobs:
         commit-message: |
           upgrade to latest dependencies
           
-          ${{ steps.work.outputs.deplog }}
+          ${{ steps.work.outputs.log }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}

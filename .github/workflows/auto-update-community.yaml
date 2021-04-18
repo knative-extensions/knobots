@@ -104,10 +104,10 @@ jobs:
         delete-branch: true
 
         commit-message: |
-          Format go code
+          Update community files
           
-          ${{ steps.work.outputs.deplog }}
-        title: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
+          ${{ steps.work.outputs.log }}
+        title: "[${{ steps.inferbranch.outputs.branch }}] Update community files"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}
 
@@ -132,7 +132,7 @@ jobs:
         SLACK_CHANNEL: ${{ matrix.channel }}
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
-        SLACK_TITLE: "[${{ steps.inferbranch.outputs.branch }}] Update actions for ${{ matrix.name }} failed."
+        SLACK_TITLE: "[${{ steps.inferbranch.outputs.branch }}] Update community files for ${{ matrix.name }} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}

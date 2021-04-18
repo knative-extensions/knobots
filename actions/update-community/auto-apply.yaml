@@ -3,24 +3,12 @@ title: "Update community"
 
 # No special inputs needed.
 
-prTitle: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
+prTitle: "[${{ steps.inferbranch.outputs.branch }}] Update community files"
 repos:
   main: "${{ matrix.name }}"
   meta: "knative/community"
-prBody: |
-  ${{ github.event.inputs.reason }} -${{ github.actor }}
-
-  /cc ${{ matrix.assignees }}
-  /assign ${{ matrix.assignees }}
-
-  Produced by: ${{ github.repository }}/actions/update-community
-
-  Details:
-  ```
-  ${{ steps.updatedeps.outputs.deplog }}
-  ```
 
 commitMessage: |
-  Format go code
+  Update community files
 
-  ${{ steps.work.outputs.deplog }}
+  ${{ steps.work.outputs.log }}
