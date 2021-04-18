@@ -109,13 +109,13 @@ jobs:
           {{join (split .CommitMessage "\n") "\n          "}}
         title: "{{.PRTitle}}"
         body: |
-          {{github `github.event.inputs.reason || "Cron"`}} -{{github "github.actor"}}
-          
+          {{github `github.event.inputs.reason`}} -{{github "github.actor"}}
+
         	/cc {{github "matrix.assignees"}}
 	        /assign ${{github "matrix.assignees"}}
-          
+
 	        Produced by: {{github "github.repository"}}/actions/{{.Action}}
-          
+
         	Details:
 	        ```
           {{github "steps.work.outputs.log"}}

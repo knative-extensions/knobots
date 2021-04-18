@@ -109,13 +109,13 @@ jobs:
           ${{ steps.work.outputs.deplog }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
         body: |
-          ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
-          
+          ${{ github.event.inputs.reason }} -${{ github.actor }}
+
         	/cc ${{ matrix.assignees }}
 	        /assign $${{ matrix.assignees }}
-          
+
 	        Produced by: ${{ github.repository }}/actions/update-community
-          
+
         	Details:
 	        ```
           ${{ steps.work.outputs.log }}
