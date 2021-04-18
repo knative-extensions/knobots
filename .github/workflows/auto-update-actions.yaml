@@ -110,10 +110,10 @@ jobs:
         title: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
         body: |
           ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
-
+          
         	/cc ${{ matrix.assignees }}
 	        /assign $${{ matrix.assignees }}
-
+          
 	        Produced by: ${{ github.repository }}/actions/update-actions
           
         	Details:

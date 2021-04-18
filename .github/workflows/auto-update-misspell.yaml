@@ -110,10 +110,10 @@ jobs:
         title: "[${{ steps.inferbranch.outputs.branch }}] Fix spelling"
         body: |
           ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
-
+          
         	/cc ${{ matrix.assignees }}
 	        /assign $${{ matrix.assignees }}
-
+          
 	        Produced by: ${{ github.repository }}/actions/update-misspell
           
         	Details:

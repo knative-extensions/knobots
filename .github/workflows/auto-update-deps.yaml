@@ -122,10 +122,10 @@ jobs:
         title: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
         body: |
           ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
-
+          
         	/cc ${{ matrix.assignees }}
 	        /assign $${{ matrix.assignees }}
-
+          
 	        Produced by: ${{ github.repository }}/actions/update-deps
           
         	Details:
