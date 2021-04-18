@@ -1,0 +1,11 @@
+shortName: gofmt
+title: "Format Markdown"
+
+# No special inputs needed.
+
+prTitle: "[${{ steps.inferbranch.outputs.branch }}] Format markdown"
+
+commitMessage: |
+  Format markdown
+
+  ${{ steps.work.outputs.log }}

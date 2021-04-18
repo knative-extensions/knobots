@@ -1,0 +1,14 @@
+# update-deps.yml
+name: "Format Markdown"
+description: "Format Markdown with prettier"
+branding:
+  icon: star
+  color: blue
+outputs:
+  create_pr:
+    description: "Whether a PR should be created because there were meaningful changes"
+  log:
+    description: "Log of changes"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
