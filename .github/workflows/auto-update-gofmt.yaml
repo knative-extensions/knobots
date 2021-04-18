@@ -63,7 +63,7 @@ jobs:
         include: ${{ fromJson(needs.meta.outputs.includes) }}
     steps:
     
-    - name: Checkout  code
+    - name: Checkout config code
       uses: actions/checkout@v2
       with:
         path: config

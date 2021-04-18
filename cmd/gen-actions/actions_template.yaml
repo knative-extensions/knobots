@@ -67,7 +67,7 @@ jobs:
         include: {{github "fromJson(needs.meta.outputs.includes)"}}
     steps:
     {{range $path, $reporef := .Repos}}
-    - name: Checkout {{$reporef.Name}} code
+    - name: Checkout {{if $reporef.Name}}{{$reporef.Name}}{{else}}{{$path}}{{end}} code
       uses: actions/checkout@v2
       with:
         path: {{$path}}{{if $reporef.Name}}
