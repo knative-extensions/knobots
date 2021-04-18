@@ -1,0 +1,26 @@
+shortName: gofmt
+title: "Update actions"
+
+# No special inputs needed.
+
+prTitle: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
+repos:
+  main: "${{ matrix.name }}"
+  meta: "${{ matrix.meta-organization }}/.github"
+prBody: |
+  ${{ github.event.inputs.reason }} -${{ github.actor }}
+
+  /cc ${{ matrix.assignees }}
+  /assign ${{ matrix.assignees }}
+
+  Produced by: ${{ github.repository }}/actions/update-actions
+
+  Details:
+  ```
+  ${{ steps.updatedeps.outputs.deplog }}
+  ```
+
+commitMessage: |
+  Format go code
+
+  ${{ steps.work.outputs.deplog }}

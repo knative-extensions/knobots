@@ -16,24 +16,22 @@
 
 set -e
 
-deplog=""
-
+log=""
 create_pr="false"
 
-# Determine the name of the go module.
+cd main
+
 if [[ ! -f go.mod ]]; then
     echo "No go mod, skipping..."
-    exit(0)
 else
-
     export FILES=( $(find -path './vendor' -prune -o -path './third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print) )
     export GENFILES= ( $(git ls-files | xargs git check-attr linguist-generated | grep 'true$' | cut -d: -f1) )
     for i in "${GENFILES[@]}"; do
         FILES=(${FILES[@]//*$i*})
     done
     if (( ${#FILES[@]} > 0 )); then
-        deplog=$(goimports -w "${FILES[@]}")
-        deplog=$deplog $(gofmt -s -w "${FILES[@]}")
+        log=$(goimports -w "${FILES[@]}")
+        log="$log $(gofmt -s -w "${FILES[@]}")"
         create_pr="true"
     else
         echo No Go files found.
@@ -42,4 +40,4 @@ fi
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 echo "::set-output name=create_pr::${create_pr}"
 
-echo "::set-output name=deplog::$deplog"
+echo "::set-output name=log::$log"

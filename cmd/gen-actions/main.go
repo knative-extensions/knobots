@@ -73,13 +73,26 @@ func handleDir(path string, templ *template.Template) error {
 		return fmt.Errorf("Unable to read %q: %w", metafile, err)
 	}
 	c := conf{}
+	c.Repos = map[string]RepoRef{}
+	// Set defaults before parsing c
+	c.PRBody = `${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
+
+	/cc ${{ matrix.assignees }}
+	/assign ${{ matrix.assignees }}
+  
+	Produced by: ${{ github.repository }}/actions/${{}}
+  
+	Details:
+	` + "```\n" + `${{ steps.updatedeps.outputs.deplog }}` + "\n```"
+	c.Repos["config"] = RepoRef{} // Empty Name means "this repo"
+	c.Repos["main"] = RepoRef{Name: "${{ matrix.name }}"}
 	if err := yaml.Unmarshal(bytes, &c); err != nil {
 		return fmt.Errorf("Unable to parse %q: %w", metafile, err)
 	}
+	c.Action = path
 	// Deliberately using unix path convertion here.
 	c.ActionRef = "${{ github.repository }}/actions/" + path + "@${{ github.sha }}"
-	c.ActionRef = "evankanderson/knobots/actions/" + path + "@react"
-	c.Action = path
+	c.ActionRef = "./config/actions/" + path
 
 	outfileName := filepath.Join(".github", "workflows", "auto-"+path+".yaml")
 	outfile, err := os.OpenFile(outfileName, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
@@ -102,6 +115,7 @@ type conf struct {
 	PRTitle       string `yaml:"prTitle"`
 	PRBody        string `yaml:"prBody"`
 	CommitMessage string `yaml:"commitMessage"`
+	Repos         map[string]RepoRef
 	Inputs        []Input
 	// With allows passing _extra_ inputs to the action; all inputs will automatically be passed
 	With map[string]string
@@ -112,6 +126,11 @@ type Input struct {
 	Description string
 	Required    bool
 	Default     string
+}
+
+type RepoRef struct {
+	Name string
+	Ref  string
 }
 
 // GitHub returns a github variable substitution

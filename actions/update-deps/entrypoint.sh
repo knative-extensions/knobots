@@ -18,6 +18,8 @@ set -e
 
 deplog=""
 
+cd main
+
 # Determine the name of the go module.
 if [[ -f go.mod ]]; then
     export MODULE_NAME=$(go mod graph | cut -d' ' -f 1 | grep -v '@' | head -1)
@@ -70,6 +72,4 @@ done
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 echo "::set-output name=create_pr::${create_pr}"
 
-
-
-echo "::set-output name=deplog::$deplog"
+echo "::set-output name=log::$deplog"

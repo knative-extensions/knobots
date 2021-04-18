@@ -19,17 +19,18 @@ set -e
 log=""
 create_pr="false"
 
-cd main
-
-export files=( $(find . -type f -not -path './vendor/*' -not -path './third-party/*' -not -path './.git/*') )
-
-if (( ${#FILES[@]} > 0 )); then
-    log=$(misspell -i importas -w "${FILES[@]}" )
-    create_pr="true"
-else
-    echo No files found.
+FILE="OWNERS_ALIASES"
+if [ "${ORGANIZATION}" != "knative" ] ; then
+  FILE="${ORGANIZATION}-OWNERS_ALIASES"
 fi
+
+if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
+  cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
+  create_pr="true"
+fi
+# TODO: copy other files over, like CODE-OF-CONDUCT.md
+
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 echo "::set-output name=create_pr::${create_pr}"
 
-echo "::set-output name=log::$log"
+echo "::set-output name=log::${log}"

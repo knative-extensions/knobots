@@ -5,7 +5,7 @@ title: "Fix Misspellings"
 
 prTitle: "[${{ steps.inferbranch.outputs.branch }}] Fix spelling"
 prBody: |
-  ${{ github.event.inputs.reason }} -${{ github.actor }}
+  ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
 
   /cc ${{ matrix.assignees }}
   /assign ${{ matrix.assignees }}

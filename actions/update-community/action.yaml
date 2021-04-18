@@ -1,14 +1,14 @@
 # update-deps.yml
-name: "Run Gofmt and Goimport"
-description: "Automatic golang formatting and import ordering"
+name: "Update community"
+description: "Update community files such as OWNERS_ALIASES"
 branding:
-  icon: smile
+  icon: users
   color: green
 outputs:
   create_pr:
     description: "Whether a PR should be created because there were meaningful changes"
   log:
-    description: "Report on module changes"
+    description: "Log of changes"
 runs:
   using: 'docker'
   image: 'Dockerfile'

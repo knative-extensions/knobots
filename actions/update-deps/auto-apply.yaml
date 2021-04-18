@@ -8,6 +8,13 @@ inputs:
 - name: pr-empty-deps
   description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
   default: "false"
+- name: branch
+  description: "Branch Name? (empty for default branch of the respective repository)"
+
+repos:
+  main:
+    name: "${{ matrix.name }}"
+    ref: "${{ github.event.inputs.branch }}"
 
 prTitle: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
 prBody: |

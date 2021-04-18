@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Run Gofmt and Goimport
+name: Update actions
 
 on:
   schedule:
@@ -85,7 +85,7 @@ jobs:
 
     - name: Apply work
       id: work
-      uses: "./config/actions/update-gofmt"
+      uses: "./config/actions/update-actions"
       with:
         repo: ${{ matrix.name }}
         include: ${{ matrix.include }}
@@ -107,14 +107,14 @@ jobs:
           Format go code
           
           ${{ steps.work.outputs.deplog }}
-        title: "[${{ steps.inferbranch.outputs.branch }}] Format Go code"
+        title: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
         body: |
           ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
 
         	/cc ${{ matrix.assignees }}
 	        /assign $${{ matrix.assignees }}
 
-	        Produced by: ${{ github.repository }}/actions/update-gofmt
+	        Produced by: ${{ github.repository }}/actions/update-actions
 
         	Details:
 	        ```
@@ -132,7 +132,7 @@ jobs:
         SLACK_CHANNEL: ${{ matrix.channel }}
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
-        SLACK_TITLE: "[${{ steps.inferbranch.outputs.branch }}] Format Go code for ${{ matrix.name }} failed."
+        SLACK_TITLE: "[${{ steps.inferbranch.outputs.branch }}] Update actions for ${{ matrix.name }} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}

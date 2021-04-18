@@ -7,7 +7,7 @@ branding:
 outputs:
   create_pr:
     description: "Whether a PR should be created because there were meaningful changes"
-  deplog:
+  log:
     description: "Report on spelling changes"
 runs:
   using: 'docker'

@@ -21,9 +21,7 @@ on:
   workflow_dispatch:
     inputs:
       only-repo:
-        description: "Only autogenerate a single repo (exact match)?"    
-      branch:
-        description: "Branch Name? (empty for default branch of the respective repository)"
+        description: "Only autogenerate a single repo (exact match)?"
       reason:
         description: "Justification?"
         required: true
@@ -68,18 +66,21 @@ jobs:
         name: {{github "fromJson(needs.meta.outputs.names)"}}
         include: {{github "fromJson(needs.meta.outputs.includes)"}}
     steps:
-    # TODO: parameterize checkouts and paths
-    - name: Checkout repo code
+    {{range $path, $reporef := .Repos}}
+    - name: Checkout {{$reporef.Name}} code
       uses: actions/checkout@v2
       with:
-        repository: {{github "matrix.name"}}
-        ref: {{github "github.event.inputs.branch"}}
+        path: {{$path}}{{if $reporef.Name}}
+        repository: {{$reporef.Name}}{{end}}{{if $reporef.Ref}}
+        ref: {{$reporef.Ref}}{{end}}
+    {{end}}
   
     # This is required because the branch setting might be empty (to infer a default), so
     # after checkout we fetch what the checkout action decided to check out.
     - name: Infer branch from checkout
       id: inferbranch
       run: |
+        cd main
         echo "::set-output name=branch::$(git branch --show-current)"
 
     - name: Apply work
@@ -108,7 +109,17 @@ jobs:
           {{join (split .CommitMessage "\n") "\n          "}}
         title: "{{.PRTitle}}"
         body: |
-          {{join (split .PRBody "\n") "\n          "}}
+          {{github `github.event.inputs.reason || "Cron"`}} -{{github "github.actor"}}
+
+        	/cc {{github "matrix.assignees"}}
+	        /assign ${{github "matrix.assignees"}}
+
+	        Produced by: {{github "github.repository"}}/actions/{{.Action}}
+
+        	Details:
+	        ```
+          {{github "steps.work.outputs.log"}}
+          ```
 
     - name: Report error
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -124,4 +135,4 @@ jobs:
         SLACK_TITLE: "{{.PRTitle}} for {{github "matrix.name"}} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/{{github "github.repository"}}/actions/runs/{{github "github.run_id"}}
-          {{github "github.event.inputs.reason"}} -{{github "github.actor"}}
+          {{github "github.event.inputs.reason" `|| "Cron"`}} -{{github "github.actor"}}

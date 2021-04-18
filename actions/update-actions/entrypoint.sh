@@ -17,18 +17,20 @@
 set -e
 
 log=""
+
 create_pr="false"
 
-cd main
+mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows"
+cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates -type f -name '*.yaml') \
+  "${GITHUB_WORKSPACE}/main/.github/workflows"
+yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
+  jq -r "(.[\"${ORGANIZATION}/${REPO}\"] // {\"omit\": []}).omit[] + \"*\"" | \
+  while read GLOB; do
+    rm "${GITHUB_WORKSPACE}/main/.github/workflows/${GLOB}"
+  done
 
-export files=( $(find . -type f -not -path './vendor/*' -not -path './third-party/*' -not -path './.git/*') )
+create_pr="true"
 
-if (( ${#FILES[@]} > 0 )); then
-    log=$(misspell -i importas -w "${FILES[@]}" )
-    create_pr="true"
-else
-    echo No files found.
-fi
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 echo "::set-output name=create_pr::${create_pr}"
 

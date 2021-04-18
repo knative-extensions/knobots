@@ -1,0 +1,20 @@
+# update-deps.yml
+name: "Update actions"
+description: "Update GitHub actions"
+branding:
+  icon: refresh-ccw
+  color: green
+inputs:
+    NAME: ${{ inputs.action-name }}
+    ONLY: ${{ inputs.only-repo }}
+outputs:
+  create_pr:
+    description: "Whether a PR should be created because there were meaningful changes"
+  log:
+    description: "Log of changes"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ORGANIZATION: ${{matrix.meta-organization}}
+    REPO: ${{matrix.}}

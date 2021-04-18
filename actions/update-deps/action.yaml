@@ -12,7 +12,7 @@ inputs:
 outputs:
   create_pr:
     description: "Whether a PR should be created because there were meaningful changes"
-  deplog:
+  log:
     description: "Report on module changes"
 runs:
   using: 'docker'

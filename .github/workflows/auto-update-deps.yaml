@@ -21,9 +21,7 @@ on:
   workflow_dispatch:
     inputs:
       only-repo:
-        description: "Only autogenerate a single repo (exact match)?"    
-      branch:
-        description: "Branch Name? (empty for default branch of the respective repository)"
+        description: "Only autogenerate a single repo (exact match)?"
       reason:
         description: "Justification?"
         required: true
@@ -34,6 +32,8 @@ on:
       pr-empty-deps:
         description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
         default: "false"
+      branch:
+        description: "Branch Name? (empty for default branch of the respective repository)"
       
 
 jobs:
@@ -70,28 +70,37 @@ jobs:
         name: ${{ fromJson(needs.meta.outputs.names) }}
         include: ${{ fromJson(needs.meta.outputs.includes) }}
     steps:
-    # TODO: parameterize checkouts and paths
-    - name: Checkout repo code
+    
+    - name: Checkout  code
       uses: actions/checkout@v2
       with:
+        path: config
+    
+    - name: Checkout ${{ matrix.name }} code
+      uses: actions/checkout@v2
+      with:
+        path: main
         repository: ${{ matrix.name }}
         ref: ${{ github.event.inputs.branch }}
+    
   
     # This is required because the branch setting might be empty (to infer a default), so
     # after checkout we fetch what the checkout action decided to check out.
     - name: Infer branch from checkout
       id: inferbranch
       run: |
+        cd main
         echo "::set-output name=branch::$(git branch --show-current)"
 
     - name: Apply work
       id: work
-      uses: "evankanderson/knobots/actions/update-deps@react"
+      uses: "./config/actions/update-deps"
       with:
         repo: ${{ matrix.name }}
         include: ${{ matrix.include }}
         release: "${{ github.event.inputs.release }}"
         pr-empty-deps: "${{ github.event.inputs.pr-empty-deps }}"
+        branch: "${{ github.event.inputs.branch }}"
 
     - name: Create Pull Request
       id: cpr
@@ -112,18 +121,17 @@ jobs:
           ${{ steps.work.outputs.deplog }}
         title: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
         body: |
-          ${{ github.event.inputs.reason }} -${{ github.actor }}
-          
-          /cc ${{ matrix.assignees }}
-          /assign ${{ matrix.assignees }}
-          
-          Produced by: ${{ github.repository }}/actions/update-deps
-          
-          Details:
+          ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
+
+        	/cc ${{ matrix.assignees }}
+	        /assign $${{ matrix.assignees }}
+
+	        Produced by: ${{ github.repository }}/actions/update-deps
+
+        	Details:
+	        ```
+          ${{ steps.work.outputs.log }}
           ```
-          ${{ steps.updatedeps.outputs.deplog }}
-          ```
-          
 
     - name: Report error
       uses: rtCamp/action-slack-notify@v2.1.0
@@ -139,4 +147,4 @@ jobs:
         SLACK_TITLE: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies for ${{ matrix.name }} failed."
         SLACK_MESSAGE: |
           For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          ${{ github.event.inputs.reason }} -${{ github.actor }}
+          ${{ github.event.inputs.reason || "Cron" }} -${{ github.actor }}
