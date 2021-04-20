@@ -22,5 +22,5 @@ runs:
     # CHANGE THIS LINE AFTER RELEASE
     # This should point to the _upcoming_ release
     # *******************************************
-    RELEASE: ${{ inputs.release || "v0.23" }}
+    RELEASE: ${{ inputs.release || 'v0.23' }}
     FORCE_DEPS: ${{ inputs.pr-empty-deps }}
