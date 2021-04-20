@@ -91,6 +91,7 @@ jobs:
       uses: "./config/actions/update-deps"
       with:
         repo: ${{ matrix.name }}
+        organization: ${{ matrix.meta-organization }}
         include: ${{ matrix.include }}
         release: "${{ github.event.inputs.release }}"
         pr-empty-deps: "${{ github.event.inputs.pr-empty-deps }}"
@@ -101,13 +102,18 @@ jobs:
       if: ${{ env.create_pr == 'true' }}
       uses: peter-evans/create-pull-request@v3
       with:
+        # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         committer: "Knative Automation <automation@knative.team>"
         author: "Knative Automation <automation@knative.team>"
+
+        # Where to stage the change
         push-to-fork: ${{ matrix.fork }}
         branch: auto-updates/update-deps-${{ steps.inferbranch.outputs.branch }}
         signoff: true
         delete-branch: true
+        # Note this is hard-coded based on the added repos in main.go
+        path: main
 
         commit-message: |
           upgrade to latest dependencies

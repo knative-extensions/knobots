@@ -5,8 +5,10 @@ branding:
   icon: refresh-ccw
   color: green
 inputs:
-    NAME: ${{ inputs.action-name }}
-    ONLY: ${{ inputs.only-repo }}
+  organization:
+    description: 'The organization that the actions should be copied for.'
+  repo:
+    description: 'The repo being copied to, for repo-specific customizations.'
 outputs:
   create_pr:
     description: "Whether a PR should be created because there were meaningful changes"
@@ -17,4 +19,4 @@ runs:
   image: 'Dockerfile'
   env:
     ORGANIZATION: ${{matrix.meta-organization}}
-    REPO: ${{matrix.}}
+    REPO: ${{matrix.name}}

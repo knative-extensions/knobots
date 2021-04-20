@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM node:current
 
 RUN npm install --global prettier
 
