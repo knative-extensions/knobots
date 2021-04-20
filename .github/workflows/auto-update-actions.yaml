@@ -25,7 +25,6 @@ on:
       reason:
         description: "Justification?"
         required: true
-        default: "Cron"
       
 
 jobs:

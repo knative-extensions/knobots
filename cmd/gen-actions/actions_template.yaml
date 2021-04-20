@@ -25,7 +25,6 @@ on:
       reason:
         description: "Justification?"
         required: true
-        default: "Cron"
       {{range .Inputs}}{{.Name}}:
         description: "{{.Description}}"{{if .Required}}
         required: {{.Required}}{{end}}{{if .Default}}

@@ -25,7 +25,6 @@ on:
       reason:
         description: "Justification?"
         required: true
-        default: "Cron"
       release:
         description: "Release? (vX.Y) defaults to current release"
       pr-empty-deps:
