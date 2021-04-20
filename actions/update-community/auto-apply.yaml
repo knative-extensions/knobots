@@ -5,8 +5,10 @@ title: "Update community"
 
 prTitle: "[${{ steps.inferbranch.outputs.branch }}] Update community files"
 repos:
-  main: "${{ matrix.name }}"
-  meta: "knative/community"
+  main:
+    name: "${{ matrix.name }}"
+  meta:
+    name: "knative/community"
 
 commitMessage: |
   Update community files

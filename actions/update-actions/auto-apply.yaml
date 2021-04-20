@@ -5,8 +5,10 @@ title: "Update actions"
 
 prTitle: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
 repos:
-  main: "${{ matrix.name }}"
-  meta: "${{ matrix.meta-organization }}/.github"
+  main:
+    name: "${{ matrix.name }}"
+  meta:
+    name: "${{ matrix.meta-organization }}/.github"
 
 commitMessage: |
   Update actions

@@ -68,6 +68,12 @@ jobs:
         path: main
         repository: ${{ matrix.name }}
     
+    - name: Checkout ${{ matrix.meta-organization }}/.github code
+      uses: actions/checkout@v2
+      with:
+        path: meta
+        repository: ${{ matrix.meta-organization }}/.github
+    
   
     # This is required because the branch setting might be empty (to infer a default), so
     # after checkout we fetch what the checkout action decided to check out.
