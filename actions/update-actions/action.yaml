@@ -18,5 +18,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    ORGANIZATION: ${{matrix.meta-organization}}
-    REPO: ${{matrix.name}}
+    ORGANIZATION: ${{inputs.organization}}
+    REPO: ${{inputs.repo}}
