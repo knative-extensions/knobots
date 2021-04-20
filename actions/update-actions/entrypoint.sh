@@ -21,10 +21,10 @@ log=""
 create_pr="false"
 
 mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows"
-cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates -type f -name '*.yaml') \
+cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
   "${GITHUB_WORKSPACE}/main/.github/workflows"
 yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
-  jq -r "(.[\"${ORGANIZATION}/${REPO}\"] // {\"omit\": []}).omit[] + \"*\"" | \
+  jq -r '(.["${ORGANIZATION}/${REPO}"] // {"omit": []}).omit[] + "*"' | \
   while read GLOB; do
     rm "${GITHUB_WORKSPACE}/main/.github/workflows/${GLOB}"
   done
