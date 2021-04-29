@@ -1,0 +1,143 @@
+# Copyright 2021 The Knative Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+##
+## This file is auto-generated from actions/{{.Action}}/auto-apply.yaml
+## by ./cmd/gen-actions
+##
+
+name: {{.Title}}
+
+on:
+  schedule:
+    - cron: '0 1,13 * * 1-5' # 6am/pm Pacific on weekdays
+
+  workflow_dispatch:
+    inputs:
+      only-repo:
+        description: "Only autogenerate a single repo (exact match)?"
+      reason:
+        description: "Justification?"
+        required: true
+      {{range .Inputs}}{{.Name}}:
+        description: "{{.Description}}"{{if .Required}}
+        required: {{.Required}}{{end}}{{if .Default}}
+        default: "{{.Default}}"{{end}}
+      {{end}}
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      includes: {{github "steps.load-matrix.outputs.includes"}}
+      names: {{github "steps.load-matrix.outputs.names"}}
+
+    steps:
+    - name: Check out knobots configuration
+      uses: actions/checkout@v2
+
+    - name: Calculate affected repos
+      id: load-matrix
+      uses: "./actions/calculate-matrix"
+      with:
+        action-name: {{.ShortName}}
+        only-repo: {{github "github.event.inputs.only-repo"}}
+
+  apply-change:
+    name: "Apply Change" # TODO: from metadata?
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        name: {{github "fromJson(needs.meta.outputs.names)"}}
+        include: {{github "fromJson(needs.meta.outputs.includes)"}}
+    steps:
+    {{range $path, $reporef := .Repos}}
+    - name: Checkout {{if $reporef.Name}}{{$reporef.Name}}{{else}}{{$path}}{{end}} code
+      uses: actions/checkout@v2
+      with:
+        path: {{$path}}{{if $reporef.Name}}
+        repository: {{$reporef.Name}}{{end}}{{if $reporef.Ref}}
+        ref: {{$reporef.Ref}}{{end}}
+    {{end}}
+  
+    # This is required because the branch setting might be empty (to infer a default), so
+    # after checkout we fetch what the checkout action decided to check out.
+    - name: Infer branch from checkout
+      id: inferbranch
+      run: |
+        cd main
+        echo "::set-output name=branch::$(git branch --show-current)"
+
+    - name: Apply work
+      id: work
+      uses: "{{.ActionRef}}"
+      with:
+        repo: {{github "matrix.name"}}
+        organization: {{github "matrix.meta-organization"}}
+        include: {{github "matrix.include"}}{{range .Inputs}}
+        {{.Name}}: "{{github (printf "github.event.inputs.%s" .Name)}}"{{end}}{{range $key, $value := .With}}
+        {{$key}}: "{{$value}}"{{end}}
+
+    - name: Create Pull Request
+      id: cpr
+      if: {{github `env.create_pr == 'true'`}}
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like
+        token: {{github "secrets.PERSONAL_ACCESS_TOKEN"}}
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
+
+        # Where to stage the change
+        push-to-fork: {{github "matrix.fork"}}
+        branch: auto-updates/{{.Action}}-{{github "steps.inferbranch.outputs.branch"}}
+        signoff: true
+        delete-branch: true
+        # Note this is hard-coded based on the added repos in main.go
+        path: main
+
+        commit-message: |
+          {{join (split .CommitMessage "\n") "\n          "}}
+        title: "{{.PRTitle}}"
+        body: |
+          {{github `github.event.inputs.reason || 'Cron'`}} -{{github "github.actor"}}
+
+          /cc {{github "matrix.assignees"}}
+          /assign ${{github "matrix.assignees"}}
+
+          Produced by: {{github "github.repository"}}/actions/{{.Action}}
+
+          Details:
+          ```
+          {{github "steps.work.outputs.log"}}
+          ```
+
+    - name: Report error
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: {{github "failure()"}}
+      env:
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
+        SLACK_WEBHOOK: {{github "secrets.SLACK_WEBHOOK"}}
+
+        SLACK_CHANNEL: {{github "matrix.channel"}}
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: "{{.PRTitle}} for {{github "matrix.name"}} failed."
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/{{github "github.repository"}}/actions/runs/{{github "github.run_id"}}
+          {{github "github.event.inputs.reason" `|| 'Cron'`}} -{{github "github.actor"}}

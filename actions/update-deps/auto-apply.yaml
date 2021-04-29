@@ -1,0 +1,38 @@
+# Copyright 2021 The Knative Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+shortName: deps
+title: "Update Deps and Codegen"
+
+inputs:
+- name: release
+  description: "Release? (vX.Y) defaults to current release"
+- name: pr-empty-deps
+  description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
+  default: "false"
+- name: branch
+  description: "Branch Name? (empty for default branch of the respective repository)"
+
+repos:
+  main:
+    name: "${{ matrix.name }}"
+    ref: "${{ github.event.inputs.branch }}"
+
+prTitle: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
+
+commitMessage: |
+  upgrade to latest dependencies
+
+  ${{ steps.work.outputs.log }}
+
