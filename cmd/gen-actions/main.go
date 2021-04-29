@@ -1,6 +1,6 @@
 package main
 
-// Copyright 2020 The Knative Authors.
+// Copyright 2021 The Knative Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -91,7 +91,6 @@ func handleDir(path string, templ *template.Template) error {
 	}
 	c.Action = path
 	// Deliberately using unix path convertion here.
-	c.ActionRef = "${{ github.repository }}/actions/" + path + "@${{ github.sha }}"
 	c.ActionRef = "./config/actions/" + path
 
 	outfileName := filepath.Join(".github", "workflows", "auto-"+path+".yaml")

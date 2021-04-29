@@ -1,4 +1,4 @@
-# Copyright 2020 The Knative Authors.
+# Copyright 2021 The Knative Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,6 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+##
+## This file is auto-generated from actions/update-gofmt/auto-apply.yaml
+## by ./cmd/gen-actions
+##
 
 name: Run Gofmt and Goimport
 
@@ -107,6 +112,7 @@ jobs:
           Format go code
           
           ${{ steps.work.outputs.log }}
+          
         title: "[${{ steps.inferbranch.outputs.branch }}] Format Go code"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}
