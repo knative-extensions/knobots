@@ -241,11 +241,6 @@
   assignees: 'knative-sandbox/client-writers'
 
 # google
-- name: 'google/exposure-notifications-server'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/exposure-notifications-server'
-  channel: '@helmick'
-  assignees: mikehelmick
 - name: 'google/knative-gcp'
   meta-organization: 'knative' # Pull actions from the Knative org.
   fork: 'knative-automation/knative-gcp'
