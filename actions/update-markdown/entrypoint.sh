@@ -20,6 +20,10 @@ cd main
 
 log=$(prettier --write --prose-wrap=always $(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/))
 
+# Ensure files have the same owner as the checkout directory.
+# See https://github.com/knative-sandbox/knobots/issues/79
+chown -R --reference=. .
+
 echo "::set-output name=create_pr::true"
 
 echo "::set-output name=log::${log}"

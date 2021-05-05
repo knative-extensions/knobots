@@ -37,6 +37,11 @@ else
         echo No Go files found.
     fi
 fi
+
+# Ensure files have the same owner as the checkout directory.
+# See https://github.com/knative-sandbox/knobots/issues/79
+chown -R --reference=. .
+
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 echo "::set-output name=create_pr::${create_pr}"
 
