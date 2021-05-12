@@ -117,7 +117,7 @@ jobs:
           {{github `github.event.inputs.reason || 'Cron'`}} -{{github "github.actor"}}
 
           /cc {{github "matrix.assignees"}}
-          /assign ${{github "matrix.assignees"}}
+          /assign {{github "matrix.assignees"}}
 
           Produced by: {{github "github.repository"}}/actions/{{.Action}}
 
