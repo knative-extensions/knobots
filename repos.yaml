@@ -247,14 +247,6 @@
   # Disabled as too noisy for a low-traffic channel
   # channel: 'knative-gcp'
   assignees: '@nlopezgi @zhongduo'
-- name: 'google/go-containerregistry'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/go-containerregistry'
-  assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
-- name: 'google/ko'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/ko'
-  assignees: '@jonjohnsonjr @ImJasonH @mattmoor'
 
 # vmware-tanzu
 - name: 'vmware-tanzu/sources-for-knative'
