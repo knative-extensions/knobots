@@ -17,6 +17,9 @@ description: "Update community files such as OWNERS_ALIASES"
 branding:
   icon: users
   color: green
+inputs:
+  organization:
+    decription: "The organization that the target repo belongs to"
 outputs:
   create_pr:
     description: "Whether a PR should be created because there were meaningful changes"
@@ -25,3 +28,6 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  env:
+    ORGANIZATION: ${{ inputs.organization }}
+
