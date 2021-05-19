@@ -26,7 +26,10 @@ fi
 
 if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
   cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
+  echo "Copying ${GITHUB_WORKSPACE}/meta/${FILE} -> ${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
   create_pr="true"
+else
+  echo "Could not find ${FILE}, skipping"
 fi
 # TODO: copy other files over, like CODE-OF-CONDUCT.md
 
