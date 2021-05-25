@@ -240,14 +240,6 @@
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
-# google
-- name: 'google/knative-gcp'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/knative-gcp'
-  # Disabled as too noisy for a low-traffic channel
-  # channel: 'knative-gcp'
-  assignees: '@nlopezgi @zhongduo'
-
 # vmware-tanzu
 - name: 'vmware-tanzu/sources-for-knative'
   meta-organization: 'knative' # Pull actions from the Knative org.
