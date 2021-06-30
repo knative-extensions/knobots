@@ -8,5 +8,3 @@
 - "knative-sandbox/kn-plugin-source-kafka"
 # Haven't asked if they want them.
 - "google/exposure-notifications-server"
-# Generated docs have problems
-- "google/go-containerregistry"
