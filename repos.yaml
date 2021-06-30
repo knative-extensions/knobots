@@ -51,6 +51,11 @@
   fork: 'knative-automation/client'
   channel: 'cli'
   assignees: knative/client-wg-leads
+- name: 'knative/release'
+  meta-organization: 'knative'
+  fork: 'knative-automation/release'
+  channel: 'productivity'
+  assignees: knative/knative-release-leads
 
 # knative-sandbox (reconciler test)
 - name: 'knative-sandbox/reconciler-test'
