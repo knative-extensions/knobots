@@ -6,5 +6,3 @@
 - "knative-sandbox/kn-plugin-admin"
 - "knative-sandbox/kn-plugin-sample"
 - "knative-sandbox/kn-plugin-source-kafka"
-# Haven't asked if they want them.
-- "google/exposure-notifications-server"
