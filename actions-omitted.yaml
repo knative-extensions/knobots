@@ -1,16 +1,16 @@
 # Avoid syncing certain actions to certain repos. (For example, go testing from non-go repos.)
 # This uses a glob prefix match (adds * to the end of each omit), so no need to specify '.yaml'
-'knative/website':
+knative-sandbox/kn-plugin-diag:
   omit:
-  - 'knative-go-'
-  - 'knative-releasability'
-  - 'knative-release-notes'
-'knative-sandbox/kperf'
+    - knative-releasability
+knative-sandbox/kn-plugin-quickstart:
   omit:
-  - 'knative-releasability'
-'knative-sandbox/kn-plugin-diag'
+    - knative-releasability
+knative-sandbox/kperf:
   omit:
-  - 'knative-releasability'
-'knative-sandbox/kn-plugin-quickstart'
+    - knative-releasability
+knative/website:
   omit:
-  - 'knative-releasability'
+    - knative-go-
+    - knative-releasability
+    - knative-release-notes
