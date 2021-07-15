@@ -210,6 +210,12 @@
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
+- name: 'knative-sandbox/kn-plugin-func'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-func'
+  channel: 'functions-sandbox'
+  assignees: 'knative-sandbox/kn-plugin-func-approvers'
+
 - name: 'knative-sandbox/kn-plugin-migration'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-migration'
