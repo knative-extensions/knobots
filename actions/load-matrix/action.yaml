@@ -12,10 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang
-
-RUN go get github.com/bronze1man/yaml2json && apt-get update && apt-get install -y jq
-
-COPY entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+name: "Load repo matrix"
+description: "Load the set of repos this action should apply to"
+branding:
+  icon: copy
+  color: blue
+inputs:
+  action-name:
+    description: "Name of action, used to determine excludes."
+    required: true
+  only-repo:
+    description: "Name of a single repo to apply to for this run."
+outputs:
+  include:
+    description: "Repo data structure on selected repos (list)"
+  names:
+    description: "Repo names only (parallel list to repos)"
+runs:
+  using: "node12"
+  main: "index.js"

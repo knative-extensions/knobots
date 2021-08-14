@@ -52,7 +52,7 @@ jobs:
 
     - name: Calculate affected repos
       id: load-matrix
-      uses: "./actions/calculate-matrix"
+      uses: "./actions/load-matrix"
       with:
         action-name: deps
         only-repo: ${{ github.event.inputs.only-repo }}

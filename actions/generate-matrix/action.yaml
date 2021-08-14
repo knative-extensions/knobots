@@ -12,25 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: "Calculate repo matrix"
-description: "Calculate the set of repos this action should apply to"
-branding:
-  icon: copy
-  color: blue
+name: "Generate repo matrix"
+description: "Compute the set of per-repo actions to execute, and store the results in a file."
 inputs:
-  action-name:
-    description: "Name of action, used to determine excludes."
+  configDir:
+    description: "Directory containing configuration listing repos, excludes, etc"
     required: true
-  only-repo:
-    description: "Name of a single repo to apply to for this run."
-outputs:
-  include:
-    description: "Repo data structure on selected repos (list)"
-  names:
-    description: "Repo names only (parallel list to repos)"
+    default: "."
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    NAME: ${{ inputs.action-name }}
-    ONLY: ${{ inputs.only-repo }}
+  using: "node12"
+  main: "index.js"

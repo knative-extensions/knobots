@@ -1,0 +1,665 @@
+{
+  "knative/pkg": {
+    "org": "knative",
+    "fork": "knative-automation/pkg",
+    "slackChannel": "serving-api",
+    "gitHubAssignees": "knative/serving-writers knative/eventing-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative/caching": {
+    "org": "knative",
+    "fork": "knative-automation/caching",
+    "slackChannel": "serving-api",
+    "gitHubAssignees": "knative/serving-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative/networking": {
+    "org": "knative",
+    "fork": "knative-automation/networking",
+    "slackChannel": "networking",
+    "gitHubAssignees": "knative/networking-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative/serving": {
+    "org": "knative",
+    "fork": "knative-automation/serving",
+    "slackChannel": "serving-api",
+    "gitHubAssignees": "knative/serving-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative/eventing": {
+    "org": "knative",
+    "fork": "knative-automation/eventing",
+    "slackChannel": "eventing",
+    "gitHubAssignees": "knative/eventing-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative/operator": {
+    "org": "knative",
+    "fork": "knative-automation/operator",
+    "slackChannel": "operations",
+    "gitHubAssignees": "knative/operations-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative/test-infra": {
+    "org": "knative",
+    "fork": "knative-automation/test-infra",
+    "slackChannel": "productivity",
+    "gitHubAssignees": "knative/productivity-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative/docs": {
+    "org": "knative",
+    "fork": "knative-automation/docs",
+    "slackChannel": "docs",
+    "gitHubAssignees": "knative/serving-writers knative/eventing-writers knative/docs-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {}
+    }
+  },
+  "knative/website": {
+    "org": "knative",
+    "fork": "knative-automation/website",
+    "slackChannel": "docs",
+    "gitHubAssignees": "knative-docs/docs-wg-leads",
+    "actions": {
+      "actions": {
+        "omit": [
+          "knative-go-",
+          "knative-releasability",
+          "knative-release-notes"
+        ]
+      },
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {}
+    }
+  },
+  "knative/client": {
+    "org": "knative",
+    "fork": "knative-automation/client",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative/client-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {}
+    }
+  },
+  "knative/release": {
+    "org": "knative",
+    "fork": "knative-automation/release",
+    "slackChannel": "productivity",
+    "gitHubAssignees": "knative/knative-release-leads",
+    "actions": {
+      "community": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/reconciler-test": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/reconciler-test",
+    "slackChannel": "test",
+    "gitHubAssignees": "knative/eventing-writers knative/serving-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/sample-controller": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/sample-controller",
+    "slackChannel": "serving-api",
+    "gitHubAssignees": "knative-sandbox/api-core-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/sample-source": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/sample-source",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads lberk",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/control-protocol": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/control-protocol",
+    "slackChannel": "eventing-delivery",
+    "gitHubAssignees": "knative-sandbox/channel-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/discovery": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/discovery",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-autoscaler-keda": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-autoscaler-keda",
+    "slackChannel": "eventing-delivery",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-awssqs": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-awssqs",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-ceph": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-ceph",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-couchdb": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-couchdb",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-github": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-github",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-gitlab": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-gitlab",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-kafka": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-kafka",
+    "slackChannel": "eventing-delivery",
+    "gitHubAssignees": "knative-sandbox/channel-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-kafka-broker": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-kafka-broker",
+    "slackChannel": "eventing-delivery",
+    "gitHubAssignees": "knative-sandbox/channel-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-natss": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-natss",
+    "slackChannel": "eventing-delivery",
+    "gitHubAssignees": "knative-sandbox/channel-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-prometheus": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-prometheus",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-rabbitmq": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-rabbitmq",
+    "slackChannel": "eventing-delivery",
+    "gitHubAssignees": "knative-sandbox/channel-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/eventing-redis": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/eventing-redis",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/net-contour": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/net-contour",
+    "slackChannel": "net-contour",
+    "gitHubAssignees": "knative-sandbox/networking-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/net-kourier": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/net-kourier",
+    "slackChannel": "net-kourier",
+    "gitHubAssignees": "knative-sandbox/networking-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/net-istio": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/net-istio",
+    "slackChannel": "net-istio",
+    "gitHubAssignees": "knative-sandbox/networking-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/net-http01": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/net-http01",
+    "slackChannel": "net-http01",
+    "gitHubAssignees": "knative-sandbox/networking-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/net-certmanager": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/net-certmanager",
+    "slackChannel": "net-certmanager",
+    "gitHubAssignees": "knative-sandbox/networking-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/net-ingressv2": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/net-ingressv2",
+    "slackChannel": "net-ingressv2",
+    "gitHubAssignees": "knative-sandbox/networking-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kperf": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kperf",
+    "slackChannel": "performance",
+    "gitHubAssignees": "knative/productivity-wg-leads",
+    "actions": {
+      "actions": {
+        "omit": [
+          "knative-releasability"
+        ]
+      },
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-admin": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-admin",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-diag": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-diag",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {
+        "omit": [
+          "knative-releasability"
+        ]
+      },
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-event": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-event",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-migration": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-migration",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-quickstart": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-quickstart",
+    "slackChannel": "user-experience",
+    "gitHubAssignees": "knative-sandbox/ux-writers",
+    "actions": {
+      "actions": {
+        "omit": [
+          "knative-releasability"
+        ]
+      },
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-sample": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-sample",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-service-log": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-service-log",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-source-kafka": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-source-kafka",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-source-kamelet": {
+    "org": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-source-kamelet",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "vmware-tanzu/sources-for-knative": {
+    "org": "vmware-tanzu",
+    "fork": "knative-automation/sources-for-knative",
+    "slackChannel": "vmware-sources",
+    "gitHubAssignees": "we don't use Prow",
+    "actions": {
+      "actions": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "mattmoor/boilerplate-check": {
+    "org": "mattmoor",
+    "fork": "knative-automation/boilerplate-check",
+    "slackChannel": "@mattmoor",
+    "gitHubAssignees": "@mattmoor",
+    "actions": {
+      "actions": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "mattmoor/mink": {
+    "org": "mattmoor",
+    "fork": "knative-automation/mink",
+    "slackChannel": "mink",
+    "gitHubAssignees": "@mattmoor",
+    "actions": {
+      "actions": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  }
+}
