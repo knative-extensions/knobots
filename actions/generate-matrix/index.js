@@ -15,6 +15,7 @@
 const core = require('@actions/core')
 const fs = require('fs')
 const path = require('path')
+const v8 = require('v8')
 const yaml = require('js-yaml')
 
 function readRepos(dir) {
@@ -23,76 +24,50 @@ function readRepos(dir) {
     return doc
 }
 
-function getActionExcludes(dir) {
-    const items = fs.readdirSync(dir)
-    const suffixLen = ("-exclude.yaml".length)
-    let actionInfos = {}
-    for (const item of items) {
-        if (!item.endsWith("-exclude.yaml")) {
-            continue
-        }
-        fileName = path.join(dir, item)
-        const prefix = item.substr(0, item.length - suffixLen)
-        info = {
-            exclude: yaml.load(fs.readFileSync(fileName)),
-            config: true
-        }
-        optionsFile = path.join(dir, prefix + "-omitted.yaml")
-        if (fs.existsSync(optionsFile)) {
-            info.config = yaml.load(fs.readFileSync(optionsFile))
-        }
-        actionInfos[prefix] = info
-    }
-    return actionInfos
-}
-
-function orgFromRepo(repoInfo) {
-    if ("meta-organization" in repoInfo) {
-        return repoInfo["meta-organization"]
-    }
-    return repo.substr(0, repo.indexOf("/"))
-}
-
-function forkFromRepo(repoInfo) {
+function forkFromRepo(repoName, repoInfo) {
     if ("fork" in repoInfo) {
         return repoInfo.fork
     }
     if ("forkOrg" in repoInfo) {
-        return repoInfo.forkOrg + "/" + orgFromRepo(repoInfo.name)
+        return repoInfo.forkOrg + "/" + repoName
     }
-    return "knative-automation/" + orgFromRepo(repoInfo.name)
+    return "knative-automation/" + repoName
 }
 
 try {
     const configDir = core.getInput("configDir")
-    const repos = readRepos(configDir)
-    const actionExcludes = getActionExcludes(configDir)
+    const orgs = readRepos(configDir)
     let repoSummary = {}
-    console.log("Loaded", repos.length, "repos")
-    for (repoInfo of repos) {
-        const name = repoInfo.name
-        let info = {
-            "actionsSource": orgFromRepo(repoInfo),
-            "fork": forkFromRepo(repoInfo),
-            "slackChannel": repoInfo.channel,
-            "gitHubAssignees": repoInfo.assignees,
-            "actions": {}
-        }
-        for (a in actionExcludes) {
-            const excludes = actionExcludes[a].exclude
-            if (excludes.includes(name) || excludes.includes(info.org)) {
-                continue
+    console.log("Loaded", orgs.length, "orgs")
+
+    for (org of orgs) {
+        const orgActions = org.actions
+        for (repo in org.repos) {
+            const repoInfo = org.repos[repo]
+            let info = {
+                "actionsSource": org.org,
+                "fork": forkFromRepo(repo, repoInfo),
+                "slackChannel": repoInfo.channel,
+                "gitHubAssignees": repoInfo.assignees,
+                "actions": v8.deserialize(v8.serialize(orgActions))  // deepcopy
             }
-            if (actionExcludes[a].config === true) {
-                info.actions[a] = {}
-            } else if (name in actionExcludes[a].config) {
-                info.actions[a] = actionExcludes[a].config[name]
-            } else {
-                info.actions[a] = {}
+            if ("actionsSource" in repoInfo) {
+                info.actionsSource = repoInfo.actionsSource
             }
+            if ("exclude" in repoInfo) {
+                for (action of repoInfo.exclude) {
+                    delete info.actions[action]
+                }
+            }
+            if ("actions" in repoInfo) {
+                for (action in repoInfo.actions) {
+                    info.actions[action] = repoInfo.actions[action]
+                }
+            }
+            repoSummary[org.org + "/" + repo] = info
         }
-        repoSummary[name] = info
     }
+
     const outFile = path.join(configDir, "config.json")
     fs.writeFileSync(outFile, JSON.stringify(repoSummary, null, space = 2))
     console.log("Wrote", Object.keys(repoSummary).length, "repos to", outFile)

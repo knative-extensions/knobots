@@ -1,266 +1,229 @@
 # Experiment with loading a matrix Job "include" from a file.
 
-# knative
-- name: 'knative/pkg'
-  meta-organization: 'knative'
-  fork: 'knative-automation/pkg'
-  channel: 'serving-api'
-  assignees: knative/serving-writers knative/eventing-writers
-- name: 'knative/caching'
-  meta-organization: 'knative'
-  fork: 'knative-automation/caching'
-  channel: 'serving-api'
-  assignees: knative/serving-writers
-- name: 'knative/networking'
-  meta-organization: 'knative'
-  fork: 'knative-automation/networking'
-  channel: 'networking'
-  assignees: knative/networking-wg-leads
-- name: 'knative/serving'
-  meta-organization: 'knative'
-  fork: 'knative-automation/serving'
-  channel: 'serving-api'
-  assignees: knative/serving-writers
-- name: 'knative/eventing'
-  meta-organization: 'knative'
-  fork: 'knative-automation/eventing'
-  channel: 'eventing'
-  assignees: knative/eventing-writers
-- name: 'knative/operator'
-  meta-organization: 'knative'
-  fork: 'knative-automation/operator'
-  channel: 'operations'
-  assignees: knative/operations-wg-leads
-- name: 'knative/test-infra'
-  meta-organization: 'knative'
-  fork: 'knative-automation/test-infra'
-  channel: 'productivity'
-  assignees: knative/productivity-wg-leads
-- name: 'knative/docs'
-  meta-organization: 'knative'
-  fork: 'knative-automation/docs'
-  channel: 'docs'
-  assignees: knative/serving-writers knative/eventing-writers knative/docs-wg-leads
-- name: 'knative/website'
-  meta-organization: 'knative'
-  fork: 'knative-automation/website'
-  channel: 'docs'
-  assignees: knative-docs/docs-wg-leads
-- name: 'knative/client'
-  meta-organization: 'knative'
-  fork: 'knative-automation/client'
-  channel: 'cli'
-  assignees: knative/client-wg-leads
-- name: 'knative/release'
-  meta-organization: 'knative'
-  fork: 'knative-automation/release'
-  channel: 'productivity'
-  assignees: knative/knative-release-leads
+- org: knative
+  actions:
+    actions: {}
+    community: {}
+    deps: {}
+    gotool: {}
+    misspell: {}
+    prettier: {}
+  repos:
+    pkg:
+      channel: 'serving-api'
+      assignees: knative/serving-writers knative/eventing-writers
+    caching:
+      channel: 'serving-api'
+      assignees: knative/serving-writers
+    networking:
+      channel: 'networking'
+      assignees: knative/networking-wg-leads
+    serving:
+      channel: 'serving-api'
+      assignees: knative/serving-writers
+    eventing:
+      channel: 'eventing'
+      assignees: knative/eventing-writers
+    operator:
+      channel: 'operations'
+      assignees: knative/operations-wg-leads
+    test-infra:
+      channel: 'productivity'
+      assignees: knative/productivity-wg-leads
+    docs:
+      channel: 'docs'
+      assignees: knative/serving-writers knative/eventing-writers knative/docs-wg-leads
+      exclude: ['prettier']
+    website:
+      channel: 'docs'
+      assignees: knative-docs/docs-wg-leads
+      exclude: ['prettier']
+      actions:
+        actions:
+          omit: ['knative-go-', 'knative-releasability', 'knative-release-notes']
+    client:
+      channel: 'cli'
+      assignees: knative/client-wg-leads
+      exclude: ['prettier']
+    release:
+      channel: 'productivity'
+      assignees: knative/knative-release-leads
+      exclude: ['actions', 'deps', 'gotool']
 
-# knative-sandbox (reconciler test)
-- name: 'knative-sandbox/reconciler-test'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/reconciler-test'
-  channel: 'test'
-  assignees: knative/eventing-writers knative/serving-writers
+- org: knative-sandbox
+  actions:
+    actions: {}
+    community: {}
+    deps: {}
+    gotool: {}
+    misspell: {}
+    prettier: {}
+  repos:
+    reconciler-test:
+      channel: 'test'
+      assignees: knative/eventing-writers knative/serving-writers
 
-# knative-sandbox (samples)
-- name: 'knative-sandbox/sample-controller'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/sample-controller'
-  channel: 'serving-api'
-  assignees: knative-sandbox/api-core-wg-leads
-- name: 'knative-sandbox/sample-source'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/sample-source'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads lberk
+    # knative-sandbox (samples)
+    sample-controller:
+      channel: 'serving-api'
+      assignees: knative-sandbox/api-core-wg-leads
+    sample-source:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads lberk
 
-# knative-sandbox/control-protocol
-- name: 'knative-sandbox/control-protocol'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/control-protocol'
-  channel: 'eventing-delivery'
-  assignees: knative-sandbox/channel-wg-leads
+    # Eventing control protocol
+    control-protocol:
+      channel: 'eventing-delivery'
+      assignees: knative-sandbox/channel-wg-leads
 
-# knative-sandbox/discovery
-- name: 'knative-sandbox/discovery'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/discovery'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
+    # Duck type discovery
+    discovery:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
 
-# knative-sandbox/eventing-* (eventing), sorted alphabetically
-- name: 'knative-sandbox/eventing-autoscaler-keda'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-autoscaler-keda'
-  channel: 'eventing-delivery'
-  assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-awssqs'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-awssqs'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-ceph'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-ceph'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-couchdb'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-couchdb'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-github'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-github'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-gitlab'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-gitlab'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-kafka'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-kafka'
-  channel: 'eventing-delivery'
-  assignees: knative-sandbox/channel-wg-leads
-- name: 'knative-sandbox/eventing-kafka-broker'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-kafka-broker'
-  channel: 'eventing-delivery'
-  assignees: knative-sandbox/channel-wg-leads
-- name: 'knative-sandbox/eventing-natss'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-natss'
-  channel: 'eventing-delivery'
-  assignees: knative-sandbox/channel-wg-leads
-- name: 'knative-sandbox/eventing-prometheus'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-prometheus'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
-- name: 'knative-sandbox/eventing-rabbitmq'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-rabbitmq'
-  channel: 'eventing-delivery'
-  assignees: knative-sandbox/channel-wg-leads
-- name: 'knative-sandbox/eventing-redis'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-redis'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
+    # knative-sandbox/eventing-* (eventing), sorted alphabetically
+    eventing-autoscaler-keda:
+      channel: 'eventing-delivery'
+      assignees: knative-sandbox/source-wg-leads
+    eventing-awssqs:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
+    eventing-ceph:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
+    eventing-couchdb:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
+    eventing-github:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
+    eventing-gitlab:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
+    eventing-kafka:
+      channel: 'eventing-delivery'
+      assignees: knative-sandbox/channel-wg-leads
+    eventing-kafka-broker:
+      channel: 'eventing-delivery'
+      assignees: knative-sandbox/channel-wg-leads
+    eventing-natss:
+      channel: 'eventing-delivery'
+      assignees: knative-sandbox/channel-wg-leads
+    eventing-prometheus:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
+    eventing-rabbitmq:
+      channel: 'eventing-delivery'
+      assignees: knative-sandbox/channel-wg-leads
+    eventing-redis:
+      channel: 'eventing-sources'
+      assignees: knative-sandbox/source-wg-leads
+      exclude: ['misspell']
 
-# knative-sandbox (networking)
-- name: 'knative-sandbox/net-contour'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/net-contour'
-  channel: 'net-contour'
-  assignees: knative-sandbox/networking-wg-leads
-- name: 'knative-sandbox/net-kourier'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/net-kourier'
-  channel: 'net-kourier'
-  assignees: knative-sandbox/networking-wg-leads
-- name: 'knative-sandbox/net-istio'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/net-istio'
-  channel: 'net-istio'
-  assignees: knative-sandbox/networking-wg-leads
-- name: 'knative-sandbox/net-http01'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/net-http01'
-  channel: 'net-http01'
-  assignees: knative-sandbox/networking-wg-leads
-- name: 'knative-sandbox/net-certmanager'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/net-certmanager'
-  channel: 'net-certmanager'
-  assignees: knative-sandbox/networking-wg-leads
-- name: 'knative-sandbox/net-ingressv2'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/net-ingressv2'
-  channel: 'net-ingressv2'
-  assignees: knative-sandbox/networking-wg-leads
+    # knative-sandbox (networking)
+    net-contour:
+      channel: 'net-contour'
+      assignees: knative-sandbox/networking-wg-leads
+    net-kourier:
+      channel: 'net-kourier'
+      assignees: knative-sandbox/networking-wg-leads
+    net-istio:
+      channel: 'net-istio'
+      assignees: knative-sandbox/networking-wg-leads
+    net-http01:
+      channel: 'net-http01'
+      assignees: knative-sandbox/networking-wg-leads
+    net-certmanager:
+      channel: 'net-certmanager'
+      assignees: knative-sandbox/networking-wg-leads
+    net-ingressv2:
+      channel: 'net-ingressv2'
+      assignees: knative-sandbox/networking-wg-leads
 
-# knative-sandbox (kperf)
-- name: 'knative-sandbox/kperf'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kperf'
-  channel: 'performance'
-  assignees: knative/productivity-wg-leads
+    # knative-sandbox (kperf)
+    kperf:
+      channel: 'performance'
+      assignees: knative/productivity-wg-leads
+      actions:
+        actions:
+          omit: ['knative-releasability']
 
-# knative-sandbox/kn-plugin-*, sorted alphabetically
-- name: 'knative-sandbox/kn-plugin-admin'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-admin'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    # knative-sandbox/kn-plugin-*, sorted alphabetically
+    kn-plugin-admin:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
+      exclude: ['prettier']
 
-- name: 'knative-sandbox/kn-plugin-diag'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-diag'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    kn-plugin-diag:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
+      actions:
+        actions:
+          omit: ['knative-releasability']
 
-- name: 'knative-sandbox/kn-plugin-event'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-event'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    kn-plugin-event:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
 
-- name: 'knative-sandbox/kn-plugin-migration'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-migration'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    kn-plugin-migration:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
 
-- name: 'knative-sandbox/kn-plugin-quickstart'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-quickstart'
-  channel: 'user-experience'
-  assignees: 'knative-sandbox/ux-writers'
+    kn-plugin-quickstart:
+      channel: 'user-experience'
+      assignees: 'knative-sandbox/ux-writers'
+      actions:
+        actions:
+          omit: ['knative-releasability']
 
-- name: 'knative-sandbox/kn-plugin-sample'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-sample'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    kn-plugin-sample:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
+      exclude: ['prettier']
 
-- name: 'knative-sandbox/kn-plugin-service-log'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-service-log'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    kn-plugin-service-log:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
 
-- name: 'knative-sandbox/kn-plugin-source-kafka'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-source-kafka'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    kn-plugin-source-kafka:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
+      exclude: ['prettier']
 
-- name: 'knative-sandbox/kn-plugin-source-kamelet'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-source-kamelet'
-  channel: 'cli'
-  assignees: 'knative-sandbox/client-writers'
+    kn-plugin-source-kamelet:
+      channel: 'cli'
+      assignees: 'knative-sandbox/client-writers'
 
 # vmware-tanzu
-- name: 'vmware-tanzu/sources-for-knative'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/sources-for-knative'
-  channel: 'vmware-sources'
-  assignees: we don't use Prow
+- org: vmware-tanzu
+  actions:
+    actions: {}
+    community: {}
+    deps: {}
+    gotool: {}
+    misspell: {}
+    prettier: {}
+  repos:
+    sources-for-knative:
+      actionsSource: knative  # Pull actions from the Knative org.
+      channel: 'vmware-sources'
+      assignees: we don't use Prow
 
 # mattmoor
-- name: 'mattmoor/boilerplate-check'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/boilerplate-check'
-  channel: '@mattmoor'
-  assignees: '@mattmoor'
-- name: 'mattmoor/mink'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/mink'
-  channel: 'mink'
-  assignees: '@mattmoor'
+- org: mattmoor
+  actions:
+    actions: {}
+    community: {}
+    deps: {}
+    gotool: {}
+    misspell: {}
+    prettier: {}
+  repos:
+    boilerplate-check:
+      actionsSource: knative  # Pull actions from the Knative org.
+      channel: '@mattmoor'
+      assignees: '@mattmoor'
+    mink:
+      actionsSource: knative  # Pull actions from the Knative org.
+      channel: 'mink'
+      assignees: '@mattmoor'
