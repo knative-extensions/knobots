@@ -1,6 +1,6 @@
 {
   "knative/pkg": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/pkg",
     "slackChannel": "serving-api",
     "gitHubAssignees": "knative/serving-writers knative/eventing-writers",
@@ -14,7 +14,7 @@
     }
   },
   "knative/caching": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/caching",
     "slackChannel": "serving-api",
     "gitHubAssignees": "knative/serving-writers",
@@ -28,7 +28,7 @@
     }
   },
   "knative/networking": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/networking",
     "slackChannel": "networking",
     "gitHubAssignees": "knative/networking-wg-leads",
@@ -42,7 +42,7 @@
     }
   },
   "knative/serving": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/serving",
     "slackChannel": "serving-api",
     "gitHubAssignees": "knative/serving-writers",
@@ -56,7 +56,7 @@
     }
   },
   "knative/eventing": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/eventing",
     "slackChannel": "eventing",
     "gitHubAssignees": "knative/eventing-writers",
@@ -70,7 +70,7 @@
     }
   },
   "knative/operator": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/operator",
     "slackChannel": "operations",
     "gitHubAssignees": "knative/operations-wg-leads",
@@ -84,7 +84,7 @@
     }
   },
   "knative/test-infra": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/test-infra",
     "slackChannel": "productivity",
     "gitHubAssignees": "knative/productivity-wg-leads",
@@ -98,7 +98,7 @@
     }
   },
   "knative/docs": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/docs",
     "slackChannel": "docs",
     "gitHubAssignees": "knative/serving-writers knative/eventing-writers knative/docs-wg-leads",
@@ -111,7 +111,7 @@
     }
   },
   "knative/website": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/website",
     "slackChannel": "docs",
     "gitHubAssignees": "knative-docs/docs-wg-leads",
@@ -130,7 +130,7 @@
     }
   },
   "knative/client": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/client",
     "slackChannel": "cli",
     "gitHubAssignees": "knative/client-wg-leads",
@@ -143,7 +143,7 @@
     }
   },
   "knative/release": {
-    "org": "knative",
+    "actionsSource": "knative",
     "fork": "knative-automation/release",
     "slackChannel": "productivity",
     "gitHubAssignees": "knative/knative-release-leads",
@@ -154,7 +154,7 @@
     }
   },
   "knative-sandbox/reconciler-test": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/reconciler-test",
     "slackChannel": "test",
     "gitHubAssignees": "knative/eventing-writers knative/serving-writers",
@@ -168,7 +168,7 @@
     }
   },
   "knative-sandbox/sample-controller": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/sample-controller",
     "slackChannel": "serving-api",
     "gitHubAssignees": "knative-sandbox/api-core-wg-leads",
@@ -182,7 +182,7 @@
     }
   },
   "knative-sandbox/sample-source": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/sample-source",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads lberk",
@@ -196,7 +196,7 @@
     }
   },
   "knative-sandbox/control-protocol": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/control-protocol",
     "slackChannel": "eventing-delivery",
     "gitHubAssignees": "knative-sandbox/channel-wg-leads",
@@ -210,7 +210,7 @@
     }
   },
   "knative-sandbox/discovery": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/discovery",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -224,7 +224,7 @@
     }
   },
   "knative-sandbox/eventing-autoscaler-keda": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-autoscaler-keda",
     "slackChannel": "eventing-delivery",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -238,7 +238,7 @@
     }
   },
   "knative-sandbox/eventing-awssqs": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-awssqs",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -252,7 +252,7 @@
     }
   },
   "knative-sandbox/eventing-ceph": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-ceph",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -266,7 +266,7 @@
     }
   },
   "knative-sandbox/eventing-couchdb": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-couchdb",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -280,7 +280,7 @@
     }
   },
   "knative-sandbox/eventing-github": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-github",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -294,7 +294,7 @@
     }
   },
   "knative-sandbox/eventing-gitlab": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-gitlab",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -308,7 +308,7 @@
     }
   },
   "knative-sandbox/eventing-kafka": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-kafka",
     "slackChannel": "eventing-delivery",
     "gitHubAssignees": "knative-sandbox/channel-wg-leads",
@@ -322,7 +322,7 @@
     }
   },
   "knative-sandbox/eventing-kafka-broker": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-kafka-broker",
     "slackChannel": "eventing-delivery",
     "gitHubAssignees": "knative-sandbox/channel-wg-leads",
@@ -336,7 +336,7 @@
     }
   },
   "knative-sandbox/eventing-natss": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-natss",
     "slackChannel": "eventing-delivery",
     "gitHubAssignees": "knative-sandbox/channel-wg-leads",
@@ -350,7 +350,7 @@
     }
   },
   "knative-sandbox/eventing-prometheus": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-prometheus",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -364,7 +364,7 @@
     }
   },
   "knative-sandbox/eventing-rabbitmq": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-rabbitmq",
     "slackChannel": "eventing-delivery",
     "gitHubAssignees": "knative-sandbox/channel-wg-leads",
@@ -378,7 +378,7 @@
     }
   },
   "knative-sandbox/eventing-redis": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-redis",
     "slackChannel": "eventing-sources",
     "gitHubAssignees": "knative-sandbox/source-wg-leads",
@@ -391,7 +391,7 @@
     }
   },
   "knative-sandbox/net-contour": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/net-contour",
     "slackChannel": "net-contour",
     "gitHubAssignees": "knative-sandbox/networking-wg-leads",
@@ -405,7 +405,7 @@
     }
   },
   "knative-sandbox/net-kourier": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/net-kourier",
     "slackChannel": "net-kourier",
     "gitHubAssignees": "knative-sandbox/networking-wg-leads",
@@ -419,7 +419,7 @@
     }
   },
   "knative-sandbox/net-istio": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/net-istio",
     "slackChannel": "net-istio",
     "gitHubAssignees": "knative-sandbox/networking-wg-leads",
@@ -433,7 +433,7 @@
     }
   },
   "knative-sandbox/net-http01": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/net-http01",
     "slackChannel": "net-http01",
     "gitHubAssignees": "knative-sandbox/networking-wg-leads",
@@ -447,7 +447,7 @@
     }
   },
   "knative-sandbox/net-certmanager": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/net-certmanager",
     "slackChannel": "net-certmanager",
     "gitHubAssignees": "knative-sandbox/networking-wg-leads",
@@ -461,7 +461,7 @@
     }
   },
   "knative-sandbox/net-ingressv2": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/net-ingressv2",
     "slackChannel": "net-ingressv2",
     "gitHubAssignees": "knative-sandbox/networking-wg-leads",
@@ -475,7 +475,7 @@
     }
   },
   "knative-sandbox/kperf": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kperf",
     "slackChannel": "performance",
     "gitHubAssignees": "knative/productivity-wg-leads",
@@ -493,7 +493,7 @@
     }
   },
   "knative-sandbox/kn-plugin-admin": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-admin",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -506,7 +506,7 @@
     }
   },
   "knative-sandbox/kn-plugin-diag": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-diag",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -524,7 +524,7 @@
     }
   },
   "knative-sandbox/kn-plugin-event": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-event",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -538,7 +538,7 @@
     }
   },
   "knative-sandbox/kn-plugin-migration": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-migration",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -552,7 +552,7 @@
     }
   },
   "knative-sandbox/kn-plugin-quickstart": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-quickstart",
     "slackChannel": "user-experience",
     "gitHubAssignees": "knative-sandbox/ux-writers",
@@ -570,7 +570,7 @@
     }
   },
   "knative-sandbox/kn-plugin-sample": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-sample",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -583,7 +583,7 @@
     }
   },
   "knative-sandbox/kn-plugin-service-log": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-service-log",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -597,7 +597,7 @@
     }
   },
   "knative-sandbox/kn-plugin-source-kafka": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-source-kafka",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -610,7 +610,7 @@
     }
   },
   "knative-sandbox/kn-plugin-source-kamelet": {
-    "org": "knative-sandbox",
+    "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-source-kamelet",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
@@ -624,12 +624,13 @@
     }
   },
   "vmware-tanzu/sources-for-knative": {
-    "org": "vmware-tanzu",
+    "actionsSource": "knative",
     "fork": "knative-automation/sources-for-knative",
     "slackChannel": "vmware-sources",
     "gitHubAssignees": "we don't use Prow",
     "actions": {
       "actions": {},
+      "community": {},
       "deps": {},
       "gotool": {},
       "misspell": {},
@@ -637,12 +638,13 @@
     }
   },
   "mattmoor/boilerplate-check": {
-    "org": "mattmoor",
+    "actionsSource": "knative",
     "fork": "knative-automation/boilerplate-check",
     "slackChannel": "@mattmoor",
     "gitHubAssignees": "@mattmoor",
     "actions": {
       "actions": {},
+      "community": {},
       "deps": {},
       "gotool": {},
       "misspell": {},
@@ -650,12 +652,13 @@
     }
   },
   "mattmoor/mink": {
-    "org": "mattmoor",
+    "actionsSource": "knative",
     "fork": "knative-automation/mink",
     "slackChannel": "mink",
     "gitHubAssignees": "@mattmoor",
     "actions": {
       "actions": {},
+      "community": {},
       "deps": {},
       "gotool": {},
       "misspell": {},

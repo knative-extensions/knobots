@@ -46,7 +46,10 @@ function getActionExcludes(dir) {
     return actionInfos
 }
 
-function orgFromRepo(repo) {
+function orgFromRepo(repoInfo) {
+    if ("meta-organization" in repoInfo) {
+        return repoInfo["meta-organization"]
+    }
     return repo.substr(0, repo.indexOf("/"))
 }
 
@@ -69,7 +72,7 @@ try {
     for (repoInfo of repos) {
         const name = repoInfo.name
         let info = {
-            "org": orgFromRepo(name),
+            "actionsSource": orgFromRepo(repoInfo),
             "fork": forkFromRepo(repoInfo),
             "slackChannel": repoInfo.channel,
             "gitHubAssignees": repoInfo.assignees,

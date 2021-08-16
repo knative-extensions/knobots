@@ -35,7 +35,7 @@ function loadMatrix(dir, action, only) {
             names.push(repo)
             includes.push({
                 name: repo,
-                "meta-organization": r.org,
+                "meta-organization": r.actionsSource,
                 fork: r.fork,
                 channel: r.slackChannel,
                 assignees: r.gitHubAssignees,
