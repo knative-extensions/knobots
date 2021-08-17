@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang
+# TODO: figure out how to template this.
+FROM golang:1.16
 
 RUN go get github.com/bronze1man/yaml2json && apt-get update && apt-get install -y jq
 

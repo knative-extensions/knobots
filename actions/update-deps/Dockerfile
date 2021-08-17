@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang
+# TODO: figure out how to template this.
+FROM golang:1.16
 
 RUN go get github.com/google/ko@v0.6.0 github.com/google/licenseclassifier github.com/google/go-licenses github.com/dprotaso/modlog knative.dev/test-infra/buoy
 
