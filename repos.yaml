@@ -131,6 +131,11 @@
   fork: 'knative-automation/eventing-kafka-broker'
   channel: 'eventing-delivery'
   assignees: knative-sandbox/channel-wg-leads
+- name: 'knative-sandbox/eventing-kogito'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-kogito'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
 - name: 'knative-sandbox/eventing-natss'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-natss'
