@@ -263,15 +263,3 @@
   fork: 'knative-automation/sources-for-knative'
   channel: 'vmware-sources'
   assignees: we don't use Prow
-
-# mattmoor
-- name: 'mattmoor/boilerplate-check'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/boilerplate-check'
-  channel: '@mattmoor'
-  assignees: '@mattmoor'
-- name: 'mattmoor/mink'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/mink'
-  channel: 'mink'
-  assignees: '@mattmoor'
