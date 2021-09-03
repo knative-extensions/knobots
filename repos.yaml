@@ -51,6 +51,11 @@
   fork: 'knative-automation/client'
   channel: 'cli'
   assignees: knative/client-wg-leads
+- name: 'knative/homebrew-client'
+  meta-organization: 'knative'
+  fork: 'knative-automation/homebrew-client'
+  channel: 'cli'
+  assignees: knative/client-wg-leads
 - name: 'knative/release'
   meta-organization: 'knative'
   fork: 'knative-automation/release'
@@ -197,6 +202,12 @@
   assignees: knative/productivity-wg-leads
 
 # knative-sandbox/kn-plugin-*, sorted alphabetically
+- name: 'knative-sandbox/homebrew-kn-plugins'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/homebrew-kn-plugins'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+  
 - name: 'knative-sandbox/kn-plugin-admin'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-admin'
