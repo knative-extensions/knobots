@@ -1,0 +1,77 @@
+# Copyright 2021 The Knative Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Regen config.json
+
+on:
+  # Try regenerating once a day just in case something changed.
+  schedule:
+  - cron: '48 12 * * 1-5' # 5am Pacific on weekdays
+
+  push
+
+  workflow_dispatch:
+
+jobs:
+
+  regen:
+    name: Regenerate config.json from repo config
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check out current repo's code
+      uses: actions/checkout@v2
+
+    - name: Run config-gen
+      uses: ./actions/generate-matrix
+      with:
+        configDir: .
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # Who to look like:
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        committer: "Knative Automation <automation@knative.team>"
+        author: "Knative Automation <automation@knative.team>"
+
+        # Where to stage the change
+        push-to-fork: knative-automation/knobots
+        branch: auto-updates/config-regen
+        signoff: true
+        delete-branch: true
+        path: main
+
+        # Set commit details
+        commit-message: Regenerate config.json
+        title: "[Automation] regenerate config.json"
+        body: |
+          Regenerate configs - ${{github.actor}}
+
+          Produced by ${{github.repository}}/actions/generate-matrix
+
+    - name: Post failure notice to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      if: ${{ failure() }}
+      env:
+        SLACK_ICON: http://github.com/knative-automation.png?size=48
+        SLACK_USERNAME: knative-automation
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_CHANNEL: 'productivity'
+        SLACK_COLOR: '#8E1600'
+        MSG_MINIMAL: 'true'
+        SLACK_TITLE: Regenerate config.json in knobots failed.
+        SLACK_MESSAGE: |
+          For detailed logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
