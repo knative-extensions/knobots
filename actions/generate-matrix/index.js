@@ -23,6 +23,13 @@ function readRepos(dir) {
     return doc
 }
 
+// Read the set of "*-exclude.yaml" and "*-omitted.yaml" files and return
+// a map (object) where:
+// * The key is the name of the action, like "misspell" or "gofmt"
+// * The value is an object with two keys:
+//   * "exclude" is a list of repo patterns to exclude (historically, these are substrings)
+//   * "config" is a value read from "${action}-omitted.yaml",
+//      where the actions-sync action historically stored file-level opt-outs.
 function getActionExcludes(dir) {
     const items = fs.readdirSync(dir)
     const suffixLen = ("-exclude.yaml".length)
@@ -46,6 +53,7 @@ function getActionExcludes(dir) {
     return actionInfos
 }
 
+// Compute the org that this repo would like to act like it belongs to.
 function orgFromRepo(repoInfo) {
     if ("meta-organization" in repoInfo) {
         return repoInfo["meta-organization"]
@@ -53,6 +61,7 @@ function orgFromRepo(repoInfo) {
     return repo.substr(0, repo.indexOf("/"))
 }
 
+// Compute the name of the forked repo to which we will stage PRs
 function forkFromRepo(repoInfo) {
     if ("fork" in repoInfo) {
         return repoInfo.fork
@@ -63,10 +72,16 @@ function forkFromRepo(repoInfo) {
     return "knative-automation/" + orgFromRepo(repoInfo.name)
 }
 
+// This is our main. We wrap it in a try to so we can consistently
+// set failure messages on error.
 try {
+    // configDir is passed as the INPUT_CONFIGDIR env var internally.
     const configDir = core.getInput("configDir")
     const repos = readRepos(configDir)
     const actionExcludes = getActionExcludes(configDir)
+    // repoSummary is the full computed set of actions for use during action
+    // execution.  It is a map with keys being repo names to run actions on;
+    // see "info" in the loop for the value stored for each repo
     let repoSummary = {}
     console.log("Loaded", repos.length, "repos")
     for (repoInfo of repos) {
@@ -93,6 +108,7 @@ try {
         }
         repoSummary[name] = info
     }
+    // Write the computed configuration to config.json
     const outFile = path.join(configDir, "config.json")
     fs.writeFileSync(outFile, JSON.stringify(repoSummary, null, space = 2))
     console.log("Wrote", Object.keys(repoSummary).length, "repos to", outFile)
