@@ -19,7 +19,7 @@ on:
   schedule:
   - cron: '48 12 * * 1-5' # 5am Pacific on weekdays
 
-  push
+  push:
 
   workflow_dispatch:
 
@@ -52,7 +52,6 @@ jobs:
         branch: auto-updates/config-regen
         signoff: true
         delete-branch: true
-        path: main
 
         # Set commit details
         commit-message: Regenerate config.json
