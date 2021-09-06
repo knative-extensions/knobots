@@ -142,6 +142,17 @@
       "misspell": {}
     }
   },
+  "knative/homebrew-client": {
+    "actionsSource": "knative",
+    "fork": "knative-automation/homebrew-client",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative/client-wg-leads",
+    "actions": {
+      "community": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
   "knative/release": {
     "actionsSource": "knative",
     "fork": "knative-automation/release",
@@ -335,6 +346,20 @@
       "prettier": {}
     }
   },
+  "knative-sandbox/eventing-kogito": {
+    "actionsSource": "knative-sandbox",
+    "fork": "knative-automation/eventing-kogito",
+    "slackChannel": "eventing-sources",
+    "gitHubAssignees": "knative-sandbox/source-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
   "knative-sandbox/eventing-natss": {
     "actionsSource": "knative-sandbox",
     "fork": "knative-automation/eventing-natss",
@@ -492,6 +517,17 @@
       "prettier": {}
     }
   },
+  "knative-sandbox/homebrew-kn-plugins": {
+    "actionsSource": "knative-sandbox",
+    "fork": "knative-automation/homebrew-kn-plugins",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "community": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
   "knative-sandbox/kn-plugin-admin": {
     "actionsSource": "knative-sandbox",
     "fork": "knative-automation/kn-plugin-admin",
@@ -528,6 +564,20 @@
     "fork": "knative-automation/kn-plugin-event",
     "slackChannel": "cli",
     "gitHubAssignees": "knative-sandbox/client-writers",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gotool": {},
+      "misspell": {},
+      "prettier": {}
+    }
+  },
+  "knative-sandbox/kn-plugin-func": {
+    "actionsSource": "knative-sandbox",
+    "fork": "knative-automation/kn-plugin-func",
+    "slackChannel": "functions-sandbox",
+    "gitHubAssignees": "knative-sandbox/kn-plugin-func-approvers",
     "actions": {
       "actions": {},
       "community": {},
@@ -628,34 +678,6 @@
     "fork": "knative-automation/sources-for-knative",
     "slackChannel": "vmware-sources",
     "gitHubAssignees": "we don't use Prow",
-    "actions": {
-      "actions": {},
-      "community": {},
-      "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
-    }
-  },
-  "mattmoor/boilerplate-check": {
-    "actionsSource": "knative",
-    "fork": "knative-automation/boilerplate-check",
-    "slackChannel": "@mattmoor",
-    "gitHubAssignees": "@mattmoor",
-    "actions": {
-      "actions": {},
-      "community": {},
-      "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
-    }
-  },
-  "mattmoor/mink": {
-    "actionsSource": "knative",
-    "fork": "knative-automation/mink",
-    "slackChannel": "mink",
-    "gitHubAssignees": "@mattmoor",
     "actions": {
       "actions": {},
       "community": {},
