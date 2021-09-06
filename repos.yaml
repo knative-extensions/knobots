@@ -51,6 +51,11 @@
   fork: 'knative-automation/client'
   channel: 'cli'
   assignees: knative/client-wg-leads
+- name: 'knative/homebrew-client'
+  meta-organization: 'knative'
+  fork: 'knative-automation/homebrew-client'
+  channel: 'cli'
+  assignees: knative/client-wg-leads
 - name: 'knative/release'
   meta-organization: 'knative'
   fork: 'knative-automation/release'
@@ -131,6 +136,11 @@
   fork: 'knative-automation/eventing-kafka-broker'
   channel: 'eventing-delivery'
   assignees: knative-sandbox/channel-wg-leads
+- name: 'knative-sandbox/eventing-kogito'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-kogito'
+  channel: 'eventing-sources'
+  assignees: knative-sandbox/source-wg-leads
 - name: 'knative-sandbox/eventing-natss'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-natss'
@@ -192,6 +202,12 @@
   assignees: knative/productivity-wg-leads
 
 # knative-sandbox/kn-plugin-*, sorted alphabetically
+- name: 'knative-sandbox/homebrew-kn-plugins'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/homebrew-kn-plugins'
+  channel: 'cli'
+  assignees: 'knative-sandbox/client-writers'
+  
 - name: 'knative-sandbox/kn-plugin-admin'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-admin'
@@ -209,6 +225,12 @@
   fork: 'knative-automation/kn-plugin-event'
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
+
+- name: 'knative-sandbox/kn-plugin-func'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-func'
+  channel: 'functions-sandbox'
+  assignees: 'knative-sandbox/kn-plugin-func-approvers'
 
 - name: 'knative-sandbox/kn-plugin-migration'
   meta-organization: 'knative-sandbox'
@@ -252,15 +274,3 @@
   fork: 'knative-automation/sources-for-knative'
   channel: 'vmware-sources'
   assignees: we don't use Prow
-
-# mattmoor
-- name: 'mattmoor/boilerplate-check'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/boilerplate-check'
-  channel: '@mattmoor'
-  assignees: '@mattmoor'
-- name: 'mattmoor/mink'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/mink'
-  channel: 'mink'
-  assignees: '@mattmoor'
