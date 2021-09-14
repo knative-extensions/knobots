@@ -51,6 +51,11 @@
   fork: 'knative-automation/client'
   channel: 'cli'
   assignees: knative/client-wg-leads
+- name: 'knative/client-pkg'
+  meta-organization: 'knative'
+  fork: 'knative-automation/client-pkg'
+  channel: 'cli'
+  assignees: knative/client-wg-leads
 - name: 'knative/homebrew-client'
   meta-organization: 'knative'
   fork: 'knative-automation/homebrew-client'
