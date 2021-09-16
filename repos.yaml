@@ -207,7 +207,7 @@
   fork: 'knative-automation/homebrew-kn-plugins'
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
-  
+
 - name: 'knative-sandbox/kn-plugin-admin'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-admin'
