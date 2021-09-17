@@ -1,3 +1,4 @@
 - "knative/release"
 - "knative/homebrew-client"
 - "knative-sandbox/homebrew-kn-plugins"
+- "knative-sandbox/kn-plugin-func"
