@@ -24,7 +24,7 @@ mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows"
 cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
   "${GITHUB_WORKSPACE}/main/.github/workflows"
 yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
-  jq -r '(.["${ORGANIZATION}/${REPO}"] // {"omit": []}).omit[] + "*"' | \
+  jq -r --arg repo "$ORGANIZATION/$REPO" '(.[$repo] // {"omit": []}).omit[] + "*"' | \
   while read GLOB; do
     rm "${GITHUB_WORKSPACE}/main/.github/workflows/${GLOB}"
   done
