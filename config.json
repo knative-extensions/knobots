@@ -8,9 +8,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/caching": {
@@ -22,9 +22,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/networking": {
@@ -36,9 +36,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/serving": {
@@ -50,9 +50,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/eventing": {
@@ -64,9 +64,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/operator": {
@@ -78,9 +78,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/test-infra": {
@@ -92,9 +92,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/docs": {
@@ -106,7 +106,7 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
+      "gofmt": {},
       "misspell": {}
     }
   },
@@ -125,7 +125,7 @@
       },
       "community": {},
       "deps": {},
-      "gotool": {},
+      "gofmt": {},
       "misspell": {}
     }
   },
@@ -138,7 +138,21 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
+      "gofmt": {},
+      "misspell": {}
+    }
+  },
+  "knative/client-pkg": {
+    "actionsSource": "knative",
+    "fork": "knative-automation/client-pkg",
+    "slackChannel": "cli",
+    "gitHubAssignees": "knative/client-wg-leads",
+    "actions": {
+      "actions": {},
+      "community": {},
+      "deps": {},
+      "gofmt": {},
+      "markdown": {},
       "misspell": {}
     }
   },
@@ -149,8 +163,8 @@
     "gitHubAssignees": "knative/client-wg-leads",
     "actions": {
       "community": {},
-      "misspell": {},
-      "prettier": {}
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative/release": {
@@ -160,8 +174,8 @@
     "gitHubAssignees": "knative/knative-release-leads",
     "actions": {
       "community": {},
-      "misspell": {},
-      "prettier": {}
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/reconciler-test": {
@@ -173,9 +187,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/sample-controller": {
@@ -187,9 +201,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/sample-source": {
@@ -201,9 +215,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/control-protocol": {
@@ -215,9 +229,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/discovery": {
@@ -229,9 +243,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-autoscaler-keda": {
@@ -243,9 +257,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-awssqs": {
@@ -257,9 +271,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-ceph": {
@@ -271,9 +285,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-couchdb": {
@@ -285,9 +299,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-github": {
@@ -299,9 +313,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-gitlab": {
@@ -313,9 +327,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-kafka": {
@@ -327,9 +341,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-kafka-broker": {
@@ -341,9 +355,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-kogito": {
@@ -355,9 +369,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-natss": {
@@ -369,9 +383,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-prometheus": {
@@ -383,9 +397,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-rabbitmq": {
@@ -397,9 +411,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/eventing-redis": {
@@ -411,8 +425,8 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {}
     }
   },
   "knative-sandbox/net-contour": {
@@ -424,9 +438,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/net-kourier": {
@@ -438,9 +452,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/net-istio": {
@@ -452,9 +466,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/net-http01": {
@@ -466,9 +480,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/net-certmanager": {
@@ -480,9 +494,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/net-ingressv2": {
@@ -494,9 +508,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kperf": {
@@ -512,9 +526,9 @@
       },
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/homebrew-kn-plugins": {
@@ -524,8 +538,8 @@
     "gitHubAssignees": "knative-sandbox/client-writers",
     "actions": {
       "community": {},
-      "misspell": {},
-      "prettier": {}
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kn-plugin-admin": {
@@ -537,7 +551,7 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
+      "gofmt": {},
       "misspell": {}
     }
   },
@@ -554,9 +568,9 @@
       },
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kn-plugin-event": {
@@ -568,9 +582,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kn-plugin-func": {
@@ -581,10 +595,9 @@
     "actions": {
       "actions": {},
       "community": {},
-      "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kn-plugin-migration": {
@@ -596,9 +609,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kn-plugin-quickstart": {
@@ -614,9 +627,9 @@
       },
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kn-plugin-sample": {
@@ -628,7 +641,7 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
+      "gofmt": {},
       "misspell": {}
     }
   },
@@ -641,9 +654,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "knative-sandbox/kn-plugin-source-kafka": {
@@ -655,7 +668,7 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
+      "gofmt": {},
       "misspell": {}
     }
   },
@@ -668,9 +681,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   },
   "vmware-tanzu/sources-for-knative": {
@@ -682,9 +695,9 @@
       "actions": {},
       "community": {},
       "deps": {},
-      "gotool": {},
-      "misspell": {},
-      "prettier": {}
+      "gofmt": {},
+      "markdown": {},
+      "misspell": {}
     }
   }
 }
