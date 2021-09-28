@@ -34,7 +34,7 @@ fi
 
 FILE="CODE-OF-CONDUCT.md"
 if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
-  cp "${GITHUB_WORKSPACE}/meta/${FILE}" "{GITHUB_WORKSPACE}/main/CODE-OF-CONDUCT.md"
+  cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/CODE-OF-CONDUCT.md"
   echo "Copying ${GITHUB_WORKSPACE}/meta/${FILE} -> ${GITHUB_WORKSPACE}/main/CODE-OF-CONDUCT.md"
   create_pr="true"
 else
