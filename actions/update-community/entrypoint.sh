@@ -31,7 +31,17 @@ if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
 else
   echo "Could not find ${FILE}, skipping"
 fi
-# TODO: copy other files over, like CODE-OF-CONDUCT.md
+
+FILE="CODE-OF-CONDUCT.md"
+if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
+  cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/CODE-OF-CONDUCT.md"
+  echo "Copying ${GITHUB_WORKSPACE}/meta/${FILE} -> ${GITHUB_WORKSPACE}/main/CODE-OF-CONDUCT.md"
+  create_pr="true"
+else
+  echo "Could not find ${FILE}, skipping"
+fi
+
+# TODO: copy other files over, like CONTRUBUTING.md or LICENSE
 
 # Ensure files have the same owner as the checkout directory.
 # See https://github.com/knative-sandbox/knobots/issues/79

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-shortName: gofmt
+shortName: markdown
 title: "Format Markdown"
 
 # No special inputs needed.

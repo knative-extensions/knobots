@@ -47,7 +47,7 @@ jobs:
       id: load-matrix
       uses: "./actions/load-matrix"
       with:
-        action-name: gofmt
+        action-name: markdown
         only-repo: ${{ github.event.inputs.only-repo }}
 
   apply-change:

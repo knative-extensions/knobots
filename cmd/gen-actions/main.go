@@ -26,7 +26,7 @@ import (
 )
 
 func main() {
-	// For each direction in actions:
+	// For each directory in actions:
 	//   If there is an `auto-apply.yaml`:
 	//     Read the yaml
 	//     Use text.template to substitute values into `actions_template.yaml` from this dir
