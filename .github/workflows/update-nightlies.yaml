@@ -33,7 +33,8 @@ jobs:
         - net-contour
         - net-istio
         - net-kourier
-        - eventing-kafka-broker
+        - eventing-kafka-broker-eventing-kafka
+        - eventing-kafka-broker-eventing
 
         # Map to nightly-specific parameters.
         include:
@@ -73,7 +74,7 @@ jobs:
           fork: serving
           channel: net-kourier
           assignee: "@knative/networking-wg-leads"
-        - nightly: eventing-kafka-broker
+        - nightly: eventing-kafka-broker-eventing
           module: knative.dev/eventing-kafka-broker
           directory: ./third_party/eventing-latest
           files: eventing-crds.yaml eventing-core.yaml
@@ -82,7 +83,7 @@ jobs:
           fork: eventing-kafka-broker
           channel: eventing-delivery
           assignee: "@knative/delivery-wg-leads"
-        - nightly: eventing-kafka-broker
+        - nightly: eventing-kafka-broker-eventing-kafka
           module: knative.dev/eventing-kafka-broker
           directory: ./third_party/eventing-kafka-latest
           files: channel-crds.yaml
