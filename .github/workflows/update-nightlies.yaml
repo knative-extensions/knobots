@@ -86,7 +86,7 @@ jobs:
         - nightly: eventing-kafka-broker-eventing-kafka
           module: knative.dev/eventing-kafka-broker
           directory: ./third_party/eventing-kafka-latest
-          files: channel-crds.yaml
+          files: channel-crds.yaml source-crds.yaml
           bucket: eventing-kafka
           repository: knative-sandbox/eventing-kafka-broker
           fork: eventing-kafka-broker
