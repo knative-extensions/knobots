@@ -273,6 +273,13 @@
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
+# knative-sandbox (autoscaling)
+- name: 'knative-sandbox/container-freezer'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/container-freezer'
+  channel: 'autoscaling'
+  assignees: knative-sandbox/autoscaling-wg-leads
+
 # vmware-tanzu
 - name: 'vmware-tanzu/sources-for-knative'
   meta-organization: 'knative' # Pull actions from the Knative org.
