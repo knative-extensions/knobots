@@ -67,6 +67,13 @@
   channel: 'productivity'
   assignees: knative/knative-release-leads
 
+# knative-sandbox (workflows)
+- name: 'knative-sandbox/.github'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/sandbox-dot-github'
+  channel: 'productivity'
+  assignees: knative/productivity-wg-leads
+
 # knative-sandbox (reconciler test)
 - name: 'knative-sandbox/reconciler-test'
   meta-organization: 'knative-sandbox'

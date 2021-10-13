@@ -2,3 +2,4 @@
 - "knative/homebrew-client"
 - "knative-sandbox/homebrew-kn-plugins"
 - "knative-sandbox/kn-plugin-func"
+- "knative-sandbox/.github"
