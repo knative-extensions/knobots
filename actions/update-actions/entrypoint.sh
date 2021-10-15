@@ -37,10 +37,6 @@ if [[ ! -f go.mod ]]; then
     echo "No go mod, skipping..."
 else
     export FILES=( $(find -path './vendor' -prune -o -path './third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print) )
-    export GENFILES=( $(git ls-files | xargs git check-attr linguist-generated | grep 'true$' | cut -d: -f1) )
-    for i in "${GENFILES[@]}"; do
-        FILES=(${FILES[@]//*$i*})
-    done
     if (( ${#FILES[@]} > 0 )); then
         log=$(goimports -w "${FILES[@]}")
         log="$log $(gofmt -s -w "${FILES[@]}")"
