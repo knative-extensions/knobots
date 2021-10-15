@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # TODO: figure out how to template this.
-FROM golang:1.16
+FROM golang:1.17
 
 RUN go get github.com/google/ko@v0.6.0 github.com/google/licenseclassifier github.com/google/go-licenses github.com/dprotaso/modlog knative.dev/test-infra/buoy
 
