@@ -32,6 +32,7 @@ yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
 create_pr="true"
 
 # TODO: This is only temporary to resolve the chicken/egg. Remove once Golang 1.17 is rolled out.
+pushd "${GITHUB_WORKSPACE}/main"
 if [[ ! -f go.mod ]]; then
     echo "No go mod, skipping..."
 else
@@ -48,6 +49,7 @@ else
         echo No Go files found.
     fi
 fi
+popd
 
 # Ensure files have the same owner as the checkout directory.
 # See https://github.com/knative-sandbox/knobots/issues/79
