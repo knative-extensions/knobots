@@ -17,9 +17,6 @@ FROM golang:1.17
 
 RUN go get github.com/bronze1man/yaml2json && apt-get update && apt-get install -y jq
 
-# TODO: This is only temporary to resolve the chicken/egg. Remove once Golang 1.17 is rolled out.
-RUN go get golang.org/x/tools/cmd/goimports
-
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
