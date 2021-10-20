@@ -250,6 +250,12 @@
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
+- name: 'knative-sandbox/kn-plugin-operator'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-operator'
+  channel: 'cli'
+  assignees: 'knative-sandbox/kn-plugin-operator-approvers'
+
 - name: 'knative-sandbox/kn-plugin-quickstart'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-quickstart'
