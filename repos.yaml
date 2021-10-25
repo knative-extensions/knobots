@@ -68,7 +68,7 @@
   assignees: knative/knative-release-leads
 - name: 'knative/hack'
   meta-organization: 'knative'
-  fork: 'knative'
+  fork: 'knative-automation/hack'
   channel: 'productivity'
   assignees: knative/productivity-wg-leads
 
