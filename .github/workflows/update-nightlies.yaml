@@ -35,6 +35,7 @@ jobs:
         - net-kourier
         - eventing-kafka-broker-eventing-kafka
         - eventing-kafka-broker-eventing
+        - eventing-rabbitmq-eventing
 
         # Map to nightly-specific parameters.
         include:
@@ -92,6 +93,15 @@ jobs:
           fork: eventing-kafka-broker
           channel: eventing-delivery
           assignee: "@knative/delivery-wg-leads"
+        - nightly: eventing-rabbitmq-eventing
+          module: knative.dev/eventing-rabbitmq
+          directory: ./third_party/eventing-latest
+          files: eventing-crds.yaml eventing-core.yaml
+          bucket: eventing
+          repository: knative-sandbox/eventing-rabbitmq
+          fork: eventing-rabbitmq
+          channel: eventing-delivery
+          assignee: "@knative-sandbox/eventing-rabbitmq-approvers"
 
     steps:
     - name: Set up Go 1.16.x
