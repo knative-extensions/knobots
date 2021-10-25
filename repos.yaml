@@ -66,6 +66,10 @@
   fork: 'knative-automation/release'
   channel: 'productivity'
   assignees: knative/knative-release-leads
+- name: 'knative/hack'
+  fork: 'knative'
+  channel: 'productivity'
+  assignees: knative/productivity-wg-leads
 
 # knative-sandbox (workflows)
 - name: 'knative-sandbox/.github'
