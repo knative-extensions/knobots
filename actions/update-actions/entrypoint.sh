@@ -31,22 +31,6 @@ yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
 
 create_pr="true"
 
-# TODO: This is only temporary to resolve the chicken/egg. Remove once Golang 1.17 is rolled out.
-pushd "${GITHUB_WORKSPACE}/main"
-if [[ ! -f go.mod ]]; then
-    echo "No go mod, skipping..."
-else
-    export FILES=( $(find -path './vendor' -prune -o -path './third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print) )
-    if (( ${#FILES[@]} > 0 )); then
-        log=$(goimports -w "${FILES[@]}")
-        log="$log $(gofmt -s -w "${FILES[@]}")"
-        create_pr="true"
-    else
-        echo No Go files found.
-    fi
-fi
-popd
-
 # Ensure files have the same owner as the checkout directory.
 # See https://github.com/knative-sandbox/knobots/issues/79
 chown -R --reference=. .
