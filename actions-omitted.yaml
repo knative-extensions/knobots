@@ -14,8 +14,3 @@ knative/website:
     - knative-go-
     - knative-releasability
     - knative-release-notes
-knative/hack:
-  omit:
-    - knative-go-
-    - knative-releasability
-    - knative-release-notes
