@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -euxo pipefail
 
 log=""
 
@@ -25,8 +25,8 @@ cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') 
   "${GITHUB_WORKSPACE}/main/.github/workflows"
 yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
   jq -r --arg repo "$ORGANIZATION/$REPO" '(.[$repo] // {"omit": []}).omit[]' | \
-  while read PATH; do
-    rm "${GITHUB_WORKSPACE}/main/.github/workflows/${PATH}"*
+  while read FILE; do
+    rm "${GITHUB_WORKSPACE}/main/.github/workflows/${FILE}"*
   done
 
 create_pr="true"
