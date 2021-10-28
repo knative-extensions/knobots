@@ -31,15 +31,15 @@ if [[ -f go.mod ]]; then
     TMP_REPO_PATH="${TMP_DIR}/src/${MODULE_NAME}"
     mkdir -p "$(dirname "${TMP_REPO_PATH}")" && ln -s "${GITHUB_WORKSPACE}" "${TMP_REPO_PATH}"
 
-    release_flag=""
+    releaseFlags=()
     # Test to see if this module is using the knative.dev/hack repo, if it is,
     # then we know it is safe to pass down the release flag.
     if [[ $(buoy needs go.mod --domain knative.dev | grep knative.dev/hack) ]]; then
-        release_flag="--release ${RELEASE}"
+      releaseFlags+=("--release ${RELEASE} --module-release ${MODULE_RELEASE}")
     fi
 
-    echo "::set-output name=update-dep-cmd::./hack/update-deps.sh --upgrade ${release_flag}"
-    ./hack/update-deps.sh --upgrade ${release_flag}
+    echo "::set-output name=update-dep-cmd::./hack/update-deps.sh --upgrade ${releaseFlags[@]}"
+    ./hack/update-deps.sh --upgrade ${releaseFlags[@]}
     # capture logs for the module changes
     deplog=$(modlog . HEAD dirty || true)
     deplog="${deplog//$'\n'/'%0A'}"
