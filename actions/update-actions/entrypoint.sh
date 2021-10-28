@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -euo pipefail
 
 log=""
 
@@ -24,9 +24,9 @@ mkdir -p "${GITHUB_WORKSPACE}/main/.github/workflows"
 cp $(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml') \
   "${GITHUB_WORKSPACE}/main/.github/workflows"
 yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
-  jq -r --arg repo "$ORGANIZATION/$REPO" '(.[$repo] // {"omit": []}).omit[] + "*"' | \
-  while read GLOB; do
-    rm "${GITHUB_WORKSPACE}/main/.github/workflows/${GLOB}"
+  jq -r --arg repo "$ORGANIZATION/$REPO" '(.[$repo] // {"omit": []}).omit[]' | \
+  while read PATH; do
+    rm "${GITHUB_WORKSPACE}/main/.github/workflows/${PATH}"*
   done
 
 create_pr="true"
