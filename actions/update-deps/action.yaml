@@ -20,6 +20,8 @@ branding:
 inputs:
   release:
     description: "Release? (vX.Y) defaults to current release"
+  release-module:
+    description: "Release Module? (vX.Y) defaults to current release"  
   pr-empty-deps:
     description: "If true, send update PRs even for deps changes that don't change vendor. Defaults to false to reduce no-op PR spam."
 outputs:
@@ -36,4 +38,5 @@ runs:
     # This should point to the _upcoming_ release
     # *******************************************
     RELEASE: ${{ inputs.release || 'v1.0' }}
+    RELEASE_MODULE: ${{ inputs.release-module || 'v0.27' }}
     FORCE_DEPS: ${{ inputs.pr-empty-deps }}
