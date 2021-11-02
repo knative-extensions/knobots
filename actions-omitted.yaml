@@ -3,9 +3,6 @@
 knative-sandbox/kn-plugin-diag:
   omit:
     - knative-releasability
-knative-sandbox/kn-plugin-quickstart:
-  omit:
-    - knative-releasability
 knative-sandbox/kperf:
   omit:
     - knative-releasability
