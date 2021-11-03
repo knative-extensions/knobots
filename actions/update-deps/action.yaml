@@ -37,6 +37,6 @@ runs:
     # CHANGE THIS LINE AFTER RELEASE
     # This should point to the _upcoming_ release
     # *******************************************
-    RELEASE: ${{ inputs.release || 'v1.0' }}
-    MODULE_RELEASE: ${{ inputs.module_release || 'v0.27' }}
+    RELEASE: ${{ inputs.release || 'v1.1' }}
+    MODULE_RELEASE: ${{ inputs.module_release || 'v0.28' }}
     FORCE_DEPS: ${{ inputs.pr-empty-deps }}
