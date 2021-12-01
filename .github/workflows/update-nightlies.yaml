@@ -33,6 +33,7 @@ jobs:
         - net-contour
         - net-istio
         - net-kourier
+        - net-gateway-api
         - eventing-kafka-broker-eventing-kafka
         - eventing-kafka-broker-eventing
         - eventing-rabbitmq-eventing
@@ -74,6 +75,15 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-kourier
+          assignee: "@knative/networking-wg-leads"
+        - nightly: net-gateway-api
+          module: knative.dev/net-gateway-api
+          directory: ./third_party/gateway-api-latest
+          files: net-gateway-api.yaml istio-gateway.yaml
+          bucket: net-gateway-api
+          repository: knative/serving
+          fork: serving
+          channel: net-gateway-api
           assignee: "@knative/networking-wg-leads"
         - nightly: eventing-kafka-broker-eventing
           module: knative.dev/eventing-kafka-broker
