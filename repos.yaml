@@ -158,11 +158,6 @@
   fork: 'knative-automation/eventing-natss'
   channel: 'eventing-delivery'
   assignees: knative-sandbox/channel-wg-leads
-- name: 'knative-sandbox/eventing-prometheus'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-prometheus'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/source-wg-leads
 - name: 'knative-sandbox/eventing-rabbitmq'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-rabbitmq'
