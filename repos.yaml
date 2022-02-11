@@ -72,7 +72,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/sandbox-dot-github'
   channel: 'productivity'
-  assignees: knative/productivity-wg-leads
+  assignees: knative-sandbox/productivity-wg-leads
 
 # knative-sandbox (reconciler test)
 - name: 'knative-sandbox/reconciler-test'
@@ -206,7 +206,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kperf'
   channel: 'performance'
-  assignees: knative/productivity-wg-leads
+  assignees: knative-sandbox/productivity-wg-leads
 
 # knative-sandbox/kn-plugin-*, sorted alphabetically
 - name: 'knative-sandbox/homebrew-kn-plugins'
