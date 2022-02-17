@@ -114,15 +114,14 @@ jobs:
           assignee: "@knative-sandbox/eventing-rabbitmq-approvers"
 
     steps:
-    - name: Set up Go 1.16.x
+    - name: Set up Go 1.17.x
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16.x
+        go-version: 1.17.x
 
     - name: Install Dependencies
       run: |
-        cd $(mktemp -d)
-        go get github.com/dprotaso/modlog
+        go install github.com/dprotaso/modlog@latest
 
     - name: Check out code onto GOPATH
       uses: actions/checkout@v2
@@ -139,7 +138,7 @@ jobs:
 
         function release_labels() {
           # If grep matches no lines (exit code == 1) make this a noop since pipefail is on
-          git diff | { grep 'knative.dev/release' || [[ $? == 1 ]]; } | tr -s ' '
+          git diff | { grep -E 'knative.dev/release.?:' || [[ $? == 1 ]]; } | tr -s ' '
         }
 
         # Prior to the 'sed' we have output in the following format:
