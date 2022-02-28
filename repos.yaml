@@ -79,7 +79,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/reconciler-test'
   channel: 'test'
-  assignees: knative/eventing-writers knative/serving-writers
+  assignees: knative-sandbox/eventing-writers knative-sandbox/serving-writers
 
 # knative-sandbox (samples)
 - name: 'knative-sandbox/sample-controller'
