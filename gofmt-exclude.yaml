@@ -2,3 +2,5 @@
 - "knative/homebrew-client"
 - "knative-sandbox/homebrew-kn-plugins"
 - "knative-sandbox/.github"
+- "knative/actions"
+- "knative-sandbox/actions-downstream-test"

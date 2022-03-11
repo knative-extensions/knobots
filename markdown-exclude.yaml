@@ -7,3 +7,5 @@
 - "knative-sandbox/kn-plugin-admin"
 - "knative-sandbox/kn-plugin-sample"
 - "knative-sandbox/kn-plugin-source-kafka"
+- "knative/actions"
+- "knative-sandbox/actions-downstream-test"

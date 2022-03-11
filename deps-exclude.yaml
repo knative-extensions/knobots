@@ -4,3 +4,5 @@
 - "knative-sandbox/kn-plugin-func"
 - "knative-sandbox/.github"
 - "knative/hack"
+- "knative/actions"
+- "knative-sandbox/actions-downstream-test"
