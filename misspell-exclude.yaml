@@ -1,4 +1,6 @@
 # See: https://github.com/knative-sandbox/eventing-redis/pull/16#pullrequestreview-518266837
 - "knative-sandbox/eventing-redis"
 - "knative-sandbox/.github"
+- "knative/actions"
+- "knative-sandbox/actions-downstream-test"
 

@@ -36,6 +36,11 @@
   fork: 'knative-automation/test-infra'
   channel: 'productivity'
   assignees: knative/productivity-wg-leads
+- name: 'knative/actions'
+  meta-organization: 'knative'
+  fork: 'knative-automation/test-infra'
+  channel: 'productivity'
+  assignees: knative/productivity-wg-leads
 - name: 'knative/docs'
   meta-organization: 'knative'
   fork: 'knative-automation/docs'
@@ -69,6 +74,11 @@
 
 # knative-sandbox (workflows)
 - name: 'knative-sandbox/.github'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/sandbox-dot-github'
+  channel: 'productivity'
+  assignees: knative-sandbox/productivity-wg-leads
+- name: 'knative-sandbox/actions-downstream-test'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/sandbox-dot-github'
   channel: 'productivity'
