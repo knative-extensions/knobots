@@ -38,7 +38,7 @@
   assignees: knative/productivity-wg-leads
 - name: 'knative/actions'
   meta-organization: 'knative'
-  fork: 'knative-automation/test-infra'
+  fork: 'knative-automation/actions'
   channel: 'productivity'
   assignees: knative/productivity-wg-leads
 - name: 'knative/docs'
@@ -80,7 +80,7 @@
   assignees: knative-sandbox/productivity-wg-leads
 - name: 'knative-sandbox/actions-downstream-test'
   meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/sandbox-dot-github'
+  fork: 'knative-automation/actions-downstream-test'
   channel: 'productivity'
   assignees: knative-sandbox/productivity-wg-leads
 
