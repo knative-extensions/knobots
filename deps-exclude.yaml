@@ -7,3 +7,4 @@
 - "knative/actions"
 - "knative-sandbox/actions-downstream-test"
 - "knative/infra"
+- "knative-sandbox/knobots"

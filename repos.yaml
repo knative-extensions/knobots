@@ -77,6 +77,13 @@
   channel: 'productivity'
   assignees: knative/productivity-wg-leads
 
+# knative-sandbox
+- name: 'knative-sandbox/knobots'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/knobots'
+  channel: 'productivity'
+  assignees: knative-sandbox/productivity-wg-leads
+
 # knative-sandbox (workflows)
 - name: 'knative-sandbox/.github'
   meta-organization: 'knative-sandbox'
