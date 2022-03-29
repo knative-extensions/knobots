@@ -71,6 +71,11 @@
   fork: 'knative-automation/hack'
   channel: 'productivity'
   assignees: knative/productivity-wg-leads
+- name: 'knative/infra'
+  meta-organization: 'knative'
+  fork: 'knative-automation/infra'
+  channel: 'productivity'
+  assignees: knative/productivity-wg-leads
 
 # knative-sandbox (workflows)
 - name: 'knative-sandbox/.github'
