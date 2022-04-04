@@ -15,7 +15,7 @@
 # TODO: figure out how to template this.
 FROM golang:1.17
 
-RUN go get golang.org/x/tools/cmd/goimports
+RUN go install golang.org/x/tools/cmd/goimports@latest
 
 COPY entrypoint.sh /entrypoint.sh
 

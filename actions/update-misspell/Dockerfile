@@ -15,7 +15,7 @@
 # TODO: figure out how to template this.
 FROM golang:1.17
 
-RUN go get github.com/client9/misspell/cmd/misspell
+RUN go install github.com/client9/misspell/cmd/misspell@latest
 
 COPY entrypoint.sh /entrypoint.sh
 
