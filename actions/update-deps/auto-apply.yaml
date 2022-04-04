@@ -17,7 +17,9 @@ title: "Update Deps and Codegen"
 
 inputs:
 - name: release
-  description: "Release? (vX.Y) defaults to current release"
+  description: "Release version? (vX.Y) defaults to current release"
+- name: module-release
+  description: "Go module release version? (vX.Y) defaults to current release"
 - name: pr-empty-deps
   description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
   default: "false"

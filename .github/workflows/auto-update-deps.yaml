@@ -39,7 +39,7 @@ on:
         default: "false"
       branch:
         description: "Branch Name? (empty for default branch of the respective repository)"
-
+      
 
 jobs:
   meta:
@@ -70,20 +70,20 @@ jobs:
         name: ${{ fromJson(needs.meta.outputs.names) }}
         include: ${{ fromJson(needs.meta.outputs.includes) }}
     steps:
-
+    
     - name: Checkout config code
       uses: actions/checkout@v2
       with:
         path: config
-
+    
     - name: Checkout ${{ matrix.name }} code
       uses: actions/checkout@v2
       with:
         path: main
         repository: ${{ matrix.name }}
         ref: ${{ github.event.inputs.branch }}
-
-
+    
+  
     # This is required because the branch setting might be empty (to infer a default), so
     # after checkout we fetch what the checkout action decided to check out.
     - name: Infer branch from checkout
@@ -124,9 +124,9 @@ jobs:
 
         commit-message: |
           upgrade to latest dependencies
-
+          
           ${{ steps.work.outputs.log }}
-
+          
         title: "[${{ steps.inferbranch.outputs.branch }}] Upgrade to latest dependencies"
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}
