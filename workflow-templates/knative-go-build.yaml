@@ -24,3 +24,4 @@ on:
 jobs:
   build:
     uses: knative/actions/.github/workflows/go-build.yaml@main
+
