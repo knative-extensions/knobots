@@ -138,13 +138,18 @@ jobs:
 
         function release_labels() {
           # If grep matches no lines (exit code == 1) make this a noop since pipefail is on
-          git diff | { grep -E 'knative.dev/release.?:' || [[ $? == 1 ]]; } | tr -s ' '
+          git diff | { grep -E 'knative.dev/release.?:|app.kubernetes.io/version:' || [[ $? == 1 ]]; } | tr -s ' '
         }
 
         # Prior to the 'sed' we have output in the following format:
         #
         # - serving.knative.dev/release: "v20210111-9f0302e4"
         # + serving.knative.dev/release: "v20210112-9f0302e4"
+        #
+        # or
+        #
+        # - app.kubernetes.io/version: "v20210111-9f0302e4"
+        # + app.kubernetes.io/version: "v20210112-9f0302e4"
         #
         ref_count=$(release_labels | sed 's/.* "\(.*\)"$/\1/' | cut -d '-' -f2 | sort -u | wc -l)
 
@@ -157,8 +162,8 @@ jobs:
 
         echo "create_pr=true" >> $GITHUB_ENV
 
-        from_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '-' | cut -d ' ' -f2)
-        to_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '+' | cut -d ' ' -f2)
+        from_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '-' | cut -d ' ' -f2 | sort -u)
+        to_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '+' | cut -d ' ' -f2 | sort -u)
 
         if [[ -z "$from_sha" ]]  || [[ -z "$to_sha" ]]; then
           echo "::warning file=.github.js,line=1::${{matrix.nightly}} - failed to get valid shas for a diff"
