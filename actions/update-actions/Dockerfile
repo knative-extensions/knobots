@@ -15,7 +15,7 @@
 # TODO: figure out how to template this.
 FROM golang:1.17
 
-RUN go get github.com/bronze1man/yaml2json && apt-get update && apt-get install -y jq
+RUN go install github.com/bronze1man/yaml2json@latest && apt-get update && apt-get install -y jq
 
 COPY entrypoint.sh /entrypoint.sh
 
