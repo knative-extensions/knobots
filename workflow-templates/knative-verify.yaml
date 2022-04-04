@@ -1,4 +1,4 @@
-# Copyright 2021 The Knative Authors.
+# Copyright 2020 The Knative Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,20 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-shortName: actions
-title: "Update actions"
+# This file is automagically synced here from github.com/knative-sandbox/.github
+# repo by knobots: https://github.com/knative-sandbox/knobots and will be overwritten.
 
-# No special inputs needed.
+name: Verify
 
-prTitle: "[${{ steps.inferbranch.outputs.branch }}] Update actions"
-repos:
-  main:
-    name: "${{ matrix.name }}"
-  meta:
-    name: knative-sandbox/knobots
+on:
+  pull_request:
+    branches: [ 'main', 'master', 'release-*' ]
 
-commitMessage: |
-  Update actions
-
-  ${{ steps.work.outputs.log }}
-
+jobs:
+  verify:
+    uses: knative/actions/.github/workflows/verify-codegen.yaml@main
