@@ -18,8 +18,6 @@ branding:
   icon: smile
   color: green
 outputs:
-  create_pr:
-    description: "Whether a PR should be created because there were meaningful changes"
   log:
     description: "Report on module changes"
 runs:

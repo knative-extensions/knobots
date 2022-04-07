@@ -24,6 +24,6 @@ log=$(prettier --write --prose-wrap=always $(find -name '*.md' | grep -v vendor 
 # See https://github.com/knative-sandbox/knobots/issues/79
 chown -R --reference=. .
 
-echo "::set-output name=create_pr::true"
+echo "create_pr=${create_pr}" >> $GITHUB_ENV
 
 echo "::set-output name=log::${log}"
