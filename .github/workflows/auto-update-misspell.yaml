@@ -105,6 +105,10 @@ jobs:
         branch: auto-updates/update-misspell-${{ steps.inferbranch.outputs.branch }}
         signoff: true
         delete-branch: true
+
+        # What labels to add
+        labels: ${{ env.pr_labels }}
+
         # Note this is hard-coded based on the added repos in main.go
         path: main
 
