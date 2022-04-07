@@ -107,6 +107,10 @@ jobs:
         branch: auto-updates/{{.Action}}-{{github "steps.inferbranch.outputs.branch"}}
         signoff: true
         delete-branch: true
+
+        # What labels to add
+        labels: {{github "env.pr_labels"}}
+
         # Note this is hard-coded based on the added repos in main.go
         path: main
 

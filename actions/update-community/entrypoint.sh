@@ -18,6 +18,10 @@ set -e
 
 log=""
 create_pr="false"
+# The label used for Prow Tide to auto-merge PRs that pass all the required presubmit checks.
+# Must be configured in Prow to be effective. Example:
+# https://github.com/knative/test-infra/blob/66d6a1f645ff585bfd1bce0eee0cb3446c7405b9/prow/config.yaml#L168
+pr_labels="skip-review"
 
 FILE="OWNERS_ALIASES"
 if [ "${ORGANIZATION}" != "knative" ] ; then
@@ -38,6 +42,6 @@ fi
 chown -R --reference=. .
 
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
-echo "::set-output name=create_pr::${create_pr}"
+echo "pr_labels=${pr_labels}" >> $GITHUB_ENV
 
 echo "::set-output name=log::${log}"

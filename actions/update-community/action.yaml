@@ -21,8 +21,6 @@ inputs:
   organization:
     decription: "The organization that the target repo belongs to"
 outputs:
-  create_pr:
-    description: "Whether a PR should be created because there were meaningful changes"
   log:
     description: "Log of changes"
 runs:

@@ -23,8 +23,6 @@ inputs:
   repo:
     description: 'The repo being copied to, for repo-specific customizations.'
 outputs:
-  create_pr:
-    description: "Whether a PR should be created because there were meaningful changes"
   log:
     description: "Log of changes"
 runs:

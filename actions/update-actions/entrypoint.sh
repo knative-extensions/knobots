@@ -36,6 +36,5 @@ create_pr="true"
 chown -R --reference=. .
 
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
-echo "::set-output name=create_pr::${create_pr}"
 
 echo "::set-output name=log::$log"
