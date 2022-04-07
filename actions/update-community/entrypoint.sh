@@ -23,10 +23,7 @@ create_pr="false"
 # https://github.com/knative/test-infra/blob/66d6a1f645ff585bfd1bce0eee0cb3446c7405b9/prow/config.yaml#L168
 pr_labels="skip-review"
 
-FILE="OWNERS_ALIASES"
-if [ "${ORGANIZATION}" != "knative" ] ; then
-  FILE="${ORGANIZATION}-OWNERS_ALIASES"
-fi
+FILE="peribolos/${ORGANIZATION}-OWNERS_ALIASES"
 
 if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
   cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
