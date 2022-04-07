@@ -19,7 +19,7 @@ branding:
   color: green
 inputs:
   organization:
-    decription: "The organization that the target repo belongs to"
+    description: "The organization that the target repo belongs to"
 outputs:
   log:
     description: "Log of changes"
