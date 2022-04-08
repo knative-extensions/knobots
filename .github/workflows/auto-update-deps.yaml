@@ -50,7 +50,7 @@ jobs:
 
     steps:
     - name: Check out knobots configuration
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Calculate affected repos
       id: load-matrix
@@ -72,12 +72,12 @@ jobs:
     steps:
     
     - name: Checkout config code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: config
     
     - name: Checkout ${{ matrix.name }} code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: main
         repository: ${{ matrix.name }}
@@ -107,7 +107,7 @@ jobs:
     - name: Create Pull Request
       id: cpr
       if: ${{ env.create_pr == 'true' }}
-      uses: peter-evans/create-pull-request@v3
+      uses: peter-evans/create-pull-request@v4
       with:
         # Who to look like
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
@@ -146,7 +146,7 @@ jobs:
           ```
 
     - name: Report error
-      uses: rtCamp/action-slack-notify@v2.1.0
+      uses: rtCamp/action-slack-notify@v2
       if: ${{ failure() }}
       env:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
