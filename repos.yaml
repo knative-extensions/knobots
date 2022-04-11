@@ -135,11 +135,6 @@
   fork: 'knative-automation/eventing-autoscaler-keda'
   channel: 'eventing-delivery'
   assignees: knative-sandbox/eventing-writers
-- name: 'knative-sandbox/eventing-awssqs'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-awssqs'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/eventing-writers
 - name: 'knative-sandbox/eventing-ceph'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-ceph'
