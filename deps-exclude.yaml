@@ -5,6 +5,5 @@
 - "knative-sandbox/.github"
 - "knative/hack"
 - "knative/actions"
-- "knative-sandbox/actions-downstream-test"
 - "knative/infra"
 - "knative-sandbox/knobots"

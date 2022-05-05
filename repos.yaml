@@ -90,11 +90,6 @@
   fork: 'knative-automation/sandbox-dot-github'
   channel: 'productivity'
   assignees: knative-sandbox/productivity-wg-leads
-- name: 'knative-sandbox/actions-downstream-test'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/actions-downstream-test'
-  channel: 'productivity'
-  assignees: knative-sandbox/productivity-wg-leads
 
 # knative-sandbox (reconciler test)
 - name: 'knative-sandbox/reconciler-test'
