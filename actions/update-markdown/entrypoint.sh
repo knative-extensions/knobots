@@ -16,9 +16,15 @@
 
 set -e
 
+log=""
+files=$(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/)
+
 cd main
 
-log=$(prettier --write --prose-wrap=always $(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/))
+if [ -z "$(prettier -l $files)" ]; then
+    create_pr="true"
+    log=$(prettier --write --prose-wrap=always $files)
+fi
 
 # Ensure files have the same owner as the checkout directory.
 # See https://github.com/knative-sandbox/knobots/issues/79
