@@ -8,5 +8,4 @@
 - "knative-sandbox/kn-plugin-sample"
 - "knative-sandbox/kn-plugin-source-kafka"
 - "knative/actions"
-- "knative/infra"
 - "knative-sandbox/knobots"
