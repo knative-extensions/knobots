@@ -17,9 +17,11 @@
 set -e
 
 log=""
-files=$(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/)
+create_pr="false"
 
 cd main
+
+files=$(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/)
 
 if [ -z "$(prettier -l $files)" ]; then
     create_pr="true"
