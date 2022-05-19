@@ -2,5 +2,4 @@
 - "knative-sandbox/eventing-redis"
 - "knative-sandbox/.github"
 - "knative/actions"
-- "knative/infra"
 - "knative-sandbox/knobots"
