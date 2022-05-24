@@ -31,10 +31,15 @@ yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
 
 create_pr="true"
 
+# Must be configured in Prow to be effective. Example:
+# https://github.com/knative/test-infra/blob/66d6a1f645ff585bfd1bce0eee0cb3446c7405b9/prow/config.yaml#L168
+pr_labels="skip-review"
+
 # Ensure files have the same owner as the checkout directory.
 # See https://github.com/knative-sandbox/knobots/issues/79
 chown -R --reference=. .
 
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
+echo "pr_labels=${pr_labels}" >> $GITHUB_ENV
 
 echo "::set-output name=log::$log"
