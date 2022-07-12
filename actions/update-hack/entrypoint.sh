@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2021 The Knative Authors.
+# Copyright 2022 The Knative Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,15 +23,19 @@ create_pr="false"
 # https://github.com/knative/test-infra/blob/66d6a1f645ff585bfd1bce0eee0cb3446c7405b9/prow/config.yaml#L168
 pr_labels="skip-review"
 
-FILE="peribolos/${ORGANIZATION}-OWNERS_ALIASES"
+apt update && apt install git -y
 
-if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
-  cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
-  echo "Copying ${GITHUB_WORKSPACE}/meta/${FILE} -> ${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
-  create_pr="true"
+mkdir -p "${GITHUB_WORKSPACE}/main/hack/upstream"
+cp -r "${GITHUB_WORKSPACE}/meta/" "${GITHUB_WORKSPACE}/main/hack/upstream"
+echo "Copying ${GITHUB_WORKSPACE}/meta/ -> ${GITHUB_WORKSPACE}/main/hack/upstream"
+popd ${GITHUB_WORKSPAeCE}/main
+if [[ -z "$(git status --porcelain)" ]]; then
+    echo "hack/upstream is up to date. Moving on"
 else
-  echo "Could not find ${FILE}, skipping"
+    create_pr="true"
+    echo "hack/upstream is out of to date. Opening a PR to sync latest changes"
 fi
+pushd
 
 # Ensure files have the same owner as the checkout directory.
 # See https://github.com/knative-sandbox/knobots/issues/79
