@@ -218,7 +218,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kperf'
   channel: 'performance'
-  assignees: knative-sandbox/productivity-wg-leads
+  assignees: knative-sandbox/kperf-approvers
 
 # knative-sandbox/kn-plugin-*, sorted alphabetically
 - name: 'knative-sandbox/homebrew-kn-plugins'
