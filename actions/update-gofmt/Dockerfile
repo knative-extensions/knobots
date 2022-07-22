@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # TODO: figure out how to template this.
-FROM golang:1.17
+FROM golang:1.18
 
 RUN go install golang.org/x/tools/cmd/goimports@latest
 
