@@ -38,3 +38,6 @@ knative-sandbox/discovery:
 knative-sandbox/kn-plugin-migration:
   omit:
     - knative-releasability
+knative-sandbox/container-freezer:
+  omit:
+    - knative-releasability
