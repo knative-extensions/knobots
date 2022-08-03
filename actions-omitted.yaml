@@ -1,5 +1,11 @@
 # Avoid syncing certain actions to certain repos. (For example, go testing from non-go repos.)
 # This uses a glob prefix match (adds * to the end of each omit), so no need to specify '.yaml'
+knative/test-infra:
+  omit:
+    - knative-releasability
+knative/client-pkg:
+  omit:
+    - knative-releasability
 knative-sandbox/kn-plugin-diag:
   omit:
     - knative-releasability
@@ -9,8 +15,24 @@ knative-sandbox/kn-plugin-sample:
 knative-sandbox/kperf:
   omit:
     - knative-releasability
-knative/website:
+knative-sandbox/eventing-natss:
   omit:
-    - knative-go-
     - knative-releasability
-    - knative-release-notes
+knative-sandbox/kn-plugin-func:
+  omit:
+    - knative-releasability
+knative-sandbox/kn-plugin-service-log:
+  omit:
+    - knative-releasability
+knative-sandbox/eventing-couchdb:
+  omit:
+    - knative-releasability
+knative-sandbox/discovery:
+  omit:
+    - knative-releasability
+knative-sandbox/kn-plugin-migration:
+  omit:
+    - knative-releasability
+knative-sandbox/container-freezer:
+  omit:
+    - knative-releasability
