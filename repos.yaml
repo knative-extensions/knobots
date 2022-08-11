@@ -300,6 +300,13 @@
   channel: 'autoscaling'
   assignees: knative-sandbox/autoscaling-wg-leads
 
+# knative-sandbox (security)
+- name: 'knative-sandbox/security-guard'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/security-guard'
+  channel: 'security'
+  assignees: knative/security-guard-approvers
+   
 # vmware-tanzu
 - name: 'vmware-tanzu/sources-for-knative'
   meta-organization: 'knative' # Pull actions from the Knative org.
