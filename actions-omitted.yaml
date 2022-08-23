@@ -36,3 +36,6 @@ knative-sandbox/kn-plugin-migration:
 knative-sandbox/container-freezer:
   omit:
     - knative-releasability
+knative-sandbox/security-guard:
+  omit:
+    - knative-releasability
