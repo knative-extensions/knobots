@@ -250,12 +250,6 @@
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
-- name: 'knative-sandbox/kn-plugin-func'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-func'
-  channel: 'functions-sandbox'
-  assignees: 'knative-sandbox/kn-plugin-func-approvers'
-
 - name: 'knative-sandbox/kn-plugin-migration'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-migration'
@@ -311,3 +305,17 @@
   fork: 'knative-automation/sources-for-knative'
   channel: 'vmware-sources'
   assignees: we don't use Prow
+
+# knative-sandbox (functions)
+- name: 'knative-sandbox/kn-plugin-func'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/kn-plugin-func'
+  channel: 'functions-sandbox'
+  assignees: 'knative-sandbox/kn-plugin-func-approvers'
+
+- name: 'knative-sandbox/func-tastic'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/func-tastic'
+  channel: 'functions-sandbox'
+  assignees: 'knative-sandbox/func-tastic-approvers'
+
