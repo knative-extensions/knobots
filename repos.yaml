@@ -260,8 +260,8 @@
 - name: 'knative-sandbox/kn-plugin-quickstart'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-quickstart'
-  channel: 'user-experience'
-  assignees: 'knative-sandbox/ux-writers'
+  channel: 'cli'
+  assignees: 'knative-sandbox/kn-plugin-quickstart-approvers'
 
 - name: 'knative-sandbox/kn-plugin-sample'
   meta-organization: 'knative-sandbox'
