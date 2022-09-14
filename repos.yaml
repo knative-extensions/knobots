@@ -312,12 +312,12 @@
 - name: 'knative-sandbox/kn-plugin-func'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/kn-plugin-func'
-  channel: 'functions-sandbox'
+  channel: 'functions'
   assignees: 'knative-sandbox/kn-plugin-func-approvers'
 
 - name: 'knative-sandbox/func-tastic'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/func-tastic'
-  channel: 'functions-sandbox'
+  channel: 'functions'
   assignees: 'knative-sandbox/func-tastic-approvers'
 
