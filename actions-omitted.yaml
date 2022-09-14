@@ -18,9 +18,6 @@ knative-sandbox/kperf:
 knative-sandbox/eventing-natss:
   omit:
     - knative-releasability
-knative-sandbox/kn-plugin-func:
-  omit:
-    - knative-releasability
 knative-sandbox/kn-plugin-service-log:
   omit:
     - knative-releasability
