@@ -61,6 +61,11 @@
   fork: 'knative-automation/homebrew-client'
   channel: 'cli'
   assignees: knative/client-wg-leads
+- name: 'knative/func'
+  meta-organization: 'knative'
+  fork: 'knative-automation/func'
+  channel: 'functions'
+  assignees: 'knative/func-approvers'
 - name: 'knative/release'
   meta-organization: 'knative'
   fork: 'knative-automation/release'
@@ -309,11 +314,6 @@
   assignees: we don't use Prow
 
 # knative-sandbox (functions)
-- name: 'knative-sandbox/kn-plugin-func'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/kn-plugin-func'
-  channel: 'functions'
-  assignees: 'knative-sandbox/kn-plugin-func-approvers'
 
 - name: 'knative-sandbox/func-tastic'
   meta-organization: 'knative-sandbox'
