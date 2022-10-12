@@ -140,11 +140,6 @@ jobs:
 
           Produced by: ${{ github.repository }}/actions/update-deps
 
-          Details:
-          ```
-          ${{ steps.work.outputs.log }}
-          ```
-
     - name: Report error
       uses: rtCamp/action-slack-notify@v2
       if: ${{ failure() }}
