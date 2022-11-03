@@ -37,13 +37,13 @@ jobs:
 
     steps:
 
-    - name: Set up Go 1.16
-      uses: actions/setup-go@v2
+    - name: Set up Go
+      uses: actions/setup-go@v3
       with:
-        go-version: 1.16.x
+        go-version: 1.19.x
 
     - name: Install Dependencies
-      run: GO111MODULE=on go get knative.dev/test-infra/buoy@master
+      run: go install knative.dev/test-infra/buoy@main
 
     - name: Install gh
       run: |
@@ -54,7 +54,7 @@ jobs:
         sudo apt-get install gh -qqy
 
     - name: Check out code onto GOPATH
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Check Repo
       run: GITHUB_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} ./hack/auto-fork.sh ${{ matrix.org }}
