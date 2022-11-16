@@ -24,9 +24,6 @@ knative-sandbox/kn-plugin-service-log:
 knative-sandbox/eventing-couchdb:
   omit:
     - knative-releasability
-knative-sandbox/discovery:
-  omit:
-    - knative-releasability
 knative-sandbox/kn-plugin-migration:
   omit:
     - knative-releasability

@@ -122,13 +122,6 @@
   channel: 'eventing-delivery'
   assignees: knative-sandbox/eventing-writers
 
-# knative-sandbox/discovery
-- name: 'knative-sandbox/discovery'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/discovery'
-  channel: 'eventing-sources'
-  assignees: knative-sandbox/eventing-writers
-
 # knative-sandbox/eventing-* (eventing), sorted alphabetically
 - name: 'knative-sandbox/eventing-autoscaler-keda'
   meta-organization: 'knative-sandbox'
