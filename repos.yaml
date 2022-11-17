@@ -306,6 +306,14 @@
   channel: 'vmware-sources'
   assignees: we don't use Prow
 
+# knative-sandbox (async-component)
+
+- name: 'knative-sandbox/async-component'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/async-component'
+  channel: 'async-requests'
+  assignees: 'knative-sandbox/async-component-approvers'
+
 # knative-sandbox (functions)
 
 - name: 'knative-sandbox/func-tastic'
