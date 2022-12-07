@@ -36,3 +36,6 @@ knative-sandbox/async-component:
 knative-sandbox/security-guard:
   omit:
     - knative-releasability
+knative-sandbox/scaling-group:
+  omit:
+    - knative-releasability

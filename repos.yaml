@@ -289,8 +289,8 @@
 - name: 'knative-sandbox/container-freezer'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/container-freezer'
-  channel: 'autoscaling'
-  assignees: knative-sandbox/autoscaling-wg-leads
+  channel: 'serving'
+  assignees: knative-sandbox/serving-wg-leads
 
 # knative-sandbox (security)
 - name: 'knative-sandbox/security-guard'
@@ -298,7 +298,14 @@
   fork: 'knative-automation/security-guard'
   channel: 'security'
   assignees: knative/security-guard-approvers
-   
+
+# knative-sandbox (autoscaling)
+- name: 'knative-sandbox/scaling-group'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/scaling-group'
+  channel: 'serving'
+  assignees: knative-sandbox/serving-wg-leads 
+
 # vmware-tanzu
 - name: 'vmware-tanzu/sources-for-knative'
   meta-organization: 'knative' # Pull actions from the Knative org.
