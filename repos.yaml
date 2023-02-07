@@ -15,7 +15,7 @@
   meta-organization: 'knative'
   fork: 'knative-automation/networking'
   channel: 'networking'
-  assignees: knative/networking-wg-leads
+  assignees: knative/serving-writers
 - name: 'knative/serving'
   meta-organization: 'knative'
   fork: 'knative-automation/serving'
@@ -184,32 +184,32 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-contour'
   channel: 'net-contour'
-  assignees: knative-sandbox/networking-wg-leads
+  assignees: knative-sandbox/serving-writers
 - name: 'knative-sandbox/net-kourier'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-kourier'
   channel: 'net-kourier'
-  assignees: knative-sandbox/networking-wg-leads
+  assignees: knative-sandbox/serving-writers
 - name: 'knative-sandbox/net-istio'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-istio'
   channel: 'net-istio'
-  assignees: knative-sandbox/networking-wg-leads
+  assignees: knative-sandbox/serving-writers
 - name: 'knative-sandbox/net-http01'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-http01'
   channel: 'net-http01'
-  assignees: knative-sandbox/networking-wg-leads
+  assignees: knative-sandbox/serving-writers
 - name: 'knative-sandbox/net-certmanager'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-certmanager'
   channel: 'net-certmanager'
-  assignees: knative-sandbox/networking-wg-leads
+  assignees: knative-sandbox/serving-writers
 - name: 'knative-sandbox/net-gateway-api'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/net-gateway-api'
   channel: 'net-gateway-api'
-  assignees: knative-sandbox/networking-wg-leads
+  assignees: knative-sandbox/serving-writers
 
 # knative-sandbox (kperf)
 - name: 'knative-sandbox/kperf'
