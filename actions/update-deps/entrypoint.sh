@@ -18,14 +18,6 @@ set -e
 
 deplog=""
 
-# Ensure files have the same owner as the checkout directory.
-# See https://github.com/knative-sandbox/knobots/issues/79
-chown -R --reference=. main
-# This has been moved here because the scripts below use `git`
-# and the parent directory does not match the docker user and
-# thus gives an error. For more info see:
-# https://github.com/git/git/commit/8959555cee7ec045958f9b6dd62e541affb7e7d9
-
 cd main
 
 # Determine the name of the go module.
@@ -76,6 +68,10 @@ for x in $(git diff-index --name-only HEAD --); do
     create_pr="true"
     break
 done
+
+# Ensure files have the same owner as the checkout directory.
+# See https://github.com/knative-sandbox/knobots/issues/79
+chown -R --reference=. .
 
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 
