@@ -18,6 +18,12 @@ set -e
 
 deplog=""
 
+# The scripts below use `git` on the checked out .../main that has a
+# different user than the docker user which gives an error. We thus have
+# to explicitly allow it with the below command. For more info see:
+# https://github.com/git/git/commit/8959555cee7ec045958f9b6dd62e541affb7e7d9
+git config --global --add safe.directory /github/workspace/main
+
 cd main
 
 # Determine the name of the go module.
