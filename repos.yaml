@@ -108,7 +108,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/sample-controller'
   channel: 'serving-api'
-  assignees: knative-sandbox/api-core-wg-leads
+  assignees: knative-sandbox/serving-writers
 - name: 'knative-sandbox/sample-source'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/sample-source'
