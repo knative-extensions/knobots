@@ -51,7 +51,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-certmanager
-          assignee: "@knative/networking-wg-leads"
+          assignee: "@knative/serving-writers"
         - nightly: net-contour
           module: knative.dev/net-contour
           directory: ./third_party/contour-latest
@@ -60,7 +60,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-contour
-          assignee: "@knative/networking-wg-leads"
+          assignee: "@knative/serving-writers"
         - nightly: net-istio
           module: knative.dev/net-istio
           directory: ./third_party/istio-latest
@@ -69,7 +69,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-istio
-          assignee: "@knative/networking-wg-leads"
+          assignee: "@knative/serving-writers"
         - nightly: net-kourier
           module: knative.dev/net-kourier
           directory: ./third_party/kourier-latest
@@ -78,7 +78,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-kourier
-          assignee: "@knative/networking-wg-leads"
+          assignee: "@knative/serving-writers"
         - nightly: net-gateway-api
           module: knative.dev/net-gateway-api
           directory: ./third_party/gateway-api-latest
@@ -87,7 +87,7 @@ jobs:
           repository: knative/serving
           fork: serving
           channel: net-gateway-api
-          assignee: "@knative/networking-wg-leads"
+          assignee: "@knative/serving-writers"
         - nightly: eventing-kafka-broker-eventing
           module: knative.dev/eventing-kafka-broker
           directory: ./third_party/eventing-latest
