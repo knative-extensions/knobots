@@ -304,14 +304,7 @@
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/scaling-group'
   channel: 'serving'
-  assignees: knative-sandbox/serving-wg-leads 
-
-# vmware-tanzu
-- name: 'vmware-tanzu/sources-for-knative'
-  meta-organization: 'knative' # Pull actions from the Knative org.
-  fork: 'knative-automation/sources-for-knative'
-  channel: 'vmware-sources'
-  assignees: we don't use Prow
+  assignees: knative-sandbox/serving-wg-leads
 
 # knative-sandbox (async-component)
 
