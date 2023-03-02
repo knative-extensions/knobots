@@ -148,6 +148,11 @@
   fork: 'knative-automation/eventing-gitlab'
   channel: 'eventing-sources'
   assignees: knative-sandbox/eventing-writers
+- name: 'knative-sandbox/eventing-istio'
+  meta-organization: 'knative-sandbox'
+  fork: 'knative-automation/eventing-istio'
+  channel: 'eventing'
+  assignees: knative-sandbox/eventing-writers
 - name: 'knative-sandbox/eventing-kafka'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-kafka'
