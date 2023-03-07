@@ -26,6 +26,9 @@ git config --global --add safe.directory /github/workspace/main
 
 cd main
 
+# Additionally add Git submodules to the safe directory config
+git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | xargs -I{} git config --global --add safe.directory {}
+
 # Determine the name of the go module.
 if [[ -f go.mod ]]; then
     export MODULE_NAME=$(go mod graph | cut -d' ' -f 1 | grep -v '@' | head -1)
