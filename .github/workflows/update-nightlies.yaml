@@ -177,7 +177,7 @@ jobs:
         deplog=$(modlog -s ${{ matrix.module }} $from_sha $to_sha || true)
         deplog="${deplog//$'\n'/'%0A'}"
         deplog="${deplog//$'\r'/'%0D'}"
-        echo "::set-output name=deplog::$deplog"
+        echo "deplog=$deplog" >> $GITHUB_OUTPUT
 
 
     - name: Create Pull Request

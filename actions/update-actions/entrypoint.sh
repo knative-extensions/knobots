@@ -42,4 +42,4 @@ chown -R --reference=. .
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 echo "pr_labels=${pr_labels}" >> $GITHUB_ENV
 
-echo "::set-output name=log::$log"
+echo "log=$log" >> $GITHUB_OUTPUT

@@ -47,7 +47,7 @@ if [[ -f go.mod ]]; then
       releaseFlags+=("--release ${RELEASE} --module-release ${MODULE_RELEASE}")
     fi
 
-    echo "::set-output name=update-dep-cmd::./hack/update-deps.sh --upgrade ${releaseFlags[@]}"
+    echo "update-dep-cmd=./hack/update-deps.sh --upgrade ${releaseFlags[@]}" >> $GITHUB_OUTPUT
     ./hack/update-deps.sh --upgrade ${releaseFlags[@]}
     # capture logs for the module changes
     deplog=$(modlog . HEAD dirty || true)
@@ -84,4 +84,4 @@ chown -R --reference=. .
 
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
 
-echo "::set-output name=log::$deplog"
+echo "log=$deplog" >> $GITHUB_OUTPUT

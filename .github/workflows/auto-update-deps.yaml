@@ -90,7 +90,7 @@ jobs:
       id: inferbranch
       run: |
         cd main
-        echo "::set-output name=branch::$(git branch --show-current)"
+        echo "branch=$(git branch --show-current)" >> $GITHUB_OUTPUT
 
     - name: Apply work
       id: work
