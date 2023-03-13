@@ -290,13 +290,6 @@
   channel: 'cli'
   assignees: 'knative-sandbox/client-writers'
 
-# knative-sandbox (autoscaling)
-- name: 'knative-sandbox/container-freezer'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/container-freezer'
-  channel: 'serving'
-  assignees: knative-sandbox/serving-wg-leads
-
 # knative-sandbox (security)
 - name: 'knative-sandbox/security-guard'
   meta-organization: 'knative-sandbox'
