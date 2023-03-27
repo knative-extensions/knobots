@@ -18,7 +18,7 @@ FROM golang:1.19
 RUN go install github.com/google/ko@latest
 RUN go install github.com/google/go-licenses@latest
 RUN go install github.com/dprotaso/modlog@latest
-RUN go install knative.dev/test-infra/buoy@latest
+RUN go install knative.dev/toolbox/buoy@latest
 
 COPY entrypoint.sh /entrypoint.sh
 
