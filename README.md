@@ -47,15 +47,6 @@ To add a repository here, there are two requirements:
 3. Repos can also optionally exclude certain jobs by adding their name to the
 appropriate `{foo}-exclude.yaml` file. 
 
-4. New repos are normaly not release ready and should therefore 
-ommit the releasability action by adding to the actions-omitted.yaml, like this:
-   ```
-   knative-sandbox/security-guard:
-     omit:
-       - knative-releasability
-   ```
-
-
 ## Adding new automation
 
 This repo exists to run [GitHub Actions](https://docs.github.com/en/actions) to
