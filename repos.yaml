@@ -133,11 +133,6 @@
   fork: 'knative-automation/eventing-ceph'
   channel: 'knative-eventing'
   assignees: knative-sandbox/eventing-writers
-- name: 'knative-sandbox/eventing-couchdb'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/eventing-couchdb'
-  channel: 'knative-eventing'
-  assignees: knative-sandbox/eventing-writers
 - name: 'knative-sandbox/eventing-github'
   meta-organization: 'knative-sandbox'
   fork: 'knative-automation/eventing-github'
