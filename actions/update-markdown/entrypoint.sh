@@ -18,20 +18,25 @@ set -e
 
 log=""
 create_pr="false"
+ignore_file=$(mktemp)
+
+echo '**/.git'        >> $ignore_file
+echo '**/.github'     >> $ignore_file
+echo '**/vendor'      >> $ignore_file
+echo '**/third_party' >> $ignore_file
+echo '**/docs/cmd'    >> $ignore_file
 
 cd main
 
-files=$(find -name '*.md' | grep -v vendor | grep -v .github | grep -v docs/cmd/)
+echo 'log<<EOF' >> "$GITHUB_OUTPUT"
+prettier --ignore-path $ignore_file -l $(find . -name "*.md") &2>1 >> $GITHUB_OUTPUT
+echo 'EOF' >> "$GITHUB_OUTPUT"
 
-if [ -z "$(prettier -l $files)" ]; then
-    create_pr="true"
-    log=$(prettier --write --prose-wrap=always $files)
-fi
+[ -z "$(git status --porcelain=v1 2>/dev/null)" ] || create_pr="true"
 
 # Ensure files have the same owner as the checkout directory.
 # See https://github.com/knative-sandbox/knobots/issues/79
 chown -R --reference=. .
 
-echo "create_pr=${create_pr}" >> $GITHUB_ENV
 
-echo "log=${log}" >> $GITHUB_OUTPUT
+echo "create_pr=${create_pr}" >> $GITHUB_ENV
