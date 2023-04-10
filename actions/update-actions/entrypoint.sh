@@ -29,6 +29,17 @@ yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
     rm "${GITHUB_WORKSPACE}/main/.github/workflows/${FILE}"*
   done
 
+old_workflows=(
+  "knative-releasability.yaml"
+  "knative-boilerplate.yaml"
+  "knative-donotsubmit.yaml"
+  "knative-vulnerability.yaml"
+)
+
+for old_workflow in "${old_workflows[@]}"; do
+  rm "${GITHUB_WORKSPACE}/main/.github/workflows/${old_workflow}" || true
+done
+
 create_pr="true"
 
 # Must be configured in Prow to be effective. Example:
