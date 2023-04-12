@@ -40,6 +40,10 @@ if [[ -f go.mod ]]; then
     TMP_REPO_PATH="${TMP_DIR}/src/${MODULE_NAME}"
     mkdir -p "$(dirname "${TMP_REPO_PATH}")" && ln -s "${GITHUB_WORKSPACE}" "${TMP_REPO_PATH}"
 
+    tokens=(${RELEASE//\./ })
+    release_minor="${tokens[1]}"
+    export MODULE_RELEASE="0.$(( release_minor + 27 ))"
+
     releaseFlags=()
     # Test to see if this module is using the knative.dev/hack repo, if it is,
     # then we know it is safe to pass down the release flag.

@@ -20,8 +20,6 @@ branding:
 inputs:
   release:
     description: "Release? (vX.Y) defaults to current release"
-  module-release:
-    description: "Go module release version (vX.Y), defaults to current release"
   pr-empty-deps:
     description: "If true, send update PRs even for deps changes that don't change vendor. Defaults to false to reduce no-op PR spam."
 outputs:
@@ -36,5 +34,4 @@ runs:
     # This should point to the _upcoming_ release
     # *******************************************
     RELEASE: ${{ inputs.release || 'v1.10' }}
-    MODULE_RELEASE: ${{ inputs.module-release || 'v0.37' }}
     FORCE_DEPS: ${{ inputs.pr-empty-deps }}
