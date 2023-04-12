@@ -108,17 +108,17 @@ jobs:
           assignee: "@knative-sandbox/eventing-rabbitmq-approvers"
 
     steps:
-    - name: Set up Go 1.17.x
-      uses: actions/setup-go@v2
+    - name: Set up Go 1.20.x
+      uses: actions/setup-go@v4
       with:
-        go-version: 1.17.x
+        go-version: 1.20.x
 
     - name: Install Dependencies
       run: |
         go install github.com/dprotaso/modlog@latest
 
     - name: Check out code onto GOPATH
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: ${{ matrix.repository }}
 
@@ -165,10 +165,9 @@ jobs:
         fi
 
         # capture logs for the module changes
-        deplog=$(modlog -s ${{ matrix.module }} $from_sha $to_sha || true)
-        deplog="${deplog//$'\n'/'%0A'}"
-        deplog="${deplog//$'\r'/'%0D'}"
-        echo "deplog=$deplog" >> $GITHUB_OUTPUT
+        echo 'deplog<<EOF' >> $GITHUB_OUTPUT
+        modlog -s ${{ matrix.module }} $from_sha $to_sha &2>1 >> $GITHUB_OUTPUT || true
+        echo 'EOF' >> $GITHUB_OUTPUT
 
 
     - name: Create Pull Request
