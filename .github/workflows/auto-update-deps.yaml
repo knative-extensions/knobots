@@ -32,8 +32,6 @@ on:
         required: true
       release:
         description: "Release version? (vX.Y) defaults to current release"
-      module-release:
-        description: "Go module release version? (vX.Y) defaults to current release"
       pr-empty-deps:
         description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
         default: "false"
@@ -100,7 +98,6 @@ jobs:
         organization: ${{ matrix.meta-organization }}
         include: ${{ matrix.include }}
         release: "${{ github.event.inputs.release }}"
-        module-release: "${{ github.event.inputs.module-release }}"
         pr-empty-deps: "${{ github.event.inputs.pr-empty-deps }}"
         branch: "${{ github.event.inputs.branch }}"
 
