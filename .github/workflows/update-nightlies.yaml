@@ -89,7 +89,7 @@ jobs:
           channel: net-gateway-api
           assignee: "@knative/serving-writers"
         - nightly: eventing-kafka-broker-eventing
-          module: knative.dev/eventing-kafka-broker
+          module: knative.dev/eventing
           directory: ./third_party/eventing-latest
           files: eventing-crds.yaml eventing-core.yaml
           bucket: eventing
@@ -98,7 +98,7 @@ jobs:
           channel: eventing-delivery
           assignee: "@knative/delivery-wg-leads"
         - nightly: eventing-rabbitmq-eventing
-          module: knative.dev/eventing-rabbitmq
+          module: knative.dev/eventing
           directory: ./third_party/eventing-latest
           files: eventing-crds.yaml eventing-core.yaml
           bucket: eventing
