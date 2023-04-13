@@ -166,7 +166,7 @@ jobs:
 
         # capture logs for the module changes
         echo 'deplog<<EOF' >> $GITHUB_OUTPUT
-        modlog -s ${{ matrix.module }} $from_sha $to_sha &2>1 >> $GITHUB_OUTPUT || true
+        modlog -s ${{ matrix.module }} $from_sha $to_sha 2>&1 >> $GITHUB_OUTPUT || true
         echo 'EOF' >> $GITHUB_OUTPUT
 
 
