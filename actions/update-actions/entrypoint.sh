@@ -30,9 +30,10 @@ yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
   done
 
 old_workflows=(
-  "knative-releasability.yaml"
   "knative-boilerplate.yaml"
   "knative-donotsubmit.yaml"
+  "knative-releasability.yaml"
+  "knative-release-notes.yaml"
   "knative-vulnerability.yaml"
 )
 
