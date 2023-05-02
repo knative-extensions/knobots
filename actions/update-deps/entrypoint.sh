@@ -65,7 +65,10 @@ fi
 # If we don't run this before the "git diff-index" it seems to list
 # every file that's been touched by codegen.
 git status
-create_pr="${FORCE_DEPS}"
+create_pr="false"
+if [[ "${FORCE_DEPS}" == "true" ]]; then
+  create_pr="true"
+fi
 for x in $(git diff-index --name-only HEAD --); do
     if [ "$(basename $x)" = "go.mod" ]; then
         continue

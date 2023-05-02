@@ -20,7 +20,7 @@ inputs:
   description: "Release version? (vX.Y) defaults to current release"
 - name: pr-empty-deps
   description: "If true, send update PRs even for deps changes that don't change vendor. Use this only for releases."
-  default: "true"
+  default: "false"
 - name: branch
   description: "Branch Name? (empty for default branch of the respective repository)"
 
