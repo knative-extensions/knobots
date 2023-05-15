@@ -1,4 +1,3 @@
-- "knative/hack"
 - "knative/release"
 - "knative/homebrew-client"
 - "knative-sandbox/homebrew-kn-plugins"
