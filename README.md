@@ -7,10 +7,10 @@ https://github.com/knative/test-infra to enable using [repository
 secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
 to hold an access token for creating automated PRs.
 
-If you just need to run a job periodically against a repo,
-https://github.com/knative-sandbox/.github/ holds template actions (in
-`workflow-templates`) which are copied to all the repos in Knative using the
-`update-actions` workflow in this repo.
+If you want to run a job periodically against a repo, the
+[workload-templates](https://github.com/knative-sandbox/knobots/tree/main/workflow-templates)
+folder holds all the template actions which are copied to all the repos in
+Knative using the `update-actions` workflow in this repo.
 
 ## Adding a repo
 
@@ -22,7 +22,7 @@ To add a repository here, there are two requirements:
       name: 'knative/pkg'
 
       # meta-organization is the github organization from which to sync Github
-      # actions, think: https://github.com/{meta-organization}/.github
+      # actions, think: https://github.com/{meta-organization}/hack
       # Actions are pulled from the workflow-templates directory.
       meta-organization: 'knative'
 
@@ -45,7 +45,7 @@ To add a repository here, there are two requirements:
 
 
 3. Repos can also optionally exclude certain jobs by adding their name to the
-appropriate `{foo}-exclude.yaml` file. 
+appropriate `{foo}-exclude.yaml` file.
 
 ## Adding new automation
 
