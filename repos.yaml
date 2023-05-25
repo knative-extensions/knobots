@@ -292,21 +292,6 @@
   channel: 'knative-security'
   assignees: knative/security-guard-approvers
 
-# knative-sandbox (autoscaling)
-- name: 'knative-sandbox/scaling-group'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/scaling-group'
-  channel: 'knative-serving-bots'
-  assignees: knative-sandbox/serving-wg-leads
-
-# knative-sandbox (async-component)
-
-- name: 'knative-sandbox/async-component'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/async-component'
-  channel: 'knative-serving-bots'
-  assignees: 'knative-sandbox/async-component-approvers'
-
 # knative-sandbox (functions)
 
 - name: 'knative-sandbox/func-tastic'
