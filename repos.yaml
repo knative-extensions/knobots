@@ -115,13 +115,6 @@
   channel: 'knative-eventing'
   assignees: knative-sandbox/eventing-writers lberk
 
-# knative-sandbox/control-protocol
-- name: 'knative-sandbox/control-protocol'
-  meta-organization: 'knative-sandbox'
-  fork: 'knative-automation/control-protocol'
-  channel: 'knative-eventing'
-  assignees: knative-sandbox/eventing-writers
-
 # knative-sandbox/eventing-* (eventing), sorted alphabetically
 - name: 'knative-sandbox/eventing-autoscaler-keda'
   meta-organization: 'knative-sandbox'
