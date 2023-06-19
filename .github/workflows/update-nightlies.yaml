@@ -116,7 +116,7 @@ jobs:
           repository: knative-sandbox/eventing-istio
           fork: eventing-istio
           channel: eventing
-          assignee: "@knative/delivery-wg-leads"
+          assignee: "@knative/eventing-wg-leads"
         - nightly: eventing-istio-eventing-kafka-broker
           module: knative.dev/eventing-istio
           directory: ./third_party/eventing-kafka-broker-latest
