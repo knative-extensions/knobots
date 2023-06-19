@@ -40,6 +40,8 @@ jobs:
         - eventing-kafka-broker-eventing-kafka
         - eventing-kafka-broker-eventing
         - eventing-rabbitmq-eventing
+        - eventing-istio-eventing
+        - eventing-istio-eventing-kafka-broker
 
         # Map to nightly-specific parameters.
         include:
@@ -106,6 +108,24 @@ jobs:
           fork: eventing-rabbitmq
           channel: eventing-delivery
           assignee: "@knative-sandbox/eventing-rabbitmq-approvers"
+        - nightly: eventing-istio-eventing
+          module: knative.dev/eventing-istio
+          directory: ./third_party/eventing-latest
+          files: eventing-core.yaml eventing-crds.yaml in-memory-channel.yaml mt-channel-broker.yaml
+          bucket: eventing
+          repository: knative-sandbox/eventing-istio
+          fork: eventing-istio
+          channel: eventing
+          assignee: "@knative/eventing-wg-leads"
+        - nightly: eventing-istio-eventing-kafka-broker
+          module: knative.dev/eventing-istio
+          directory: ./third_party/eventing-kafka-broker-latest
+          files: eventing-kafka-broker.yaml eventing-kafka-controller.yaml eventing-kafka-source.yaml eventing-kafka-channel.yaml eventing-kafka-sink.yaml
+          bucket: eventing-kafka-broker
+          repository: knative-sandbox/eventing-istio
+          fork: eventing-istio
+          channel: eventing
+          assignee: "@knative/eventing-wg-leads"
 
     steps:
     - name: Set up Go 1.20.x
