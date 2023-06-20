@@ -98,7 +98,7 @@ jobs:
           repository: knative-sandbox/eventing-kafka-broker
           fork: eventing-kafka-broker
           channel: eventing-delivery
-          assignee: "@knative/delivery-wg-leads"
+          assignee: "@knative-sandbox/eventing-wg-leads"
         - nightly: eventing-rabbitmq-eventing
           module: knative.dev/eventing
           directory: ./third_party/eventing-latest
