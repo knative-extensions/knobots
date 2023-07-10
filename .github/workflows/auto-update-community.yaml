@@ -127,6 +127,9 @@ jobs:
         body: |
           ${{ github.event.inputs.reason || 'Cron' }} -${{ github.actor }}
 
+          /cc ${{ matrix.assignees }}
+          /assign ${{ matrix.assignees }}
+
           Produced by: ${{ github.repository }}/actions/update-community
 
           Details:
