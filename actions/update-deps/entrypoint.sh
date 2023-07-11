@@ -54,9 +54,11 @@ if [[ -f go.mod ]]; then
     echo "update-dep-cmd=./hack/update-deps.sh --upgrade ${releaseFlags[@]}" >> $GITHUB_OUTPUT
     ./hack/update-deps.sh --upgrade ${releaseFlags[@]}
     # capture logs for the module changes
-    deplog=$(modlog . HEAD dirty || true)
-    deplog="${deplog//$'\n'/'%0A'}"
-    deplog="${deplog//$'\r'/'%0D'}"
+    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+    EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+    echo "log<<$EOF" >> $GITHUB_OUTPUT
+      modlog . HEAD dirty >> $GITHUB_OUTPUT || true
+    echo "$EOF" >> $GITHUB_OUTPUT
 fi
 
 # We may pull in code-generator updates, or not have generated code.
@@ -87,5 +89,3 @@ done
 chown -R --reference=. .
 
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
-
-echo "log=$deplog" >> $GITHUB_OUTPUT
