@@ -31,11 +31,6 @@
   fork: 'knative-automation/operator'
   channel: 'knative-operations'
   assignees: knative/operations-wg-leads
-- name: 'knative/test-infra'
-  meta-organization: 'knative'
-  fork: 'knative-automation/test-infra'
-  channel: 'knative-productivity'
-  assignees: knative/productivity-wg-leads
 - name: 'knative/actions'
   meta-organization: 'knative'
   fork: 'knative-automation/actions'
