@@ -1,11 +1,11 @@
 # Hugo sucks
 - "knative/docs"
 - "knative/website"
-- "knative-sandbox/.github"
+- "knative-extensions/.github"
 # Declined because of Markdown formatter breaking conventions
 - "knative/client"
-- "knative-sandbox/kn-plugin-admin"
-- "knative-sandbox/kn-plugin-sample"
-- "knative-sandbox/kn-plugin-source-kafka"
+- "knative-extensions/kn-plugin-admin"
+- "knative-extensions/kn-plugin-sample"
+- "knative-extensions/kn-plugin-source-kafka"
 - "knative/actions"
-- "knative-sandbox/knobots"
+- "knative-extensions/knobots"

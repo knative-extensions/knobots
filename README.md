@@ -8,7 +8,7 @@ secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#cr
 to hold an access token for creating automated PRs.
 
 If you want to run a job periodically against a repo, the
-[workload-templates](https://github.com/knative-sandbox/knobots/tree/main/workflow-templates)
+[workload-templates](https://github.com/knative-extensions/knobots/tree/main/workflow-templates)
 folder holds all the template actions which are copied to all the repos in
 Knative using the `update-actions` workflow in this repo.
 
@@ -62,7 +62,7 @@ understanding the different components in this repo:
 
    * `Dockerfile` (and probably `entrypoint.sh`) for [Docker-based Actions](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action) **OR** `index.js` and `package-lock.json` et al for [Javascript actions](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action)
 
-   * If you want the action to be run against _each_ repo configured in `repos.yaml`, add an `auto-apply.yaml` (schema [here](https://github.com/knative-sandbox/knobots/blob/main/cmd/gen-actions/main.go#L109)). This will cause the `gen-actions` tool (see below) to generate a `github/workflows` file which will fan out your command to all repos.
+   * If you want the action to be run against _each_ repo configured in `repos.yaml`, add an `auto-apply.yaml` (schema [here](https://github.com/knative-extensions/knobots/blob/main/cmd/gen-actions/main.go#L109)). This will cause the `gen-actions` tool (see below) to generate a `github/workflows` file which will fan out your command to all repos.
 
      It's expected that an auto-apply action will modify the checked-out workspace; these changes will export a `create_pr` variable (set to `true` if a PR shoud be created) and optionally a `log` output.
 

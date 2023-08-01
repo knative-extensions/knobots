@@ -73,11 +73,11 @@ jobs:
         path: main
         repository: ${{ matrix.name }}
     
-    - name: Checkout knative-sandbox/knobots code
+    - name: Checkout knative-extensions/knobots code
       uses: actions/checkout@v3
       with:
         path: meta
-        repository: knative-sandbox/knobots
+        repository: knative-extensions/knobots
     
   
     # This is required because the branch setting might be empty (to infer a default), so

@@ -1,5 +1,5 @@
-# See: https://github.com/knative-sandbox/eventing-redis/pull/16#pullrequestreview-518266837
-- "knative-sandbox/eventing-redis"
-- "knative-sandbox/.github"
+# See: https://github.com/knative-extensions/eventing-redis/pull/16#pullrequestreview-518266837
+- "knative-extensions/eventing-redis"
+- "knative-extensions/.github"
 - "knative/actions"
-- "knative-sandbox/knobots"
+- "knative-extensions/knobots"

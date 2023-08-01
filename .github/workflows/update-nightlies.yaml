@@ -95,37 +95,37 @@ jobs:
           directory: ./third_party/eventing-latest
           files: eventing-crds.yaml eventing-core.yaml eventing-tls-networking.yaml
           bucket: eventing
-          repository: knative-sandbox/eventing-kafka-broker
+          repository: knative-extensions/eventing-kafka-broker
           fork: eventing-kafka-broker
           channel: eventing-delivery
-          assignee: "@knative-sandbox/eventing-wg-leads"
+          assignee: "@knative-extensions/eventing-wg-leads"
         - nightly: eventing-rabbitmq-eventing
           module: knative.dev/eventing
           directory: ./third_party/eventing-latest
           files: eventing-crds.yaml eventing-core.yaml
           bucket: eventing
-          repository: knative-sandbox/eventing-rabbitmq
+          repository: knative-extensions/eventing-rabbitmq
           fork: eventing-rabbitmq
           channel: eventing-delivery
-          assignee: "@knative-sandbox/eventing-rabbitmq-approvers"
+          assignee: "@knative-extensions/eventing-rabbitmq-approvers"
         - nightly: eventing-istio-eventing
           module: knative.dev/eventing-istio
           directory: ./third_party/eventing-latest
           files: eventing-core.yaml eventing-crds.yaml in-memory-channel.yaml mt-channel-broker.yaml
           bucket: eventing
-          repository: knative-sandbox/eventing-istio
+          repository: knative-extensions/eventing-istio
           fork: eventing-istio
           channel: eventing
-          assignee: "@knative-sandbox/eventing-wg-leads"
+          assignee: "@knative-extensions/eventing-wg-leads"
         - nightly: eventing-istio-eventing-kafka-broker
           module: knative.dev/eventing-istio
           directory: ./third_party/eventing-kafka-broker-latest
           files: eventing-kafka-broker.yaml eventing-kafka-controller.yaml eventing-kafka-source.yaml eventing-kafka-channel.yaml eventing-kafka-sink.yaml
           bucket: eventing-kafka-broker
-          repository: knative-sandbox/eventing-istio
+          repository: knative-extensions/eventing-istio
           fork: eventing-istio
           channel: eventing
-          assignee: "@knative-sandbox/eventing-wg-leads"
+          assignee: "@knative-extensions/eventing-wg-leads"
 
     steps:
     - name: Set up Go 1.20.x

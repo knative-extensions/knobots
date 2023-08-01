@@ -35,7 +35,7 @@ echo 'EOF' >> "$GITHUB_OUTPUT"
 [ -z "$(git status --porcelain=v1 2>/dev/null)" ] || create_pr="true"
 
 # Ensure files have the same owner as the checkout directory.
-# See https://github.com/knative-sandbox/knobots/issues/79
+# See https://github.com/knative-extensions/knobots/issues/79
 chown -R --reference=. .
 
 

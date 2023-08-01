@@ -22,7 +22,7 @@ repos:
   main:
     name: "${{ matrix.name }}"
   meta:
-    name: knative-sandbox/knobots
+    name: knative-extensions/knobots
 
 commitMessage: |
   Update actions
