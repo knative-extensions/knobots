@@ -85,7 +85,7 @@ for x in $(git diff-index --name-only HEAD --); do
 done
 
 # Ensure files have the same owner as the checkout directory.
-# See https://github.com/knative-sandbox/knobots/issues/79
+# See https://github.com/knative-extensions/knobots/issues/79
 chown -R --reference=. .
 
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
