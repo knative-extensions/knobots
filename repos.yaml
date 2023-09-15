@@ -199,13 +199,6 @@
   channel: 'knative-serving-bots'
   assignees: knative-extensions/serving-writers
 
-# knative-extensions (kperf)
-- name: 'knative-extensions/kperf'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/kperf'
-  channel: 'knative-serving-bots'
-  assignees: knative-extensions/kperf-approvers
-
 # knative-extensions/kn-plugin-*, sorted alphabetically
 - name: 'knative-extensions/homebrew-kn-plugins'
   meta-organization: 'knative-extensions'
