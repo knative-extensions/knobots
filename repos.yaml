@@ -167,6 +167,13 @@
   channel: 'knative-eventing'
   assignees: knative-extensions/eventing-writers
 
+# knative-extensions (serving-progressive-rollout)
+- name: 'knative-extensions/serving-progressive-rollout'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/serving-progressive-rollout'
+  channel: 'knative-serving'
+  assignees: knative-extensions/serving-progressive-rollout-approvers
+
 # knative-extensions (networking)
 - name: 'knative-extensions/net-contour'
   meta-organization: 'knative-extensions'
