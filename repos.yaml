@@ -76,6 +76,11 @@
   fork: 'knative-automation/infra'
   channel: 'knative-productivity'
   assignees: knative/productivity-wg-leads
+- name: 'knative/ux'
+  meta-organization: 'knative'
+  fork: 'knative-automation/ux'
+  channel: 'knative-ux'
+  assignees: knative/ux-wg-leads
 
 # knative-extensions
 - name: 'knative-extensions/knobots'
