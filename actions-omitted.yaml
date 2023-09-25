@@ -6,3 +6,4 @@ knative/hack:
     - knative-security
     - knative-stale
     - knative-verify
+    - knative-style
