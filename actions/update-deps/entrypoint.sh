@@ -72,6 +72,11 @@ if [[ "${FORCE_DEPS}" == "true" ]]; then
   create_pr="true"
 fi
 for x in $(git diff-index --name-only HEAD --); do
+    if ! find . -type d -name vendor | grep -q vendor; then
+        echo "Found diff: $x"
+        create_pr="true"
+        break
+    fi
     if [ "$(basename $x)" = "go.mod" ]; then
         continue
     elif [ "$(basename $x)" = "go.sum" ]; then
