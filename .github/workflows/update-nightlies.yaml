@@ -212,6 +212,7 @@ jobs:
           ${{ steps.nightlies.outputs.deplog }}
 
         title: '[Automated] Update ${{ matrix.nightly }} nightly'
+        labels: 'skip-review'
         body: |
           /assign ${{ matrix.assignee }}
           /cc ${{ matrix.assignee }}
