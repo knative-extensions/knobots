@@ -293,3 +293,9 @@
   channel: 'knative-functions'
   assignees: 'knative-extensions/func-tastic-approvers'
 
+# knative-extensions (backstage)
+- name: 'knative-extensions/backstage-plugins'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/backstage-plugins'
+  channel: 'knative-eventing'
+  assignees: 'knative-extensions/backstage-plugins-writers'
