@@ -81,6 +81,10 @@
   fork: 'knative-automation/ux'
   channel: 'knative-ux'
   assignees: knative/ux-wg-leads
+- name: 'knative/specs'
+  meta-organization: 'knative'
+  fork: 'knative-automation/specs'
+  assignees: knative/knative-trademark-committee knative/technical-oversight-committee
 
 # knative-extensions
 - name: 'knative-extensions/knobots'
