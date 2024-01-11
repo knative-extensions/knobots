@@ -19,6 +19,10 @@ RUN go install github.com/google/ko@latest
 RUN go install github.com/google/go-licenses@latest
 RUN go install github.com/dprotaso/modlog@latest
 RUN go install knative.dev/toolbox/buoy@latest
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
+    chmod 700 get_helm.sh && \
+    ./get_helm.sh && \
+    rm -f get_helm.sh
 
 COPY entrypoint.sh /entrypoint.sh
 
