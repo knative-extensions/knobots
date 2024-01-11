@@ -101,7 +101,7 @@
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/reconciler-test'
   channel: 'knative-eventing'
-  assignees: knative-extensions/eventing-writers knative-extensions/serving-writers
+  assignees: knative-extensions/eventing-writers
 
 # knative-extensions (samples)
 - name: 'knative-extensions/sample-controller'
