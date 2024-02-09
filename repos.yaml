@@ -141,11 +141,6 @@
   fork: 'knative-automation/eventing-istio'
   channel: 'knative-eventing'
   assignees: knative-extensions/eventing-writers
-- name: 'knative-extensions/eventing-kafka'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/eventing-kafka'
-  channel: 'knative-eventing'
-  assignees: knative-extensions/eventing-writers
 - name: 'knative-extensions/eventing-kafka-broker'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/eventing-kafka-broker'
