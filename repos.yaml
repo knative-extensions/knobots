@@ -288,6 +288,12 @@
   channel: 'knative-functions'
   assignees: 'knative-extensions/func-tastic-approvers'
 
+- name: 'knative-extensions/func-go'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/func-go'
+  channel: 'knative-functions'
+  assignees: 'knative/function-runtime-approvers'
+  
 # knative-extensions (backstage)
 - name: 'knative-extensions/backstage-plugins'
   meta-organization: 'knative-extensions'
