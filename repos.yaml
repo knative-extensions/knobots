@@ -292,7 +292,7 @@
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/func-go'
   channel: 'knative-functions'
-  assignees: 'knative/function-runtime-approvers'
+  assignees: 'knative-extensions/function-runtime-approvers'
   
 # knative-extensions (backstage)
 - name: 'knative-extensions/backstage-plugins'
