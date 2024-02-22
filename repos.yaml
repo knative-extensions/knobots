@@ -190,11 +190,6 @@
   fork: 'knative-automation/net-istio'
   channel: 'knative-serving-bots'
   assignees: knative-extensions/serving-writers
-- name: 'knative-extensions/net-http01'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/net-http01'
-  channel: 'knative-serving-bots'
-  assignees: knative-extensions/serving-writers
 - name: 'knative-extensions/net-certmanager'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/net-certmanager'
