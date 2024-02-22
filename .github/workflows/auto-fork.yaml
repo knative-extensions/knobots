@@ -37,10 +37,7 @@ jobs:
 
     steps:
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.19.x
+    - uses: knative/actions/setup-go@main
 
     - name: Install Dependencies
       run: go install knative.dev/toolbox/buoy@main
@@ -66,7 +63,7 @@ jobs:
         SLACK_ICON: http://github.com/knative-automation.png?size=48
         SLACK_USERNAME: knative-automation
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_CHANNEL: 'productivity'
+        SLACK_CHANNEL: 'knative-productivity'
         SLACK_COLOR: '#8E1600'
         MSG_MINIMAL: 'true'
         SLACK_TITLE: Auto-fork ${{ matrix.org }} failed.

@@ -128,10 +128,7 @@ jobs:
           assignee: "@knative-extensions/eventing-wg-leads"
 
     steps:
-    - name: Set up Go 1.21.x
-      uses: actions/setup-go@v4
-      with:
-        go-version: 1.21.x
+    - uses: knative/actions/setup-go@main
 
     - name: Install Dependencies
       run: |
