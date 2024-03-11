@@ -84,7 +84,7 @@ jobs:
         - nightly: net-gateway-api
           module: knative.dev/net-gateway-api
           directory: ./third_party/gateway-api-latest
-          files: net-gateway-api.yaml istio-gateway.yaml gateway-api.yaml
+          files: net-gateway-api.yaml istio-gateway.yaml contour-gateway.yaml gateway-api.yaml
           bucket: net-gateway-api
           repository: knative/serving
           fork: serving
