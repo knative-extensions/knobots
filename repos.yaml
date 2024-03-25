@@ -156,6 +156,11 @@
   fork: 'knative-automation/eventing-natss'
   channel: 'knative-eventing'
   assignees: knative-extensions/eventing-writers
+- name: 'knative-extensions/eventing-rabbitmq'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/eventing-rabbitmq'
+  channel: 'knative-eventing'
+  assignees: knative-extensions/eventing-writers
 - name: 'knative-extensions/eventing-redis'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/eventing-redis'
@@ -283,7 +288,7 @@
   fork: 'knative-automation/func-go'
   channel: 'knative-functions'
   assignees: 'knative-extensions/function-runtime-approvers'
-
+  
 # knative-extensions (backstage)
 - name: 'knative-extensions/backstage-plugins'
   meta-organization: 'knative-extensions'
