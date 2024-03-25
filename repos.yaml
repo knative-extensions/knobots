@@ -160,7 +160,7 @@
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/eventing-rabbitmq'
   channel: 'knative-eventing'
-  assignees: knative-extensions/eventing-writers
+  assignees: knative-extensions/eventing-rabbitmq-approvers
 - name: 'knative-extensions/eventing-redis'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/eventing-redis'
