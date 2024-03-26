@@ -7,3 +7,4 @@
 - "knative-extensions/knobots"
 - "knative-extensions/func-tastic"
 - "knative/ux"
+- "knative/specs"

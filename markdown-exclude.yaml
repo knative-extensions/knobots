@@ -9,3 +9,4 @@
 - "knative-extensions/kn-plugin-source-kafka"
 - "knative/actions"
 - "knative-extensions/knobots"
+- "knative/specs"
