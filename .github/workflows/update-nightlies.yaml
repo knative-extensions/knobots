@@ -32,7 +32,6 @@ jobs:
       fail-fast: false # Keep running if one leg fails.
       matrix:
         nightly:
-        - net-certmanager
         - net-contour
         - net-istio
         - net-kourier
@@ -45,15 +44,6 @@ jobs:
 
         # Map to nightly-specific parameters.
         include:
-        - nightly: net-certmanager
-          module: knative.dev/net-certmanager
-          directory: ./third_party/cert-manager-latest
-          files: net-certmanager.yaml
-          bucket: net-certmanager
-          repository: knative/serving
-          fork: serving
-          channel: net-certmanager
-          assignee: "@knative/serving-writers"
         - nightly: net-contour
           module: knative.dev/net-contour
           directory: ./third_party/contour-latest
