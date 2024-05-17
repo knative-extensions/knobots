@@ -1,4 +1,6 @@
 # Welcome to knobots
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fknative-extensions%2Fknobots.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fknative-extensions%2Fknobots?ref=badge_shield)
+
 
 This repository contains a number of github actions, which perform routine
 maintenance tasks for a variety of repositories, mostly for the knative org. In
@@ -74,3 +76,7 @@ understanding the different components in this repo:
 
    1. Go is a common language across Knative, and has sufficiently rich templating
    2. Using Go enables the script to work even on Windows machines, which is a nice benefit
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fknative-extensions%2Fknobots.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fknative-extensions%2Fknobots?ref=badge_large)
