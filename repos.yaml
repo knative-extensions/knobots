@@ -178,6 +178,13 @@
   channel: 'knative-serving'
   assignees: knative-extensions/serving-progressive-rollout-approvers
 
+# knative-extensions (autoscaler-keda)
+- name: 'knative-extensions/autoscaler-keda'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/autoscaler-keda'
+  channel: 'knative-serving'
+  assignees: knative-extensions/autoscaler-keda-approvers
+
 # knative-extensions (networking)
 - name: 'knative-extensions/net-contour'
   meta-organization: 'knative-extensions'
