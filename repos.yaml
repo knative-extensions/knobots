@@ -220,21 +220,9 @@
   channel: 'knative-client'
   assignees: 'knative-extensions/client-writers'
 
-- name: 'knative-extensions/kn-plugin-diag'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/kn-plugin-diag'
-  channel: 'knative-client'
-  assignees: 'knative-extensions/client-writers'
-
 - name: 'knative-extensions/kn-plugin-event'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/kn-plugin-event'
-  channel: 'knative-client'
-  assignees: 'knative-extensions/client-writers'
-
-- name: 'knative-extensions/kn-plugin-migration'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/kn-plugin-migration'
   channel: 'knative-client'
   assignees: 'knative-extensions/client-writers'
 
