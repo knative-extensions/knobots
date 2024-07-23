@@ -26,4 +26,7 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/s
 
 COPY entrypoint.sh /entrypoint.sh
 
+# Disable Go' toolchain machinery to stick to the installed version of Go
+ENV GOTOOLCHAIN=local
+
 ENTRYPOINT ["/entrypoint.sh"]
