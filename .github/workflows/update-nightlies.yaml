@@ -116,7 +116,7 @@ jobs:
           fork: eventing-istio
           channel: eventing
           assignee: "@knative-extensions/eventing-wg-leads"
-        - nightly: eventing-gitlab
+        - nightly: eventing-gitlab-eventing
           module: knative.dev/eventing
           directory: ./third_party/eventing-latest
           files: eventing-crds.yaml eventing-core.yaml eventing-tls-networking.yaml
