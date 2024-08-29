@@ -120,7 +120,7 @@ jobs:
           module: knative.dev/eventing
           directory: ./third_party/eventing-latest
           files: eventing-crds.yaml eventing-core.yaml eventing-tls-networking.yaml
-          bucket: eventing-gitlab
+          bucket: eventing
           repository: knative-extensions/eventing-gitlab
           fork: knative-extensions/eventing-gitlab
           channel: eventing
