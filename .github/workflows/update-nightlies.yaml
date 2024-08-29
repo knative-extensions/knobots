@@ -41,6 +41,7 @@ jobs:
         - eventing-rabbitmq-eventing
         - eventing-istio-eventing
         - eventing-istio-eventing-kafka-broker
+        - eventing-gitlab-eventing
 
         # Map to nightly-specific parameters.
         include:
@@ -119,7 +120,7 @@ jobs:
         - nightly: eventing-gitlab-eventing
           module: knative.dev/eventing
           directory: ./third_party/eventing-latest
-          files: eventing-crds.yaml eventing-core.yaml eventing-tls-networking.yaml
+          files: eventing-crds.yaml eventing-core.yaml
           bucket: eventing
           repository: knative-extensions/eventing-gitlab
           fork: eventing-gitlab
