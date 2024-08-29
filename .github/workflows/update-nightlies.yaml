@@ -122,7 +122,7 @@ jobs:
           files: eventing-crds.yaml eventing-core.yaml eventing-tls-networking.yaml
           bucket: eventing
           repository: knative-extensions/eventing-gitlab
-          fork: knative-extensions/eventing-gitlab
+          fork: eventing-gitlab
           channel: eventing
           assignee: "@knative-extensions/eventing-wg-leads"
 
