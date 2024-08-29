@@ -126,8 +126,6 @@ jobs:
           channel: eventing
           assignee: "@knative-extensions/eventing-wg-leads"
 
-
-
     steps:
     - uses: knative/actions/setup-go@main
 
