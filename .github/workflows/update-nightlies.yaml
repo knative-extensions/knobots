@@ -134,7 +134,7 @@ jobs:
       id: nightlies
       run: |
         for x in ${{ matrix.files }}; do
-          curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
+          curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x --create-dirs -o ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
         done
 
         function release_labels() {
