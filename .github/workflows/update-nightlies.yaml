@@ -144,7 +144,15 @@ jobs:
       id: nightlies
       run: |
         for x in ${{ matrix.files }}; do
-          curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x --create-dirs -o ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
+          mkdir -p "${GITHUB_WORKSPACE}/${{ matrix.directory }}"
+          
+          if [ ! -f "${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x" ]; then
+            # file does not exist yet, so create it and add to git index, so we track it correctly in release_labels()
+            touch "${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x"
+            git add "${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x"
+          fi
+        
+          curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x -o ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
         done
 
         function release_labels() {
@@ -167,7 +175,7 @@ jobs:
         if [[ "$ref_count" -lt 2 ]]; then
           # For debugging
           release_labels | sort -u
-          echo "::warning file=.github.js,line=1::${{matrix.nightly}} -  skipping bump no changes"
+          echo "::warning file=.github.js,line=1::${{matrix.nightly}} - skipping bump no changes"
           exit 0
         fi
 
@@ -176,16 +184,21 @@ jobs:
         from_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '-' | cut -d ' ' -f2 | sort -u)
         to_sha=$(release_labels | sort -u  | sed 's/^\([+-]\).* ".*-\(.*\)"$/\1 \2/' | grep '+' | cut -d ' ' -f2 | sort -u)
 
-        if [[ -z "$from_sha" ]]  || [[ -z "$to_sha" ]]; then
-          echo "::warning file=.github.js,line=1::${{matrix.nightly}} - failed to get valid shas for a diff"
-          exit 0
+        if [[ -z "$from_sha" ]]; then
+          # all files were newly created
+          
+          echo "deplog='new files added'" >> $GITHUB_OUTPUT
+        else
+          if [[ -z "$to_sha" ]]; then
+            echo "::warning file=.github.js,line=1::${{matrix.nightly}} - failed to get valid sha for a diff"
+            exit 0
+          fi
+  
+          # capture logs for the module changes
+          echo 'deplog<<EOF' >> $GITHUB_OUTPUT
+          modlog -s ${{ matrix.module }} $from_sha $to_sha 2>&1 >> $GITHUB_OUTPUT || true
+          echo 'EOF' >> $GITHUB_OUTPUT
         fi
-
-        # capture logs for the module changes
-        echo 'deplog<<EOF' >> $GITHUB_OUTPUT
-        modlog -s ${{ matrix.module }} $from_sha $to_sha 2>&1 >> $GITHUB_OUTPUT || true
-        echo 'EOF' >> $GITHUB_OUTPUT
-
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
@@ -217,7 +230,7 @@ jobs:
           Produced via:
           ```shell
           for x in ${{ matrix.files }}; do
-            curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x > ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
+            curl https://storage.googleapis.com/knative-nightly/${{ matrix.bucket }}/latest/$x -o ${GITHUB_WORKSPACE}/${{ matrix.directory }}/$x
           done
           ```
 
