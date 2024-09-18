@@ -42,6 +42,7 @@ jobs:
         - eventing-istio-eventing
         - eventing-istio-eventing-kafka-broker
         - eventing-gitlab-eventing
+        - backstage-plugins-eventing
 
         # Map to nightly-specific parameters.
         include:
@@ -126,6 +127,15 @@ jobs:
           fork: eventing-gitlab
           channel: eventing
           assignee: "@knative-extensions/eventing-wg-leads"
+        - nightly: backstage-plugins-eventing
+          module: knative.dev/eventing
+          directory: ./third_party/eventing-latest
+          files: eventing-crds.yaml eventing-core.yaml in-memory-channel.yaml mt-channel-broker.yaml
+          bucket: eventing
+          repository: knative-extensions/backstage-plugins
+          fork: backstage-plugins
+          channel: eventing
+          assignee: "@knative-extensions/backstage-plugins-writers"
 
     steps:
     - uses: knative/actions/setup-go@main
