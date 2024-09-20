@@ -8,3 +8,4 @@
 - "knative-extensions/knobots"
 - "knative/ux"
 - "knative/specs"
+- "knative-extensions/func-python"

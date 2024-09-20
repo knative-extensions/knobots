@@ -283,6 +283,12 @@
   channel: 'knative-functions'
   assignees: 'knative-extensions/function-runtime-approvers'
 
+- name: 'knative-extensions/func-python'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/func-python'
+  channel: 'knative-functions'
+  assignees: 'knative-extensions/function-runtime-approvers'
+
 # knative-extensions (backstage)
 - name: 'knative-extensions/backstage-plugins'
   meta-organization: 'knative-extensions'
