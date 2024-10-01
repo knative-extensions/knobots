@@ -140,6 +140,11 @@
   fork: 'knative-automation/eventing-gitlab'
   channel: 'knative-eventing'
   assignees: knative-extensions/eventing-writers
+- name: 'knative-extensions/eventing-integrations'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/eventing-integrations'
+  channel: 'knative-eventing'
+  assignees: knative-extensions/eventing-writers
 - name: 'knative-extensions/eventing-istio'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/eventing-istio'
