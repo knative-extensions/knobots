@@ -24,6 +24,9 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/s
     ./get_helm.sh && \
     rm -f get_helm.sh
 
+# install gettext package for envsubst command, which are needed in some packages
+RUN apt-get update && apt-get install -y gettext-base && rm -rf /var/lib/apt/lists/*
+
 COPY entrypoint.sh /entrypoint.sh
 
 # Disable Go' toolchain machinery to stick to the installed version of Go
