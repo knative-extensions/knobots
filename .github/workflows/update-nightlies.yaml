@@ -43,6 +43,7 @@ jobs:
         - eventing-istio-eventing-kafka-broker
         - eventing-gitlab-eventing
         - backstage-plugins-eventing
+        - eventing-eventing-integrations
 
         # Map to nightly-specific parameters.
         include:
@@ -82,6 +83,15 @@ jobs:
           fork: serving
           channel: net-gateway-api
           assignee: "@knative/serving-writers"
+        - nightly: eventing-eventing-integrations
+          module: knative.dev/eventing-integrations
+          directory: ./third_party/eventing-integrations-latest
+          files: eventing-integrations-images.yaml eventing-transformations-images.yaml
+          bucket: eventing-integrations
+          repository: knative/eventing
+          fork: eventing
+          channel: knative-eventing
+          assignee: "@knative/eventing-writers"
         - nightly: eventing-kafka-broker-eventing
           module: knative.dev/eventing
           directory: ./third_party/eventing-latest
