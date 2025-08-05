@@ -93,4 +93,7 @@ done
 # See https://github.com/knative-extensions/knobots/issues/79
 chown -R --reference=. .
 
+pr_labels="skip-review"
+
+echo "pr_labels=${pr_labels}" >> $GITHUB_ENV
 echo "create_pr=${create_pr}" >> $GITHUB_ENV
