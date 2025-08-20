@@ -112,7 +112,7 @@
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/sample-source'
   channel: 'knative-eventing'
-  assignees: knative-extensions/eventing-writers lberk
+  assignees: knative-extensions/eventing-writers
 
 # knative-extensions/eventing-* (eventing), sorted alphabetically
 - name: 'knative-extensions/eventing-autoscaler-keda'
