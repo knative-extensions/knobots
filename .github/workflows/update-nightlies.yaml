@@ -155,7 +155,7 @@ jobs:
         go install github.com/dprotaso/modlog@latest
 
     - name: Check out code onto GOPATH
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: ${{ matrix.repository }}
 
