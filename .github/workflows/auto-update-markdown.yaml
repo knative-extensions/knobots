@@ -41,7 +41,7 @@ jobs:
 
     steps:
     - name: Check out knobots configuration
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Calculate affected repos
       id: load-matrix
@@ -63,12 +63,12 @@ jobs:
     steps:
     
     - name: Checkout config code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         path: config
     
     - name: Checkout ${{ matrix.name }} code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         path: main
         repository: ${{ matrix.name }}
