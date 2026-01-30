@@ -6,6 +6,5 @@
 - "knative/infra"
 - "knative-extensions/knobots"
 - "knative-extensions/func-tastic"
-- "knative-extensions/eventing-integrations"
 - "knative/ux"
 - "knative/specs"
