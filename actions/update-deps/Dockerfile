@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # TODO: figure out how to template this.
-FROM golang:1.25
+FROM golang:1.26
 
 RUN go install github.com/google/ko@latest
 RUN go install github.com/google/go-licenses@latest
