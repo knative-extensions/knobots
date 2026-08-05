@@ -232,23 +232,12 @@
   channel: 'knative-client'
   assignees: 'knative-extensions/client-writers'
 
-- name: 'knative-extensions/kn-plugin-service-log'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/kn-plugin-service-log'
-  channel: 'knative-client'
-  assignees: 'knative-extensions/client-writers'
-
 - name: 'knative-extensions/kn-plugin-source-kafka'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/kn-plugin-source-kafka'
   channel: 'knative-client'
   assignees: 'knative-extensions/client-writers'
 
-- name: 'knative-extensions/kn-plugin-source-kamelet'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/kn-plugin-source-kamelet'
-  channel: 'knative-client'
-  assignees: 'knative-extensions/client-writers'
 
 # knative-extensions (security)
 - name: 'knative-extensions/security-guard'
