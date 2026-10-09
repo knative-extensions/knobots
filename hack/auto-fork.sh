@@ -33,19 +33,26 @@ has_fork () {
 make_fork () {
   local repository=$1; shift
   echo "🐎 ${repository} will be forked."
-  gh repo fork ${org}/${repo} --remote=false
+  gh repo fork ${org}/${repo} --clone=false
+  local rc=$?
   sleep 1
-  if [ $? -eq 0 ]
+  if [ $rc -eq 0 ]
   then
     echo "✅ ${repository} is forked."
   else
     echo "❌ ${repository} failed to fork."
+    failed=1
   fi
 }
 
+failed=0
 forked=$(buoy repos knative-automation | sed 's/knative-automation\///')
 
 for i in $(buoy repos ${org}); do
   repo=$(basename ${i})
   has $repo ${forked} && has_fork "${org}/${repo}" || make_fork "${org}/${repo}"
 done
+
+# Exit nonzero if any fork failed so the workflow fails and the
+# failure()-gated Slack notification is sent.
+exit $failed
