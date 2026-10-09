@@ -33,9 +33,10 @@ has_fork () {
 make_fork () {
   local repository=$1; shift
   echo "🐎 ${repository} will be forked."
-  gh repo fork ${org}/${repo} --remote=false
+  gh repo fork ${org}/${repo} --clone=false
+  local rc=$?
   sleep 1
-  if [ $? -eq 0 ]
+  if [ $rc -eq 0 ]
   then
     echo "✅ ${repository} is forked."
   else
