@@ -254,6 +254,12 @@
   channel: 'knative-functions'
   assignees: 'knative-extensions/func-tastic-approvers'
 
+- name: 'knative-extensions/func-adapter-kafka'
+  meta-organization: 'knative-extensions'
+  fork: 'knative-automation/func-adapter-kafka'
+  channel: 'knative-functions'
+  assignees: 'knative-extensions/function-runtime-approvers'
+
 - name: 'knative-extensions/func-go'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/func-go'
