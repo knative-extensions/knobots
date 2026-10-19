@@ -8,3 +8,4 @@
 - "knative-extensions/func-tastic"
 - "knative/ux"
 - "knative/specs"
+- "knative/toolbox"

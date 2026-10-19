@@ -66,6 +66,12 @@
   fork: 'knative-automation/hack'
   channel: 'knative-productivity'
   assignees: knative/productivity-wg-leads
+# Only sync community files; excluded from all other update jobs.
+- name: 'knative/toolbox'
+  meta-organization: 'knative'
+  fork: 'knative-automation/toolbox'
+  channel: 'knative-productivity'
+  assignees: knative/productivity-wg-leads
 - name: 'knative/infra'
   meta-organization: 'knative'
   fork: 'knative-automation/infra'
