@@ -55,9 +55,16 @@ if [[ -f go.mod ]]; then
     ./hack/update-deps.sh --upgrade ${releaseFlags[@]}
     # capture logs for the module changes
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+    # The log goes into the commit message, which create-pull-request gets as one
+    # env var. Linux caps one env var at MAX_ARG_STRLEN (128 KiB). 64 KiB keeps
+    # us well under that, and also under GitHub's 65536-character limit for a PR
+    # body if the log ever goes there.
+    max_log_bytes=65536
     EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
     echo "log<<$EOF" >> $GITHUB_OUTPUT
-      modlog . HEAD dirty >> $GITHUB_OUTPUT || true
+      modlog . HEAD dirty \
+        | LC_ALL=C awk -v max="${max_log_bytes}" '{ n += length($0) + 1; if (n > max) { print "  ... (truncated)"; exit } print }' \
+        >> $GITHUB_OUTPUT || true
     echo "$EOF" >> $GITHUB_OUTPUT
 fi
 
