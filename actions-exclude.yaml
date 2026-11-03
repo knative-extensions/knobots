@@ -7,5 +7,4 @@
 - "knative-extensions/eventing-integrations"
 - "knative-extensions/knobots"
 - "knative/ux"
-- "knative/specs"
 - "knative/toolbox"
