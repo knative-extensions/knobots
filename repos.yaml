@@ -82,10 +82,6 @@
   fork: 'knative-automation/ux'
   channel: 'knative-ux'
   assignees: knative/ux-wg-leads
-- name: 'knative/specs'
-  meta-organization: 'knative'
-  fork: 'knative-automation/specs'
-  assignees: knative/knative-trademark-committee knative/technical-oversight-committee
 
 # knative-extensions
 - name: 'knative-extensions/knobots'
@@ -121,11 +117,6 @@
   assignees: knative-extensions/eventing-writers
 
 # knative-extensions/eventing-* (eventing), sorted alphabetically
-- name: 'knative-extensions/eventing-autoscaler-keda'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/eventing-autoscaler-keda'
-  channel: 'knative-eventing'
-  assignees: knative-extensions/eventing-writers
 - name: 'knative-extensions/eventing-ceph'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/eventing-ceph'
@@ -171,13 +162,6 @@
   fork: 'knative-automation/eventing-redis'
   channel: 'knative-eventing'
   assignees: knative-extensions/eventing-writers
-
-# knative-extensions (autoscaler-keda)
-- name: 'knative-extensions/autoscaler-keda'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/autoscaler-keda'
-  channel: 'knative-serving'
-  assignees: knative-extensions/autoscaler-keda-approvers
 
 # knative-extensions (networking)
 - name: 'knative-extensions/net-contour'
@@ -232,12 +216,6 @@
   channel: 'knative-client'
   assignees: 'knative-extensions/kn-plugin-quickstart-approvers'
 
-- name: 'knative-extensions/kn-plugin-sample'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/kn-plugin-sample'
-  channel: 'knative-client'
-  assignees: 'knative-extensions/client-writers'
-
 - name: 'knative-extensions/kn-plugin-source-kafka'
   meta-organization: 'knative-extensions'
   fork: 'knative-automation/kn-plugin-source-kafka'
@@ -245,20 +223,7 @@
   assignees: 'knative-extensions/client-writers'
 
 
-# knative-extensions (security)
-- name: 'knative-extensions/security-guard'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/security-guard'
-  channel: 'knative-security'
-  assignees: knative/security-guard-approvers
-
 # knative-extensions (functions)
-
-- name: 'knative-extensions/func-tastic'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/func-tastic'
-  channel: 'knative-functions'
-  assignees: 'knative-extensions/func-tastic-approvers'
 
 - name: 'knative-extensions/func-adapter-kafka'
   meta-organization: 'knative-extensions'
@@ -277,10 +242,3 @@
   fork: 'knative-automation/func-python'
   channel: 'knative-functions'
   assignees: 'knative-extensions/function-runtime-approvers'
-
-# knative-extensions (backstage)
-- name: 'knative-extensions/backstage-plugins'
-  meta-organization: 'knative-extensions'
-  fork: 'knative-automation/backstage-plugins'
-  channel: 'knative-eventing'
-  assignees: 'knative-extensions/backstage-plugins-writers'

@@ -5,9 +5,7 @@
 # Declined because of Markdown formatter breaking conventions
 - "knative/client"
 - "knative-extensions/kn-plugin-admin"
-- "knative-extensions/kn-plugin-sample"
 - "knative-extensions/kn-plugin-source-kafka"
 - "knative/actions"
 - "knative-extensions/knobots"
-- "knative/specs"
 - "knative/toolbox"
