@@ -29,6 +29,8 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Set up Go
+      uses: knative/actions/setup-go@main
     - name: Install dependency update tools
       shell: bash
       env:

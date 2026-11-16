@@ -41,8 +41,8 @@ func TestCompositeActions(t *testing.T) {
 				Runs    struct {
 					Using string
 					Steps []struct {
-						ID, Shell, Run string
-						Env            map[string]string
+						ID, Shell, Run, Uses string
+						Env                  map[string]string
 					}
 				}
 			}
@@ -56,7 +56,14 @@ func TestCompositeActions(t *testing.T) {
 				t.Fatalf("action must not require a Dockerfile: %v", err)
 			}
 			foundRun := false
+			goReady := false
 			for _, step := range action.Runs.Steps {
+				if step.Uses == "knative/actions/setup-go@main" {
+					goReady = true
+				}
+				if strings.Contains(step.Run, "go install ") && !goReady {
+					t.Error("Go tools must be installed after knative/actions/setup-go@main")
+				}
 				if step.Run != "" && step.Shell != "bash" {
 					t.Errorf("run step %q must specify bash", step.ID)
 				}

@@ -36,6 +36,8 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Set up Go
+      uses: knative/actions/setup-go@main
     - name: Install yaml2json
       shell: bash
       env:

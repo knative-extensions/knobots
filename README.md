@@ -56,7 +56,7 @@ understanding the different components in this repo:
 
 * `.github/workflows` contains the actual GitHub Actions, in the Actions yaml format. These are (mostly) generated from the `actions` directories mentioned below, but a few are hand-maintained. For the generated workflows, run `go run ./cmd/gen-actions` at the root of the repo to regnerate the files, which will need to be checked in / PR'ed if changed.
 
-* `actions` contains a set of [composite GitHub Actions](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action) that run directly on GitHub-hosted Ubuntu runners. They use the runner's preinstalled Go, Node.js/npm, jq, Helm, and envsubst, installing only action-specific tools. Go uses its default automatic toolchain selection when a module requires a newer version. Each directory under `actions` should contain the following:
+* `actions` contains a set of [composite GitHub Actions](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action) that run directly on GitHub-hosted Ubuntu runners. Actions that use Go set it up with `knative/actions/setup-go@main`. They use the runner's preinstalled Node.js/npm, jq, Helm, and envsubst, installing only action-specific tools. Each directory under `actions` should contain the following:
 
    * `action.yaml` -- GitHub actions configuration. This file makes the directory an action.
 
