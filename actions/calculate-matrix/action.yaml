@@ -25,12 +25,29 @@ inputs:
     description: "Name of a single repo to apply to for this run."
 outputs:
   include:
+    description: "Alias for includes"
+    value: ${{ steps.run.outputs.includes }}
+  includes:
     description: "Repo data structure on selected repos (list)"
+    value: ${{ steps.run.outputs.includes }}
   names:
     description: "Repo names only (parallel list to repos)"
+    value: ${{ steps.run.outputs.names }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    NAME: ${{ inputs.action-name }}
-    ONLY: ${{ inputs.only-repo }}
+  using: composite
+  steps:
+    - name: Install yaml2json
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install github.com/bronze1man/yaml2json@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Calculate repo matrix
+      id: run
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        NAME: ${{ inputs.action-name }}
+        ONLY: ${{ inputs.only-repo }}
+      run: bash "$ACTION_PATH/entrypoint.sh"

@@ -47,5 +47,5 @@ echo "::group::Matrix includes for ${NAME}"
 echo "${SELECTED_REPOS}" | jq .
 echo "::endgroup::"
 
-echo "includes=${SELECTED_REPOS}" >> $GITHUB_OUTPUT
-echo "names=${SELECTED_NAMES}" >> $GITHUB_OUTPUT
+echo "includes=${SELECTED_REPOS}" >> "$GITHUB_OUTPUT"
+echo "names=${SELECTED_NAMES}" >> "$GITHUB_OUTPUT"

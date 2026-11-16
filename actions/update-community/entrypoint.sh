@@ -34,11 +34,7 @@ else
 fi
 # TODO: copy other files over, like CODE-OF-CONDUCT.md
 
-# Ensure files have the same owner as the checkout directory.
-# See https://github.com/knative-extensions/knobots/issues/79
-chown -R --reference=. .
+echo "create_pr=${create_pr}" >> "$GITHUB_ENV"
+echo "pr_labels=${pr_labels}" >> "$GITHUB_ENV"
 
-echo "create_pr=${create_pr}" >> $GITHUB_ENV
-echo "pr_labels=${pr_labels}" >> $GITHUB_ENV
-
-echo "log=${log}" >> $GITHUB_OUTPUT
+echo "log=${log}" >> "$GITHUB_OUTPUT"

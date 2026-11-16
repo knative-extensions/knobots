@@ -29,14 +29,9 @@ echo '**/docs/cmd'    >> $ignore_file
 cd main
 
 echo 'log<<EOF' >> "$GITHUB_OUTPUT"
-prettier --ignore-path $ignore_file -l $(find . -name "*.md") &2>1 >> $GITHUB_OUTPUT
+prettier --ignore-path $ignore_file -l $(find . -name "*.md") &2>1 >> "$GITHUB_OUTPUT"
 echo 'EOF' >> "$GITHUB_OUTPUT"
 
 [ -z "$(git status --porcelain=v1 2>/dev/null)" ] || create_pr="true"
 
-# Ensure files have the same owner as the checkout directory.
-# See https://github.com/knative-extensions/knobots/issues/79
-chown -R --reference=. .
-
-
-echo "create_pr=${create_pr}" >> $GITHUB_ENV
+echo "create_pr=${create_pr}" >> "$GITHUB_ENV"

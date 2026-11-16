@@ -23,9 +23,15 @@ inputs:
 outputs:
   log:
     description: "Log of changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    ORGANIZATION: ${{ inputs.organization }}
+  using: composite
+  steps:
+    - name: Update community files
+      id: run
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        ORGANIZATION: ${{ inputs.organization }}
+      run: bash "$ACTION_PATH/entrypoint.sh"
 

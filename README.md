@@ -56,11 +56,11 @@ understanding the different components in this repo:
 
 * `.github/workflows` contains the actual GitHub Actions, in the Actions yaml format. These are (mostly) generated from the `actions` directories mentioned below, but a few are hand-maintained. For the generated workflows, run `go run ./cmd/gen-actions` at the root of the repo to regnerate the files, which will need to be checked in / PR'ed if changed.
 
-* `actions` contains a set of GitHub Actions, either as Dockerfile actions or Javascript actions. Each directory under `actions` should contain the following:
+* `actions` contains a set of [composite GitHub Actions](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action) that run directly on GitHub-hosted Ubuntu runners. They use the runner's preinstalled Go, Node.js/npm, jq, Helm, and envsubst, installing only action-specific tools. Go uses its default automatic toolchain selection when a module requires a newer version. Each directory under `actions` should contain the following:
 
    * `action.yaml` -- GitHub actions configuration. This file makes the directory an action.
 
-   * `Dockerfile` (and probably `entrypoint.sh`) for [Docker-based Actions](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action) **OR** `index.js` and `package-lock.json` et al for [Javascript actions](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action)
+   * `entrypoint.sh` -- The action's implementation, invoked from `action.yaml` using `github.action_path`. Composite steps install any extra tools and forward script outputs through `action.yaml`. No container build is required.
 
    * If you want the action to be run against _each_ repo configured in `repos.yaml`, add an `auto-apply.yaml` (schema [here](https://github.com/knative-extensions/knobots/blob/main/cmd/gen-actions/main.go#L109)). This will cause the `gen-actions` tool (see below) to generate a `github/workflows` file which will fan out your command to all repos.
 

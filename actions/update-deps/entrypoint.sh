@@ -18,16 +18,7 @@ set -e
 
 deplog=""
 
-# The scripts below use `git` on the checked out .../main that has a
-# different user than the docker user which gives an error. We thus have
-# to explicitly allow it with the below command. For more info see:
-# https://github.com/git/git/commit/8959555cee7ec045958f9b6dd62e541affb7e7d9
-git config --global --add safe.directory /github/workspace/main
-
 cd main
-
-# Additionally add Git submodules to the safe directory config
-git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | xargs -I{} git config --global --add safe.directory /github/workspace/main/{}
 
 # Determine the name of the go module.
 if [[ -f go.mod ]]; then
@@ -51,7 +42,7 @@ if [[ -f go.mod ]]; then
       releaseFlags+=("--release ${RELEASE} --module-release ${MODULE_RELEASE}")
     fi
 
-    echo "update-dep-cmd=./hack/update-deps.sh --upgrade ${releaseFlags[@]}" >> $GITHUB_OUTPUT
+    echo "update-dep-cmd=./hack/update-deps.sh --upgrade ${releaseFlags[@]}" >> "$GITHUB_OUTPUT"
     ./hack/update-deps.sh --upgrade ${releaseFlags[@]}
     # capture logs for the module changes
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
@@ -61,11 +52,11 @@ if [[ -f go.mod ]]; then
     # body if the log ever goes there.
     max_log_bytes=65536
     EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-    echo "log<<$EOF" >> $GITHUB_OUTPUT
+    echo "log<<$EOF" >> "$GITHUB_OUTPUT"
       modlog . HEAD dirty \
         | LC_ALL=C awk -v max="${max_log_bytes}" '{ n += length($0) + 1; if (n > max) { print "  ... (truncated)"; exit } print }' \
-        >> $GITHUB_OUTPUT || true
-    echo "$EOF" >> $GITHUB_OUTPUT
+        >> "$GITHUB_OUTPUT" || true
+    echo "$EOF" >> "$GITHUB_OUTPUT"
 fi
 
 # We may pull in code-generator updates, or not have generated code.
@@ -96,11 +87,7 @@ for x in $(git diff-index --name-only HEAD --); do
     break
 done
 
-# Ensure files have the same owner as the checkout directory.
-# See https://github.com/knative-extensions/knobots/issues/79
-chown -R --reference=. .
-
 pr_labels="skip-review"
 
-echo "pr_labels=${pr_labels}" >> $GITHUB_ENV
-echo "create_pr=${create_pr}" >> $GITHUB_ENV
+echo "pr_labels=${pr_labels}" >> "$GITHUB_ENV"
+echo "create_pr=${create_pr}" >> "$GITHUB_ENV"

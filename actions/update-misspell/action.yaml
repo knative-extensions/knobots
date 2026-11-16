@@ -20,6 +20,20 @@ branding:
 outputs:
   log:
     description: "Report on spelling changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: composite
+  steps:
+    - name: Install misspell
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install github.com/client9/misspell/cmd/misspell@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Fix misspellings
+      id: run
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: bash "$ACTION_PATH/entrypoint.sh"

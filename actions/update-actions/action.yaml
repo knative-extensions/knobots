@@ -25,9 +25,22 @@ inputs:
 outputs:
   log:
     description: "Log of changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    ORGANIZATION: ${{inputs.organization}}
-    REPO: ${{inputs.repo}}
+  using: composite
+  steps:
+    - name: Install yaml2json
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install github.com/bronze1man/yaml2json@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Update actions
+      id: run
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        ORGANIZATION: ${{ inputs.organization }}
+        REPO: ${{ inputs.repo }}
+      run: bash "$ACTION_PATH/entrypoint.sh"

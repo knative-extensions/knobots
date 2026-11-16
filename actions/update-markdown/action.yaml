@@ -20,6 +20,18 @@ branding:
 outputs:
   log:
     description: "Log of changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: composite
+  steps:
+    - name: Install prettier
+      shell: bash
+      run: |
+        npm install --global --prefix "$RUNNER_TEMP/knobots" prettier
+        echo "$RUNNER_TEMP/knobots/bin" >> "$GITHUB_PATH"
+    - name: Format Markdown
+      id: run
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: bash "$ACTION_PATH/entrypoint.sh"
