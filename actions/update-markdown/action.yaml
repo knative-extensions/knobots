@@ -46,7 +46,7 @@ runs:
         cd main
 
         echo 'log<<EOF' >> "$GITHUB_OUTPUT"
-        prettier --ignore-path $ignore_file -l $(find . -name "*.md") &2>1 >> "$GITHUB_OUTPUT"
+        prettier --ignore-path "$ignore_file" --write --no-error-on-unmatched-pattern '**/*.md' >> "$GITHUB_OUTPUT"
         echo 'EOF' >> "$GITHUB_OUTPUT"
 
         [ -z "$(git status --porcelain=v1 2>/dev/null)" ] || create_pr="true"

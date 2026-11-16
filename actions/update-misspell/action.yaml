@@ -42,10 +42,10 @@ runs:
 
         cd main
 
-        export files=( $(find . -type f -not -path './vendor/*' -not -path './third-party/*' -not -path './.git/*') )
+        mapfile -d '' -t files < <(find . -type f -not -path './vendor/*' -not -path './third-party/*' -not -path './.git/*' -print0)
 
-        if (( ${#FILES[@]} > 0 )); then
-          log=$(misspell -i importas -w "${FILES[@]}" )
+        if (( ${#files[@]} > 0 )); then
+          log=$(misspell -i importas -w "${files[@]}")
           create_pr="true"
         else
           echo No files found.
