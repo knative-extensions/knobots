@@ -52,28 +52,14 @@ runs:
         NAME: ${{ inputs.action-name }}
         ONLY: ${{ inputs.only-repo }}
       run: |
-        function filtered_repos() {
-          local EXCLUDE="${1}"
-          local EXACT="${2}"
-          local FILTER=$(cat "${EXCLUDE}" | yaml2json | jq "join(\"|\")")
-          if [[ "$FILTER" != "" ]]; then
-            FILTER=".name | test(${FILTER}) | not"
-          else
-            FILTER="true"
-          fi
-          if [[ "$EXACT" != "" ]]; then
-            FILTER="(${FILTER}) and (.name == \"${EXACT}\")"
-          fi
-
-          cat repos.yaml | yaml2json | jq -c "map(select(${FILTER}))"
-        }
-
-        function filtered_names() {
-          filtered_repos "${1}" "${2}" | jq -c "map(.name)"
-        }
-
-        SELECTED_NAMES="$(filtered_names "${NAME}-exclude.yaml" "${ONLY}")"
-        SELECTED_REPOS="$(filtered_repos "${NAME}-exclude.yaml" "${ONLY}")"
+        exclude=$(yaml2json < "${NAME}-exclude.yaml" | jq -r '(. // []) | join("|")')
+        SELECTED_REPOS=$(yaml2json < repos.yaml | jq -c --arg exclude "$exclude" --arg only "$ONLY" '
+          map(select(
+            ($exclude == "" or (.name | test($exclude) | not)) and
+            ($only == "" or .name == $only)
+          ))
+        ')
+        SELECTED_NAMES=$(jq -c 'map(.name)' <<< "$SELECTED_REPOS")
 
         echo "::group::Matrix names for ${NAME}"
         echo "${SELECTED_NAMES}" | jq .

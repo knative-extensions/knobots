@@ -53,4 +53,9 @@ runs:
 
         echo "create_pr=${create_pr}" >> "$GITHUB_ENV"
 
-        echo "log=$log" >> "$GITHUB_OUTPUT"
+        delimiter=$(uuidgen)
+        {
+          echo "log<<$delimiter"
+          printf '%s\n' "$log"
+          echo "$delimiter"
+        } >> "$GITHUB_OUTPUT"

@@ -16,13 +16,12 @@
 
 set -e
 
-deplog=""
-
 cd main
 
 # Determine the name of the go module.
 if [[ -f go.mod ]]; then
-    export MODULE_NAME=$(go mod graph | cut -d' ' -f 1 | grep -v '@' | head -1)
+    MODULE_NAME=$(go list -m -f '{{.Path}}')
+    export MODULE_NAME
 
     # TODO(mattmoor): Move this into `./hack/update-codegen.sh`
     TMP_DIR="$(mktemp -d)"
@@ -38,12 +37,12 @@ if [[ -f go.mod ]]; then
     releaseFlags=()
     # Test to see if this module is using the knative.dev/hack repo, if it is,
     # then we know it is safe to pass down the release flag.
-    if [[ $(buoy needs go.mod --domain knative.dev | grep knative.dev/hack) ]]; then
-      releaseFlags+=("--release ${RELEASE} --module-release ${MODULE_RELEASE}")
+    if buoy needs go.mod --domain knative.dev | grep -Fq 'knative.dev/hack'; then
+      releaseFlags+=(--release "$RELEASE" --module-release "$MODULE_RELEASE")
     fi
 
-    echo "update-dep-cmd=./hack/update-deps.sh --upgrade ${releaseFlags[@]}" >> "$GITHUB_OUTPUT"
-    ./hack/update-deps.sh --upgrade ${releaseFlags[@]}
+    echo "update-dep-cmd=./hack/update-deps.sh --upgrade ${releaseFlags[*]}" >> "$GITHUB_OUTPUT"
+    ./hack/update-deps.sh --upgrade "${releaseFlags[@]}"
     # capture logs for the module changes
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
     # The log goes into the commit message, which create-pull-request gets as one
@@ -69,25 +68,20 @@ create_pr="false"
 if [[ "${FORCE_DEPS}" == "true" ]]; then
   create_pr="true"
 fi
-for x in $(git diff-index --name-only HEAD --); do
-    if ! find . -type d -name vendor | grep -q vendor; then
-        echo "Found diff: $x"
+vendor_dir=$(find . -type d -name vendor -print -quit)
+while IFS= read -r -d '' file; do
+    if [[ -z "$vendor_dir" ]]; then
+        echo "Found diff: $file"
         create_pr="true"
         break
     fi
-    if [ "$(basename $x)" = "go.mod" ]; then
-        continue
-    elif [ "$(basename $x)" = "go.sum" ]; then
-        continue
-    elif [ "$(basename $x)" = "modules.txt" ]; then
-        continue
-    fi
-    echo "Found non-module diff: $x"
+    case "${file##*/}" in
+        go.mod|go.sum|modules.txt) continue ;;
+    esac
+    echo "Found non-module diff: $file"
     create_pr="true"
     break
-done
+done < <(git diff-index --name-only -z HEAD --)
 
-pr_labels="skip-review"
-
-echo "pr_labels=${pr_labels}" >> "$GITHUB_ENV"
+echo "pr_labels=skip-review" >> "$GITHUB_ENV"
 echo "create_pr=${create_pr}" >> "$GITHUB_ENV"

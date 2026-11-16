@@ -33,21 +33,19 @@ runs:
       id: run
       shell: bash
       run: |
-        log=""
         create_pr="false"
         ignore_file=$(mktemp)
-
-        echo '**/.git'        >> $ignore_file
-        echo '**/.github'     >> $ignore_file
-        echo '**/vendor'      >> $ignore_file
-        echo '**/third_party' >> $ignore_file
-        echo '**/docs/cmd'    >> $ignore_file
+        trap 'rm -f "$ignore_file"' EXIT
+        printf '%s\n' '**/.git' '**/.github' '**/vendor' '**/third_party' '**/docs/cmd' > "$ignore_file"
 
         cd main
 
-        echo 'log<<EOF' >> "$GITHUB_OUTPUT"
-        prettier --ignore-path "$ignore_file" --write --no-error-on-unmatched-pattern '**/*.md' >> "$GITHUB_OUTPUT"
-        echo 'EOF' >> "$GITHUB_OUTPUT"
+        delimiter=$(uuidgen)
+        {
+          echo "log<<$delimiter"
+          prettier --ignore-path "$ignore_file" --write --no-error-on-unmatched-pattern '**/*.md'
+          echo "$delimiter"
+        } >> "$GITHUB_OUTPUT"
 
         [ -z "$(git status --porcelain=v1 2>/dev/null)" ] || create_pr="true"
 
