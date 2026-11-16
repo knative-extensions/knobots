@@ -25,6 +25,30 @@ import (
 	"gopkg.in/yaml.v1"
 )
 
+type action struct {
+	Outputs map[string]struct{ Value string }
+	Runs    struct {
+		Using string
+		Steps []struct {
+			ID, Shell, Run, Uses string
+			Env                  map[string]string
+		}
+	}
+}
+
+func loadAction(t *testing.T, path string) action {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var a action
+	if err := yaml.Unmarshal(data, &a); err != nil {
+		t.Fatal(err)
+	}
+	return a
+}
+
 func TestCompositeActions(t *testing.T) {
 	paths, err := filepath.Glob("*/action.yaml")
 	if err != nil || len(paths) == 0 {
@@ -32,23 +56,7 @@ func TestCompositeActions(t *testing.T) {
 	}
 	for _, path := range paths {
 		t.Run(filepath.Dir(path), func(t *testing.T) {
-			data, err := os.ReadFile(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			var action struct {
-				Outputs map[string]struct{ Value string }
-				Runs    struct {
-					Using string
-					Steps []struct {
-						ID, Shell, Run, Uses string
-						Env                  map[string]string
-					}
-				}
-			}
-			if err := yaml.Unmarshal(data, &action); err != nil {
-				t.Fatal(err)
-			}
+			action := loadAction(t, path)
 			if action.Runs.Using != "composite" {
 				t.Fatalf("runs.using = %q, want composite", action.Runs.Using)
 			}
@@ -67,10 +75,24 @@ func TestCompositeActions(t *testing.T) {
 				if step.Run != "" && step.Shell != "bash" {
 					t.Errorf("run step %q must specify bash", step.ID)
 				}
+				if step.Run != "" {
+					cmd := exec.Command("bash", "-n")
+					cmd.Stdin = strings.NewReader(step.Run)
+					if out, err := cmd.CombinedOutput(); err != nil {
+						t.Errorf("invalid shell in step %q: %v\n%s", step.ID, err, out)
+					}
+				}
 				if step.ID == "run" {
 					foundRun = true
-					if step.Run != `bash "$ACTION_PATH/entrypoint.sh"` || step.Env["ACTION_PATH"] != "${{ github.action_path }}" {
-						t.Error("entrypoint must use the quoted action path, not the workspace or a container path")
+					if step.Run == "" {
+						t.Error("run step must contain shell commands")
+					}
+					if filepath.Dir(path) == "update-deps" {
+						if step.Run != `bash "$ACTION_PATH/entrypoint.sh"` || step.Env["ACTION_PATH"] != "${{ github.action_path }}" {
+							t.Error("external entrypoint must use the quoted action path")
+						}
+					} else if strings.Contains(step.Run, "entrypoint.sh") {
+						t.Error("simple scripts should be inline")
 					}
 				}
 			}
@@ -89,19 +111,28 @@ func TestCompositeActions(t *testing.T) {
 					t.Errorf("output %s = %q, want %q", name, output.Value, want)
 				}
 			}
-			cmd := exec.Command("bash", "-n", filepath.Join(filepath.Dir(path), "entrypoint.sh"))
-			if out, err := cmd.CombinedOutput(); err != nil {
-				t.Fatalf("invalid entrypoint: %v\n%s", err, out)
+			if filepath.Dir(path) == "update-deps" {
+				cmd := exec.Command("bash", "-n", filepath.Join(filepath.Dir(path), "entrypoint.sh"))
+				if out, err := cmd.CombinedOutput(); err != nil {
+					t.Fatalf("invalid entrypoint: %v\n%s", err, out)
+				}
+			} else if _, err := os.Stat(filepath.Join(filepath.Dir(path), "entrypoint.sh")); !os.IsNotExist(err) {
+				t.Errorf("inlined action should not have an entrypoint.sh: %v", err)
 			}
 		})
 	}
 }
 
 func TestCommunityAction(t *testing.T) {
-	// Use a workspace outside the action directory, with spaces in its path.
-	script, err := filepath.Abs("update-community/entrypoint.sh")
-	if err != nil {
-		t.Fatal(err)
+	// Exercise the inline run block with the same shell options as GitHub Actions.
+	var script string
+	for _, step := range loadAction(t, "update-community/action.yaml").Runs.Steps {
+		if step.ID == "run" {
+			script = step.Run
+		}
+	}
+	if script == "" {
+		t.Fatal("missing community run block")
 	}
 	for _, present := range []bool{false, true} {
 		t.Run(fmt.Sprintf("source-present=%t", present), func(t *testing.T) {
@@ -119,11 +150,11 @@ func TestCommunityAction(t *testing.T) {
 			}
 			envFile := filepath.Join(workspace, "env")
 			outputFile := filepath.Join(workspace, "output")
-			cmd := exec.Command("bash", script)
+			cmd := exec.Command("bash", "--noprofile", "--norc", "-eo", "pipefail", "-c", script)
 			cmd.Dir = workspace
 			cmd.Env = append(os.Environ(), "GITHUB_WORKSPACE="+workspace, "GITHUB_ENV="+envFile, "GITHUB_OUTPUT="+outputFile, "ORGANIZATION=knative")
 			if out, err := cmd.CombinedOutput(); err != nil {
-				t.Fatalf("entrypoint: %v\n%s", err, out)
+				t.Fatalf("community run block: %v\n%s", err, out)
 			}
 			env, err := os.ReadFile(envFile)
 			if err != nil {

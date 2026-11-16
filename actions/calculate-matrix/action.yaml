@@ -49,7 +49,39 @@ runs:
       id: run
       shell: bash
       env:
-        ACTION_PATH: ${{ github.action_path }}
         NAME: ${{ inputs.action-name }}
         ONLY: ${{ inputs.only-repo }}
-      run: bash "$ACTION_PATH/entrypoint.sh"
+      run: |
+        function filtered_repos() {
+          local EXCLUDE="${1}"
+          local EXACT="${2}"
+          local FILTER=$(cat "${EXCLUDE}" | yaml2json | jq "join(\"|\")")
+          if [[ "$FILTER" != "" ]]; then
+            FILTER=".name | test(${FILTER}) | not"
+          else
+            FILTER="true"
+          fi
+          if [[ "$EXACT" != "" ]]; then
+            FILTER="(${FILTER}) and (.name == \"${EXACT}\")"
+          fi
+
+          cat repos.yaml | yaml2json | jq -c "map(select(${FILTER}))"
+        }
+
+        function filtered_names() {
+          filtered_repos "${1}" "${2}" | jq -c "map(.name)"
+        }
+
+        SELECTED_NAMES="$(filtered_names "${NAME}-exclude.yaml" "${ONLY}")"
+        SELECTED_REPOS="$(filtered_repos "${NAME}-exclude.yaml" "${ONLY}")"
+
+        echo "::group::Matrix names for ${NAME}"
+        echo "${SELECTED_NAMES}" | jq .
+        echo "::endgroup::"
+
+        echo "::group::Matrix includes for ${NAME}"
+        echo "${SELECTED_REPOS}" | jq .
+        echo "::endgroup::"
+
+        echo "includes=${SELECTED_REPOS}" >> "$GITHUB_OUTPUT"
+        echo "names=${SELECTED_NAMES}" >> "$GITHUB_OUTPUT"

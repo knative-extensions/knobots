@@ -36,6 +36,21 @@ runs:
     - name: Fix misspellings
       id: run
       shell: bash
-      env:
-        ACTION_PATH: ${{ github.action_path }}
-      run: bash "$ACTION_PATH/entrypoint.sh"
+      run: |
+        log=""
+        create_pr="false"
+
+        cd main
+
+        export files=( $(find . -type f -not -path './vendor/*' -not -path './third-party/*' -not -path './.git/*') )
+
+        if (( ${#FILES[@]} > 0 )); then
+          log=$(misspell -i importas -w "${FILES[@]}" )
+          create_pr="true"
+        else
+          echo No files found.
+        fi
+
+        echo "create_pr=${create_pr}" >> "$GITHUB_ENV"
+
+        echo "log=$log" >> "$GITHUB_OUTPUT"

@@ -58,9 +58,9 @@ understanding the different components in this repo:
 
 * `actions` contains a set of [composite GitHub Actions](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action) that run directly on GitHub-hosted Ubuntu runners. Actions that use Go set it up with `knative/actions/setup-go@main`. They use the runner's preinstalled Node.js/npm, jq, Helm, and envsubst, installing only action-specific tools. Each directory under `actions` should contain the following:
 
-   * `action.yaml` -- GitHub actions configuration. This file makes the directory an action.
+   * `action.yaml` -- GitHub actions configuration and inline shell steps. Composite steps install any extra tools and forward script outputs through `action.yaml`. Keep simple scripts inline so the action is self-contained.
 
-   * `entrypoint.sh` -- The action's implementation, invoked from `action.yaml` using `github.action_path`. Composite steps install any extra tools and forward script outputs through `action.yaml`. No container build is required.
+   * For longer implementations, such as dependency updates, an optional `entrypoint.sh` is invoked using `github.action_path`. No container build is required.
 
    * If you want the action to be run against _each_ repo configured in `repos.yaml`, add an `auto-apply.yaml` (schema [here](https://github.com/knative-extensions/knobots/blob/main/cmd/gen-actions/main.go#L109)). This will cause the `gen-actions` tool (see below) to generate a `github/workflows` file which will fan out your command to all repos.
 
