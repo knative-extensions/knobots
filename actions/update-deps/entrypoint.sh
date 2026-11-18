@@ -69,6 +69,7 @@ if [[ "${FORCE_DEPS}" == "true" ]]; then
   create_pr="true"
 fi
 vendor_dir=$(find . -type d -name vendor -print -quit)
+# Use process substitution so create_pr changes persist outside the loop.
 while IFS= read -r -d '' file; do
     if [[ -z "$vendor_dir" ]]; then
         echo "Found diff: $file"
