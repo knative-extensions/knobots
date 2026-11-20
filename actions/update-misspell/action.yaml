@@ -33,7 +33,7 @@ runs:
       env:
         GOBIN: ${{ runner.temp }}/knobots/bin
       run: |
-        go install github.com/client9/misspell/cmd/misspell@latest
+        go install github.com/golangci/misspell/cmd/misspell@v0.8.0
         echo "$GOBIN" >> "$GITHUB_PATH"
     - name: Fix misspellings
       id: run
