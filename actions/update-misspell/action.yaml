@@ -26,6 +26,10 @@ runs:
   steps:
     - name: Set up Go
       uses: knative/actions/setup-go@main
+      with:
+        cache-dependency-path: |
+          config/go.mod
+          main/go.mod
     - name: Install misspell
       shell: bash
       env:
@@ -42,11 +46,13 @@ runs:
 
         cd main
 
-        mapfile -d '' -t files < <(find . -type f -not -path './vendor/*' -not -path './third-party/*' -not -path './.git/*' -print0)
+        mapfile -d '' -t files < <(find . -type d \( -name .git -o -name vendor -o -name third_party -o -name third-party \) -prune -o -type f -print0)
 
         if (( ${#files[@]} > 0 )); then
-          log=$(misspell -i importas -w "${files[@]}")
-          create_pr="true"
+          # Avoid compiler-style diagnostics, which Go's problem matcher treats
+          # as errors when create-pull-request prints the commit message.
+          log=$(misspell -i importas -w -f '{{ .Filename }} (line {{ .Line }}, column {{ .Column }}): corrected "{{ .Original }}" to "{{ .Corrected }}"' "${files[@]}")
+          [ -z "$log" ] || create_pr="true"
         else
           echo No files found.
         fi

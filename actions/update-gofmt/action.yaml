@@ -26,6 +26,10 @@ runs:
   steps:
     - name: Set up Go
       uses: knative/actions/setup-go@main
+      with:
+        cache-dependency-path: |
+          config/go.mod
+          main/go.mod
     - name: Install goimports
       shell: bash
       env:

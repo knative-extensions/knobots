@@ -177,7 +177,7 @@ jobs:
         if [[ "$ref_count" -lt 2 ]]; then
           # For debugging
           release_labels | sort -u
-          echo "::warning file=.github.js,line=1::${{matrix.nightly}} -  skipping bump no changes"
+          echo "::notice::${{matrix.nightly}} - skipping bump: no changes"
           exit 0
         fi
 
