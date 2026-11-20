@@ -67,3 +67,5 @@ understanding the different components in this repo:
      Actions modify the repository checked out under `main/`, set `create_pr=true` through `$GITHUB_ENV` when a PR should be created, and may expose a `log` output for the commit message and PR body.
 
    * Go setup disables dependency caching with `cache: 'false'`: the actions install standalone tools without a dependency manifest or lockfile, rather than building this repository.
+
+   * `update-misspell` only corrects comments in `.go` files. It excludes vendor, third-party, and Git metadata directories at every depth; other file types and Go string literals are left untouched.
