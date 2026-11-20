@@ -33,7 +33,7 @@ runs:
       uses: knative/actions/setup-go@main
       with:
         cache-dependency-path: |
-          config/go.mod
+          config/actions/update-actions/action.yaml
           main/go.mod
     - name: Install yaml2json
       shell: bash

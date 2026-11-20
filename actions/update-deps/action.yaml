@@ -33,7 +33,7 @@ runs:
       uses: knative/actions/setup-go@main
       with:
         cache-dependency-path: |
-          config/go.mod
+          config/actions/update-deps/action.yaml
           main/go.mod
     - name: Install dependency update tools
       shell: bash

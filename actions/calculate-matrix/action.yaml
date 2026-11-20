@@ -38,6 +38,8 @@ runs:
   steps:
     - name: Set up Go
       uses: knative/actions/setup-go@main
+      with:
+        cache-dependency-path: actions/calculate-matrix/action.yaml
     - name: Install yaml2json
       shell: bash
       env:

@@ -28,7 +28,7 @@ runs:
       uses: knative/actions/setup-go@main
       with:
         cache-dependency-path: |
-          config/go.mod
+          config/actions/update-gofmt/action.yaml
           main/go.mod
     - name: Install goimports
       shell: bash

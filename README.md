@@ -54,7 +54,7 @@ create automated management PRs against other repos in Knative. To add a new
 automated PR workflow (or update one of the existing workflows), it's worth
 understanding the different components in this repo:
 
-* `.github/workflows` contains the actual GitHub Actions, in the Actions yaml format. These are (mostly) generated from the `actions` directories mentioned below, but a few are hand-maintained. For the generated workflows, run `go run ./cmd/gen-actions` at the root of the repo to regnerate the files, which will need to be checked in / PR'ed if changed.
+* `.github/workflows` contains the GitHub Actions workflows. These files are maintained directly and are the source of truth for schedules, repository checkouts, action inputs, and PR settings. There is no workflow-generation step.
 
 * `actions` contains a set of [composite GitHub Actions](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action) that run directly on GitHub-hosted Ubuntu runners. Actions that use Go set it up with `knative/actions/setup-go@main`. They use the runner's preinstalled Node.js/npm, jq, Helm, and envsubst, installing only action-specific tools. Each directory under `actions` should contain the following:
 
@@ -62,15 +62,8 @@ understanding the different components in this repo:
 
    * For longer implementations, such as dependency updates, an optional `entrypoint.sh` is invoked using `github.action_path`. No container build is required.
 
-   * If you want the action to be run against _each_ repo configured in `repos.yaml`, add an `auto-apply.yaml` (schema [here](https://github.com/knative-extensions/knobots/blob/main/cmd/gen-actions/main.go#L109)). This will cause the `gen-actions` tool (see below) to generate a `github/workflows` file which will fan out your command to all repos.
+   * To run an action against each selected repo in `repos.yaml`, add a workflow under `.github/workflows`, following an existing `auto-update-*.yaml` workflow. Use `actions/calculate-matrix` to select repositories and pass only inputs declared by the action's `action.yaml`.
 
-     It's expected that an auto-apply action will modify the checked-out workspace; these changes will export a `create_pr` variable (set to `true` if a PR shoud be created) and optionally a `log` output.
+     Actions modify the repository checked out under `main/`, set `create_pr=true` through `$GITHUB_ENV` when a PR should be created, and may expose a `log` output for the commit message and PR body.
 
-* `cmd/gen-actions` contains a script (`main.go`) and a template {`actions_template.yaml`) for generating fan-out PR generation workflows for all the `actions` directories which include an `auto-apply.yaml`.
-
-  The parameters set in `auto-apply.yaml` are passed in to the `actions_template.yaml`, along with a `github` formatting function which passes through the remianing arguments to the _GitHub Actions_ templating system (both use the same `{{...}}` syntax for templating, so any GitHub templating needs to be escaped from the Go templates).
-
-  This script _should_ stay fairly short; it's written in Go for two reasons:
-
-   1. Go is a common language across Knative, and has sufficiently rich templating
-   2. Using Go enables the script to work even on Windows machines, which is a nice benefit
+   * Go actions install standalone tools rather than building this repository. Their cache keys use the action definition (which contains the tool installation commands) and, when present, the target repository's `main/go.mod`.
