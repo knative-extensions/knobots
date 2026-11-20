@@ -43,7 +43,7 @@ runs:
         delimiter=$(uuidgen)
         {
           echo "log<<$delimiter"
-          prettier --ignore-path "$ignore_file" --write --no-error-on-unmatched-pattern '**/*.md'
+          prettier --no-color --ignore-path "$ignore_file" --write --no-error-on-unmatched-pattern '**/*.md'
           echo "$delimiter"
         } >> "$GITHUB_OUTPUT"
 
