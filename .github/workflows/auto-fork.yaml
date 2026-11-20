@@ -37,13 +37,15 @@ jobs:
 
     steps:
 
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v7
+
     - uses: knative/actions/setup-go@main
+      with:
+        cache: 'false'
 
     - name: Install Dependencies
       run: go install knative.dev/toolbox/buoy@main
-
-    - name: Check out code onto GOPATH
-      uses: actions/checkout@v7
 
     - name: Check Repo
       run: GITHUB_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} ./hack/auto-fork.sh ${{ matrix.org }}

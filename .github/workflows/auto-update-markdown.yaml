@@ -12,11 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##
-## This file is auto-generated from actions/update-markdown/auto-apply.yaml
-## by ./cmd/gen-actions
-##
-
 name: Format Markdown
 
 on:
@@ -85,10 +80,6 @@ jobs:
     - name: Apply work
       id: work
       uses: "./config/actions/update-markdown"
-      with:
-        repo: ${{ matrix.name }}
-        organization: ${{ matrix.meta-organization }}
-        include: ${{ matrix.include }}
 
     - name: Create Pull Request
       id: cpr

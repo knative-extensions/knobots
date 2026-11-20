@@ -138,16 +138,18 @@ jobs:
           assignee: "@knative-extensions/eventing-wg-leads"
 
     steps:
-    - uses: knative/actions/setup-go@main
-
-    - name: Install Dependencies
-      run: |
-        go install github.com/dprotaso/modlog@latest
-
     - name: Check out code onto GOPATH
       uses: actions/checkout@v7
       with:
         repository: ${{ matrix.repository }}
+
+    - uses: knative/actions/setup-go@main
+      with:
+        cache: 'false'
+
+    - name: Install Dependencies
+      run: |
+        go install github.com/dprotaso/modlog@latest
 
     - name: Download nightlies
       shell: bash
@@ -177,7 +179,7 @@ jobs:
         if [[ "$ref_count" -lt 2 ]]; then
           # For debugging
           release_labels | sort -u
-          echo "::warning file=.github.js,line=1::${{matrix.nightly}} -  skipping bump no changes"
+          echo "::notice::${{matrix.nightly}} - skipping bump: no changes"
           exit 0
         fi
 

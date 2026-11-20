@@ -12,11 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-##
-## This file is auto-generated from actions/update-community/auto-apply.yaml
-## by ./cmd/gen-actions
-##
-
 name: Update community
 
 on:
@@ -92,9 +87,7 @@ jobs:
       id: work
       uses: "./config/actions/update-community"
       with:
-        repo: ${{ matrix.name }}
-        organization: ${{ matrix.meta-organization }}
-        include: ${{ matrix.include }}
+        organization: "${{ matrix.meta-organization }}"
 
     - name: Create Pull Request
       id: cpr
