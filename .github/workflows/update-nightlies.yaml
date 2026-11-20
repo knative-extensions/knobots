@@ -138,16 +138,16 @@ jobs:
           assignee: "@knative-extensions/eventing-wg-leads"
 
     steps:
+    - name: Check out code onto GOPATH
+      uses: actions/checkout@v7
+      with:
+        repository: ${{ matrix.repository }}
+
     - uses: knative/actions/setup-go@main
 
     - name: Install Dependencies
       run: |
         go install github.com/dprotaso/modlog@latest
-
-    - name: Check out code onto GOPATH
-      uses: actions/checkout@v7
-      with:
-        repository: ${{ matrix.repository }}
 
     - name: Download nightlies
       shell: bash

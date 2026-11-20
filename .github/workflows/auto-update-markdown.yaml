@@ -85,10 +85,6 @@ jobs:
     - name: Apply work
       id: work
       uses: "./config/actions/update-markdown"
-      with:
-        repo: ${{ matrix.name }}
-        organization: ${{ matrix.meta-organization }}
-        include: ${{ matrix.include }}
 
     - name: Create Pull Request
       id: cpr

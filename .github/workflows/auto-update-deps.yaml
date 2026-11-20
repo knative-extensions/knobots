@@ -94,12 +94,8 @@ jobs:
       id: work
       uses: "./config/actions/update-deps"
       with:
-        repo: ${{ matrix.name }}
-        organization: ${{ matrix.meta-organization }}
-        include: ${{ matrix.include }}
-        release: "${{ github.event.inputs.release }}"
         pr-empty-deps: "${{ github.event.inputs.pr-empty-deps }}"
-        branch: "${{ github.event.inputs.branch }}"
+        release: "${{ github.event.inputs.release }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

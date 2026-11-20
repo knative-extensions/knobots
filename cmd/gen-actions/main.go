@@ -89,6 +89,18 @@ func handleDir(path string, templ *template.Template) error {
 	if err := yaml.Unmarshal(bytes, &c); err != nil {
 		return fmt.Errorf("Unable to parse %q: %w", metafile, err)
 	}
+	actionfile := filepath.Join("actions", path, "action.yaml")
+	bytes, err = os.ReadFile(actionfile)
+	if err != nil {
+		return fmt.Errorf("Unable to read %q: %w", actionfile, err)
+	}
+	var action struct {
+		Inputs map[string]interface{}
+	}
+	if err := yaml.Unmarshal(bytes, &action); err != nil {
+		return fmt.Errorf("Unable to parse %q: %w", actionfile, err)
+	}
+	c.With = actionInputs(c, action.Inputs)
 	c.Action = path
 	// Deliberately using unix path convertion here.
 	c.ActionRef = "./config/actions/" + path
@@ -106,6 +118,29 @@ func handleDir(path string, templ *template.Template) error {
 	return nil
 }
 
+// actionInputs forwards only inputs declared by the composite action. Workflow
+// inputs such as the checkout branch need not be inputs to the action itself.
+func actionInputs(c conf, declared map[string]interface{}) map[string]string {
+	values := map[string]string{
+		"repo":         GitHub("matrix.name"),
+		"organization": GitHub("matrix.meta-organization"),
+		"include":      GitHub("matrix.include"),
+	}
+	for _, input := range c.Inputs {
+		values[input.Name] = GitHub("github.event.inputs." + input.Name)
+	}
+	for key, value := range c.With {
+		values[key] = value
+	}
+	result := map[string]string{}
+	for key := range declared {
+		if value, ok := values[key]; ok {
+			result[key] = value
+		}
+	}
+	return result
+}
+
 type conf struct {
 	Action        string `yaml:"-"`
 	ActionRef     string `yaml:"-"`
@@ -116,7 +151,7 @@ type conf struct {
 	CommitMessage string `yaml:"commitMessage"`
 	Repos         map[string]RepoRef
 	Inputs        []Input
-	// With allows passing _extra_ inputs to the action; all inputs will automatically be passed
+	// With overrides automatically forwarded values for declared action inputs.
 	With map[string]string
 }
 

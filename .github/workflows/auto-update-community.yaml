@@ -92,9 +92,7 @@ jobs:
       id: work
       uses: "./config/actions/update-community"
       with:
-        repo: ${{ matrix.name }}
-        organization: ${{ matrix.meta-organization }}
-        include: ${{ matrix.include }}
+        organization: "${{ matrix.meta-organization }}"
 
     - name: Create Pull Request
       id: cpr
