@@ -25,12 +25,49 @@ inputs:
     description: "Name of a single repo to apply to for this run."
 outputs:
   include:
+    description: "Alias for includes"
+    value: ${{ steps.run.outputs.includes }}
+  includes:
     description: "Repo data structure on selected repos (list)"
+    value: ${{ steps.run.outputs.includes }}
   names:
     description: "Repo names only (parallel list to repos)"
+    value: ${{ steps.run.outputs.names }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    NAME: ${{ inputs.action-name }}
-    ONLY: ${{ inputs.only-repo }}
+  using: composite
+  steps:
+    - name: Set up Go
+      uses: knative/actions/setup-go@main
+    - name: Install yaml2json
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install github.com/bronze1man/yaml2json@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Calculate repo matrix
+      id: run
+      shell: bash
+      env:
+        NAME: ${{ inputs.action-name }}
+        ONLY: ${{ inputs.only-repo }}
+      run: |
+        exclude=$(yaml2json < "${NAME}-exclude.yaml" | jq -r '(. // []) | join("|")')
+        SELECTED_REPOS=$(yaml2json < repos.yaml | jq -c --arg exclude "$exclude" --arg only "$ONLY" '
+          map(select(
+            ($exclude == "" or (.name | test($exclude) | not)) and
+            ($only == "" or .name == $only)
+          ))
+        ')
+        SELECTED_NAMES=$(jq -c 'map(.name)' <<< "$SELECTED_REPOS")
+
+        echo "::group::Matrix names for ${NAME}"
+        echo "${SELECTED_NAMES}" | jq .
+        echo "::endgroup::"
+
+        echo "::group::Matrix includes for ${NAME}"
+        echo "${SELECTED_REPOS}" | jq .
+        echo "::endgroup::"
+
+        echo "includes=${SELECTED_REPOS}" >> "$GITHUB_OUTPUT"
+        echo "names=${SELECTED_NAMES}" >> "$GITHUB_OUTPUT"

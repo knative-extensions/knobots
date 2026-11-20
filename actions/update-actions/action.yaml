@@ -25,9 +25,53 @@ inputs:
 outputs:
   log:
     description: "Log of changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    ORGANIZATION: ${{inputs.organization}}
-    REPO: ${{inputs.repo}}
+  using: composite
+  steps:
+    - name: Set up Go
+      uses: knative/actions/setup-go@main
+    - name: Install yaml2json
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install github.com/bronze1man/yaml2json@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Update actions
+      id: run
+      shell: bash
+      env:
+        ORGANIZATION: ${{ inputs.organization }}
+        REPO: ${{ inputs.repo }}
+      run: |
+        set -ux
+
+        workflows="${GITHUB_WORKSPACE}/main/.github/workflows"
+        mkdir -p "$workflows"
+        mapfile -d '' -t templates < <(find "${GITHUB_WORKSPACE}/meta/workflow-templates" -type f -name '*.yaml' -print0)
+        cp "${templates[@]}" "$workflows"
+        yaml2json < "${GITHUB_WORKSPACE}/config/actions-omitted.yaml" |
+          jq -r --arg repo "$REPO" '.[$repo].omit[]?' |
+          while IFS= read -r file; do
+            rm -f "$workflows/${file}"*
+          done
+
+        old_workflows=(
+          "knative-boilerplate.yaml"
+          "knative-donotsubmit.yaml"
+          "knative-releasability.yaml"
+          "knative-release-notes.yaml"
+          "knative-vulnerability.yaml"
+        )
+
+        for old_workflow in "${old_workflows[@]}"; do
+          rm -f "$workflows/$old_workflow"
+        done
+
+        # Must be configured in Prow to be effective. Example:
+        # https://github.com/knative/test-infra/blob/66d6a1f645ff585bfd1bce0eee0cb3446c7405b9/prow/config.yaml#L168
+        echo "create_pr=true" >> "$GITHUB_ENV"
+        echo "pr_labels=skip-review" >> "$GITHUB_ENV"
+
+        echo "log=Synced workflow templates and removed omitted or retired workflows." >> "$GITHUB_OUTPUT"

@@ -23,9 +23,34 @@ inputs:
 outputs:
   log:
     description: "Log of changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    ORGANIZATION: ${{ inputs.organization }}
+  using: composite
+  steps:
+    - name: Update community files
+      id: run
+      shell: bash
+      env:
+        ORGANIZATION: ${{ inputs.organization }}
+      run: |
+        create_pr="false"
+        FILE="peribolos/${ORGANIZATION}-OWNERS_ALIASES"
+
+        if [ -f "${GITHUB_WORKSPACE}/meta/${FILE}" ]; then
+          cp "${GITHUB_WORKSPACE}/meta/${FILE}" "${GITHUB_WORKSPACE}/main/OWNERS_ALIASES"
+          log="Copied ${FILE} to OWNERS_ALIASES."
+          create_pr="true"
+        else
+          log="Could not find ${FILE}, skipping."
+        fi
+        # TODO: copy other files over, like CODE-OF-CONDUCT.md
+
+        echo "$log"
+        echo "create_pr=${create_pr}" >> "$GITHUB_ENV"
+        # The label used for Prow Tide to auto-merge PRs that pass all required presubmit checks.
+        # Must be configured in Prow to be effective. Example:
+        # https://github.com/knative/test-infra/blob/66d6a1f645ff585bfd1bce0eee0cb3446c7405b9/prow/config.yaml#L168
+        echo "pr_labels=skip-review" >> "$GITHUB_ENV"
+
+        echo "log=${log}" >> "$GITHUB_OUTPUT"
 

@@ -20,6 +20,42 @@ branding:
 outputs:
   log:
     description: "Report on spelling changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: composite
+  steps:
+    - name: Set up Go
+      uses: knative/actions/setup-go@main
+    - name: Install misspell
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install github.com/client9/misspell/cmd/misspell@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Fix misspellings
+      id: run
+      shell: bash
+      run: |
+        log=""
+        create_pr="false"
+
+        cd main
+
+        mapfile -d '' -t files < <(find . -type f -not -path './vendor/*' -not -path './third-party/*' -not -path './.git/*' -print0)
+
+        if (( ${#files[@]} > 0 )); then
+          log=$(misspell -i importas -w "${files[@]}")
+          create_pr="true"
+        else
+          echo No files found.
+        fi
+
+        echo "create_pr=${create_pr}" >> "$GITHUB_ENV"
+
+        delimiter=$(uuidgen)
+        {
+          echo "log<<$delimiter"
+          printf '%s\n' "$log"
+          echo "$delimiter"
+        } >> "$GITHUB_OUTPUT"

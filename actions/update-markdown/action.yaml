@@ -20,6 +20,33 @@ branding:
 outputs:
   log:
     description: "Log of changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: composite
+  steps:
+    - name: Install prettier
+      shell: bash
+      run: |
+        npm install --global --prefix "$RUNNER_TEMP/knobots" prettier
+        echo "$RUNNER_TEMP/knobots/bin" >> "$GITHUB_PATH"
+    - name: Format Markdown
+      id: run
+      shell: bash
+      run: |
+        create_pr="false"
+        ignore_file=$(mktemp)
+        trap 'rm -f "$ignore_file"' EXIT
+        printf '%s\n' '**/.git' '**/.github' '**/vendor' '**/third_party' '**/docs/cmd' > "$ignore_file"
+
+        cd main
+
+        delimiter=$(uuidgen)
+        {
+          echo "log<<$delimiter"
+          prettier --ignore-path "$ignore_file" --write --no-error-on-unmatched-pattern '**/*.md'
+          echo "$delimiter"
+        } >> "$GITHUB_OUTPUT"
+
+        [ -z "$(git status --porcelain=v1 2>/dev/null)" ] || create_pr="true"
+
+        echo "create_pr=${create_pr}" >> "$GITHUB_ENV"

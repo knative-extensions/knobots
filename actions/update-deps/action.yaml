@@ -25,13 +25,31 @@ inputs:
 outputs:
   log:
     description: "Report on module changes"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    # *******************************************
-    # CHANGE THIS LINE AFTER RELEASE
-    # This should point to the _upcoming_ release
-    # *******************************************
-    RELEASE: ${{ inputs.release || 'v1.25' }}
-    FORCE_DEPS: ${{ inputs.pr-empty-deps }}
+  using: composite
+  steps:
+    - name: Set up Go
+      uses: knative/actions/setup-go@main
+    - name: Install dependency update tools
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install github.com/google/ko@latest
+        go install github.com/google/go-licenses@latest
+        go install github.com/dprotaso/modlog@latest
+        go install knative.dev/toolbox/buoy@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Update dependencies and codegen
+      id: run
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        # *******************************************
+        # CHANGE THIS LINE AFTER RELEASE
+        # This should point to the _upcoming_ release
+        # *******************************************
+        RELEASE: ${{ inputs.release || 'v1.25' }}
+        FORCE_DEPS: ${{ inputs.pr-empty-deps }}
+      run: bash "$ACTION_PATH/entrypoint.sh"

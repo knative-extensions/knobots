@@ -19,7 +19,52 @@ branding:
   color: green
 outputs:
   log:
-    description: "Report on module changes"
+    description: "Report on formatted Go files"
+    value: ${{ steps.run.outputs.log }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: composite
+  steps:
+    - name: Set up Go
+      uses: knative/actions/setup-go@main
+    - name: Install goimports
+      shell: bash
+      env:
+        GOBIN: ${{ runner.temp }}/knobots/bin
+      run: |
+        go install golang.org/x/tools/cmd/goimports@latest
+        echo "$GOBIN" >> "$GITHUB_PATH"
+    - name: Format Go code
+      id: run
+      shell: bash
+      run: |
+        log=""
+        create_pr="false"
+
+        cd main
+
+        if [[ ! -f go.mod ]]; then
+          echo "No go mod, skipping..."
+        else
+          export FILES=( $(find . -path '*/vendor' -prune -o -path '*/third_party' -prune -o -name '*.pb.go' -prune -o -type f -name '*.go' -print) )
+          export GENFILES=( $(git ls-files | xargs git check-attr linguist-generated | grep 'true$' | cut -d: -f1) )
+          for i in "${GENFILES[@]}"; do
+            FILES=(${FILES[@]//*$i*})
+          done
+          if (( ${#FILES[@]} > 0 )); then
+            imports_log=$(goimports -l -w "${FILES[@]}")
+            format_log=$(gofmt -l -s -w "${FILES[@]}")
+            log=$(printf '%s\n' "$imports_log" "$format_log" | sort -u)
+            create_pr="true"
+          else
+            echo No Go files found.
+          fi
+        fi
+
+        echo "create_pr=${create_pr}" >> "$GITHUB_ENV"
+
+        delimiter=$(uuidgen)
+        {
+          echo "log<<$delimiter"
+          printf '%s\n' "$log"
+          echo "$delimiter"
+        } >> "$GITHUB_OUTPUT"
