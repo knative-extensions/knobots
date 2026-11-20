@@ -66,4 +66,4 @@ understanding the different components in this repo:
 
      Actions modify the repository checked out under `main/`, set `create_pr=true` through `$GITHUB_ENV` when a PR should be created, and may expose a `log` output for the commit message and PR body.
 
-   * Go actions install standalone tools rather than building this repository. Their cache keys use the action definition (which contains the tool installation commands) and, when present, the target repository's `main/go.mod`.
+   * Go setup disables dependency caching with `cache: 'false'`: the actions install standalone tools without a dependency manifest or lockfile, rather than building this repository.

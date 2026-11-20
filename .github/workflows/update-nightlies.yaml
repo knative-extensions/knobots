@@ -144,6 +144,8 @@ jobs:
         repository: ${{ matrix.repository }}
 
     - uses: knative/actions/setup-go@main
+      with:
+        cache: 'false'
 
     - name: Install Dependencies
       run: |

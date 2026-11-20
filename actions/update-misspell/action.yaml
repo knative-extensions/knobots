@@ -27,9 +27,7 @@ runs:
     - name: Set up Go
       uses: knative/actions/setup-go@main
       with:
-        cache-dependency-path: |
-          config/actions/update-misspell/action.yaml
-          main/go.mod
+        cache: 'false'
     - name: Install misspell
       shell: bash
       env:

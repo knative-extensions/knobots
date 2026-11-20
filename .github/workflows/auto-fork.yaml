@@ -42,7 +42,7 @@ jobs:
 
     - uses: knative/actions/setup-go@main
       with:
-        cache-dependency-path: .github/workflows/auto-fork.yaml
+        cache: 'false'
 
     - name: Install Dependencies
       run: go install knative.dev/toolbox/buoy@main
