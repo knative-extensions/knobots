@@ -40,10 +40,13 @@ runs:
 
         cd main
 
+        # An explicit --ignore-path replaces prettier's default ignore files,
+        # so pass the repository's .prettierignore as well to let repos opt
+        # paths out (e.g. generated docs). A missing file is not an error.
         delimiter=$(uuidgen)
         {
           echo "log<<$delimiter"
-          prettier --no-color --ignore-path "$ignore_file" --write --no-error-on-unmatched-pattern '**/*.md'
+          prettier --no-color --ignore-path "$ignore_file" --ignore-path .prettierignore --write --no-error-on-unmatched-pattern '**/*.md'
           echo "$delimiter"
         } >> "$GITHUB_OUTPUT"
 
